@@ -44,3 +44,9 @@ yarn-error.log*
 
 # idea files
 .idea
+
+# Dev-only
+.env
+dev.db
+.vscode/
+

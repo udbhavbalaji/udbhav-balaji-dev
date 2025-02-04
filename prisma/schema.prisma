@@ -2,19 +2,130 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+    provider        = "prisma-client-js"
+    previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
     provider = "sqlite"
-    url      = env("DATABASE_URL")
+    url      = env("DEV_DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    @@index([name])
+// EXAMPLE
+
+// model Post {
+//     id        Int      @id @default(autoincrement())
+//     name      String
+//     createdAt DateTime @default(now())
+//     updatedAt DateTime @updatedAt
+
+//     @@index([name])
+// }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Spent Database Models
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+model User {
+    id                 Int           @id @default(autoincrement())
+    userId             String        @unique
+    firstName          String
+    lastName           String
+    email              String        @unique
+    password           String
+    loggedIn           String        @default("LOGGED_OUT")
+    lastGeneratedToken String?
+    receipts           Receipt[]
+    expenses           Expense[]
+    merchants          Merchant[]
+    categories         Category[]
+    subCategories      SubCategory[]
+}
+
+model Receipt {
+    id              Int       @id @default(autoincrement())
+    receiptId       String    @unique
+    userId          String
+    merchantName    String
+    merchantAddress String?
+    merchantPhone   String?
+    merchantWebsite String?
+    receiptNo       String
+    date            String
+    time            String?
+    currency        String    @default("CAD")
+    total           Float
+    subtotal        Float
+    tax             Float?
+    serviceCharge   String?
+    tip             Float?
+    items           Item[]
+    user            User      @relation(fields: [userId], references: [userId], onDelete: Cascade)
+    expenses        Expense[]
+}
+
+model Item {
+    id          Int     @id @default(autoincrement())
+    itemId      String  @unique
+    receiptId   String
+    amount      Float
+    description String?
+    flags       String?
+    qty         Int
+    unitPrice   Float
+    receipt     Receipt @relation(fields: [receiptId], references: [receiptId], onDelete: Cascade)
+}
+
+model Expense {
+    id              Int         @id @default(autoincrement())
+    userId          String
+    receiptId       String      @unique
+    categoryName    String
+    subCategoryName String
+    merchantName    String
+    date            String
+    currency        String      @default("CAD")
+    total           Float
+    category        Category    @relation(fields: [categoryName], references: [name], onDelete: Cascade)
+    subCategory     SubCategory @relation(fields: [subCategoryName], references: [name], onDelete: Cascade)
+    user            User        @relation(fields: [userId], references: [userId], onDelete: Cascade)
+    receipt         Receipt     @relation(fields: [receiptId], references: [receiptId], onDelete: Cascade)
+    merchant        Merchant    @relation(fields: [merchantName], references: [name], onDelete: Cascade)
+}
+
+model Merchant {
+    name            String @id
+    userId          String
+    categoryName    String
+    subCategoryName String
+
+    category    Category    @relation(fields: [categoryName], references: [name], onDelete: Cascade)
+    subCategory SubCategory @relation(fields: [subCategoryName], references: [name], onDelete: Cascade)
+    expenses    Expense[]
+    user        User        @relation(fields: [userId], references: [userId], onDelete: Cascade)
+}
+
+model Category {
+    name   String @id
+    userId String
+
+    user          User          @relation(fields: [userId], references: [userId], onDelete: Cascade)
+    expenses      Expense[]
+    subCategories SubCategory[]
+    merchants     Merchant[]
+}
+
+model SubCategory {
+    name         String @id
+    categoryName String
+    userId       String
+
+    expenses  Expense[]
+    category  Category   @relation(fields: [categoryName], references: [name], onDelete: Cascade)
+    merchants Merchant[]
+    user      User       @relation(fields: [userId], references: [userId], onDelete: Cascade)
 }
