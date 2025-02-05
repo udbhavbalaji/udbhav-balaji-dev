@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
-import { jwtVerify } from "jose";
+import { jwtVerify, SignJWT } from "jose";
 import { JWTExpired, JWSInvalid } from "jose/errors";
-import { UnauthorizedActionError } from "./errors";
+import { BadRequestError, UnauthorizedActionError } from "./errors";
 import { SpentExceptionCodes } from "@/types/spent";
 import { env } from "@/env";
 import { RegisteredApp, UBDevAPIConfig } from "@/types";
@@ -28,6 +28,18 @@ export const verify = {
         );
       } else throw err;
     }
+  },
+
+  password: (plain: string, hashed: string): Promise<boolean> => {
+    return bcrypt.compare(plain, hashed).catch((err) => {
+      throw BadRequestError(
+        "Invalid credentials",
+        SpentExceptionCodes.CORRUPTED_HASHED_PASSWORD,
+        undefined,
+        err,
+        err.message,
+      );
+    });
   },
 };
 
@@ -85,6 +97,15 @@ export const generate = {
 
   hashedPassword: async (plainPassword: string): Promise<string> => {
     return bcrypt.hash(plainPassword, 12).then((hash) => hash);
+  },
+
+  JWToken: async (userId: string): Promise<string> => {
+    const secret = new TextEncoder().encode(env.JWT_SECRET);
+
+    return await new SignJWT({ userId })
+      .setProtectedHeader({ alg: "HS256" })
+      .setExpirationTime(env.JWT_EXPIRES_IN)
+      .sign(secret);
   },
 };
 

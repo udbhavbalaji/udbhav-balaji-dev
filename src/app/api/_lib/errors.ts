@@ -1,4 +1,4 @@
-import { UBDevErrorResponse } from "@/types/old";
+import { UBDevErrorResponse } from "@/types";
 import { SpentAPIErrorResponse, SpentExceptionCodes } from "@/types/spent";
 import { NextResponse } from "next/server";
 

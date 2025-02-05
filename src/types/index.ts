@@ -13,9 +13,6 @@ export type ResponseTypes =
   | number
   | boolean;
 
-// export type UBDevAPIConfig = Record<RegisteredApp, AppConfig> & {
-//   appUrlMapping: Record<string, RegisteredApp>;
-// };
 export interface UBDevAPIConfig {
   appUrlMapping: Record<string, RegisteredApp>;
   configs: Record<RegisteredApp, AppConfig>;
@@ -34,10 +31,6 @@ export interface AppConfig {
   routesWithExpiredTokensAllowed: string[];
   inputValidationSchemaMapping: Record<string, ZodSchema>;
 }
-
-// export type UBDevAPIResponse<T extends ResponseTypes = any> =
-//   | (UBDevErrorResponse & { success: false })
-//   | (UBDevSuccessResponse<T> & { success: true });
 
 export interface UBDevSuccessResponse<T extends ResponseTypes> {
   status: number;

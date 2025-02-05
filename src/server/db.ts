@@ -17,38 +17,41 @@ const createPrismaClient = () => {
   const db = new PrismaClient({
     log:
       env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+    // adapter: env.NODE_ENV === "development" ? null : adapter,
     adapter,
   });
 
   const extendedDb = db.$extends({
-    query: {
-      $allOperations: async ({
-        model,
-        operation,
-        args,
-        query,
-      }: {
-        model?: string;
-        operation: string;
-        args: Prisma.MiddlewareParams["args"];
-        query: (args: Prisma.MiddlewareParams["args"]) => Promise<unknown>;
-      }) => {
-        console.log("allOperations");
-        try {
-          return await query(args);
-        } catch (err) {
-          if (err instanceof Prisma.PrismaClientKnownRequestError) {
-            if (err.code === "P2025") {
-              throw PrismaNotFoundError("Not found", 404, err, {
-                model,
-                operation,
-                args,
-              });
-            }
-          } else throw err;
-        }
-      },
-    },
+  
+    // query: {
+    //   $allOperations: async ({
+    //     model,
+    //     operation,
+    //     args,
+    //     query,
+    //   }: {
+    //     model?: string;
+    //     operation: string;
+    //     args: Prisma.MiddlewareParams["args"];
+    //     query: (args: Prisma.MiddlewareParams["args"]) => Promise<unknown>;
+    //   }) => {
+    //     console.log("allOperations");
+    //     try {
+    //       return await query(args);
+    //     } catch (err) {
+    //       console.log(err);
+    //       if (err instanceof Prisma.PrismaClientKnownRequestError) {
+    //         if (err.code === "P2025") {
+    //           throw PrismaNotFoundError("Not found", 404, err, {
+    //             model,
+    //             operation,
+    //             args,
+    //           });
+    //         }
+    //       } else throw err;
+    //     }
+    //   },
+    // },
     model: {
       user: {
         loginCheck: async (email: string): Promise<UserFromLoginCheck> => {
@@ -114,7 +117,39 @@ const createPrismaClient = () => {
     },
   });
 
-  return extendedDb;
+  const errorHandledDb = extendedDb.$extends({
+    query: {
+      $allOperations: async ({
+        model,
+        operation,
+        args,
+        query,
+      }: {
+        model?: string;
+        operation: string;
+        args: Prisma.MiddlewareParams["args"];
+        query: (args: Prisma.MiddlewareParams["args"]) => Promise<unknown>;
+      }) => {
+        console.log("allOperations");
+        try {
+          return await query(args);
+        } catch (err) {
+          console.log(err);
+          if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            if (err.code === "P2025") {
+              throw PrismaNotFoundError("Not found", 404, err, {
+                model,
+                operation,
+                args,
+              });
+            }
+          } else throw err;
+        }
+      },
+    },
+  });
+
+  return errorHandledDb;
 };
 
 const globalForPrisma = globalThis as unknown as {

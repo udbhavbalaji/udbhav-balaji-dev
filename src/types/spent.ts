@@ -1,8 +1,8 @@
 import type { User, Receipt, Item } from "@/server/db";
-import { UBDevErrorResponse, UBDevSuccessResponse } from ".";
-import { ResponseTypes } from "./index";
-import { NextRequest, NextResponse } from "next/server";
-import { ZodSchema } from "zod";
+import type { UBDevErrorResponse, UBDevSuccessResponse } from ".";
+import type { ResponseTypes } from "./index";
+import type { NextRequest, NextResponse } from "next/server";
+import type { ZodSchema } from "zod";
 
 // Enum declarations
 
@@ -56,7 +56,7 @@ export type PublicSafeUser = Omit<
 
 // Spent API Response type declarations
 
-export interface SpentAPISuccessResponse<T extends ResponseTypes>
+export interface SpentAPISuccessResponse<T extends ResponseTypes = never>
   extends UBDevSuccessResponse<T> {}
 
 export interface SpentAPIErrorResponse extends UBDevErrorResponse {
@@ -81,15 +81,6 @@ export type SpentMiddleware =
   | AuthMiddleware;
 
 // Route Handler type declarations
-
-// export type SpentRouteHandler = <T extends ResponseTypes>(
-//   request: NextRequest,
-//   ctx: Record<string, any>,
-// ) => Promise<NextResponse<SpentAPISuccessResponse<T>>>;
-
-// export type SpentErrorWrapper = <T>(
-//   handler: SpentRouteHandler,
-// ) => SpentRouteHandler;
 
 export type SpentRouteHandler = (
   request: NextRequest,

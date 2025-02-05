@@ -22,6 +22,7 @@ import { db } from "@/server/db";
 import { printHeadersToTerminal, verify } from "./utils";
 import { AppConfig, ResponseTypes } from "@/types";
 import { ApiRoutesErrorHandler } from "../../_lib/middleware";
+import deepEqual from "deep-equal";
 
 const appVerificationMiddleware: AppVerificationMiddleware = (
   headers: Headers,
@@ -55,20 +56,12 @@ const inputValidationMiddleware: InputValidationMiddleware = async (
 ): Promise<void> => {
   try {
     const reqBody = await request.json();
-    const validatedBody = schema.safeParse(reqBody);
-    if (!isEqual(validatedBody.data, reqBody)) {
-      throw InputValidationError(
-        "Validated request body doesn't equal the original request body",
-        SpentExceptionCodes.VALIDATED_BODY_MISMATCH,
-        422,
-        undefined,
-        { original: reqBody, validated: validatedBody },
-      );
-    }
+    const validatedBody = schema.parse(reqBody);
+
+    return;
   } catch (err) {
-    console.log("there is some error");
-    console.log(err);
     if (err instanceof ZodError) {
+      console.log('coming in correctly')
       throw InputValidationError(
         "Request body could not be validated",
         SpentExceptionCodes.VALIDATION_ERROR,
@@ -77,6 +70,8 @@ const inputValidationMiddleware: InputValidationMiddleware = async (
         err.issues,
       );
     } else throw err;
+    // throw err
+    // throw ApiRoutesErrorHandler(err as Error);
   }
 };
 
@@ -119,7 +114,7 @@ const authMiddleware: AuthMiddleware = async (
     );
   }
 
-  if (payload.expired) {
+  if (payload.expired && !ignoreTokenExpiry) {
     clonedHeaders.set("logout-required", "Y");
   }
 
@@ -144,8 +139,8 @@ export const withSpentRouteErrorsHandled: SpentErrorWrapper = (
         );
       }
 
-      if (request.headers.get("app-validated") !== "Y" || userId === null) {
-        console.log(request.headers);
+      if (request.headers.get("app-validated") !== "Y"/* || userId === null */) {
+        // console.log(request.headers);
         throw ForbiddenError(
           "App validation could not be confirmed",
           SpentExceptionCodes.APP_VALIDATION_FAILED,
@@ -200,11 +195,12 @@ export const SpentMiddleware = async (
   route: string,
 ): Promise<Headers> => {
   let headers: Headers = request.headers;
-  printHeadersToTerminal(headers, "orig spent");
+  // printHeadersToTerminal(headers, "orig spent");
 
+  // try {
   // 1. App Verification middleware
   headers = appVerificationMiddleware(headers);
-  printHeadersToTerminal(headers, "after appVerification");
+  // printHeadersToTerminal(headers, "after appVerification");
 
   // 2. Input Validation middleware (if required)
   if (config.routesWithInputValidation.includes(route)) {
@@ -213,7 +209,6 @@ export const SpentMiddleware = async (
     if (schema) {
       await inputValidationMiddleware(request, schema);
     } else {
-      console.log("there is some error");
       throw UnregisteredSchemaError(
         "Route expecting schema not found/registered",
         SpentExceptionCodes.UNREGISTERED_SCHEMA,
@@ -223,7 +218,7 @@ export const SpentMiddleware = async (
       );
     }
   }
-  printHeadersToTerminal(headers, "after inputValidation");
+  // printHeadersToTerminal(headers, "after inputValidation");
 
   // 3. Auth middleware (if required)
   if (config.routesWithAuthProtection.includes(route)) {
@@ -233,8 +228,12 @@ export const SpentMiddleware = async (
     }
 
     headers = await authMiddleware(headers, ignoreTokenExpiry);
-    printHeadersToTerminal(headers, "after auth");
   }
+  // printHeadersToTerminal(headers, "after auth");
 
   return headers;
+  // } catch (err) {
+  //   console.log(err);
+  //   throw err;
+  // }
 };

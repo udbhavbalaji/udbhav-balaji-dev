@@ -6,9 +6,9 @@ import { SpentExceptionCodes } from "./types/spent";
 import { ApiRoutesErrorHandler } from "./app/api/_lib/middleware";
 
 export async function middleware(request: NextRequest) {
-  printHeadersToTerminal(request.headers, "orig");
+  // printHeadersToTerminal(request.headers, "orig");
   let headers: Headers = request.headers;
-  printHeadersToTerminal(headers, "clone");
+  // printHeadersToTerminal(headers, "clone");
 
   try {
     const { pathname } = request.nextUrl;
@@ -31,7 +31,7 @@ export async function middleware(request: NextRequest) {
       },
     });
   } catch (err) {
-    ApiRoutesErrorHandler(err as Error);
+    return ApiRoutesErrorHandler(err as Error);
   }
 }
 
