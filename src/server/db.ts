@@ -1,19 +1,16 @@
 import { Prisma, PrismaClient } from "@prisma/client";
-
+export type { User, Receipt, Item } from "@prisma/client";
 import { adapter } from "./libsql";
 import { env } from "@/env";
 import {
-  AuthUser,
   LoginStatus,
-  LoginUser,
   PrismaItem,
   PrismaReceipt,
-  PublicUser,
-  SpentExceptionCodes,
+  PublicSafeUser,
+  UserFromAuthCheck,
+  UserFromLoginCheck,
 } from "@/types/spent";
-// import { Spent } from "@/types";
 
-// import { Spent } from "@/types";
 import { PrismaNotFoundError } from "@/app/api/_lib/errors";
 
 const createPrismaClient = () => {
@@ -54,7 +51,7 @@ const createPrismaClient = () => {
     },
     model: {
       user: {
-        loginCheck: async (email: string): Promise<LoginUser> => {
+        loginCheck: async (email: string): Promise<UserFromLoginCheck> => {
           return await db.user.findFirstOrThrow({
             select: {
               userId: true,
@@ -65,7 +62,7 @@ const createPrismaClient = () => {
             where: { email },
           });
         },
-        authCheck: async (userId: string): Promise<AuthUser> => {
+        authCheck: async (userId: string): Promise<UserFromAuthCheck> => {
           return await db.user.findFirstOrThrow({
             select: {
               userId: true,
@@ -93,7 +90,7 @@ const createPrismaClient = () => {
           });
         },
 
-        me: async (userId: string): Promise<PublicUser> => {
+        me: async (userId: string): Promise<PublicSafeUser> => {
           return await db.user.findFirstOrThrow({
             select: {
               userId: true,

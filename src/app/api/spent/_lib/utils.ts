@@ -1,9 +1,10 @@
+import bcrypt from "bcryptjs";
 import { jwtVerify } from "jose";
 import { JWTExpired, JWSInvalid } from "jose/errors";
 import { UnauthorizedActionError } from "./errors";
 import { SpentExceptionCodes } from "@/types/spent";
 import { env } from "@/env";
-import { RegisteredApp, UBDevAPIConfig } from "@/types/old";
+import { RegisteredApp, UBDevAPIConfig } from "@/types";
 import { InvalidRouteError } from "../../_lib/errors";
 
 export const verify = {
@@ -58,14 +59,39 @@ export const extract = {
       throw InvalidRouteError("Invalid route | App not registered");
     }
 
-    // if (pathname.startsWith("/api/spent")) {
-    //   appBaseUrl = "/api/spent";
-    //   route = pathname.split("/api/spent")[1] ?? "";
-    // } else {
-    //   appBaseUrl = "/";
-    //   route = "";
-    // }
-
     return { appBaseUrl, route, appName };
   },
+};
+
+export const generate = {
+  userID: (initials: string): string => {
+    const userIdLength = 10;
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const digits = "0123456789";
+    let userId = "SU";
+
+    for (let i = 2; i < userIdLength; i++) {
+      const rand = Math.random();
+
+      if (rand > 0.6) {
+        userId += letters.charAt(Math.random() * letters.length);
+      } else {
+        userId += digits.charAt(Math.random() * digits.length);
+      }
+    }
+    userId += initials;
+    return userId;
+  },
+
+  hashedPassword: async (plainPassword: string): Promise<string> => {
+    return bcrypt.hash(plainPassword, 12).then((hash) => hash);
+  },
+};
+
+export const printHeadersToTerminal = (
+  input: Headers,
+  tag?: string,
+) /*: Record<string, any> */ => {
+  const headerObj = Object.fromEntries(input);
+  console.log(tag, headerObj);
 };

@@ -1,6 +1,6 @@
 import { SpentAPIErrorResponse } from "@/types/spent";
 import { SpentException, UBDevException } from "./errors";
-import { UBDevErrorResponse } from "@/types/old";
+import { UBDevErrorResponse } from "@/types";
 import { NextResponse } from "next/server";
 
 export const ApiRoutesErrorHandler = (

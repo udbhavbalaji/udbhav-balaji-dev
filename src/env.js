@@ -34,8 +34,8 @@ export const env = createEnv({
   runtimeEnv: {
     DEV_DATABASE_URL: process.env.DEV_DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
-    TURSO_DATABASE_URL: process.env.DEV_DATABASE_URL,
-    TURSO_AUTH_TOKEN: process.env.NODE_ENV,
+    TURSO_DATABASE_URL: process.env.TURSO_DATABASE_URL,
+    TURSO_AUTH_TOKEN: process.env.TURSO_AUTH_TOKEN,
     SECRET_APP_KEY: process.env.SECRET_APP_KEY,
     JWT_SECRET: process.env.JWT_SECRET,
     JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,

@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { extract } from "./app/api/spent/_lib/utils";
+import { extract, printHeadersToTerminal } from "./app/api/spent/_lib/utils";
 import globalConfig from "./config";
 import { InvalidRouteError } from "./app/api/_lib/errors";
 import { SpentExceptionCodes } from "./types/spent";
+import { ApiRoutesErrorHandler } from "./app/api/_lib/middleware";
 
 export async function middleware(request: NextRequest) {
+  printHeadersToTerminal(request.headers, "orig");
   let headers: Headers = request.headers;
+  printHeadersToTerminal(headers, "clone");
 
   try {
     const { pathname } = request.nextUrl;
@@ -15,7 +18,7 @@ export async function middleware(request: NextRequest) {
       globalConfig,
     );
 
-    const appConfig = globalConfig[appName];
+    const appConfig = globalConfig.configs[appName];
 
     if (appConfig && appName === "Spent") {
       headers = await appConfig.middlewareFn(request, appConfig, route);
@@ -24,10 +27,12 @@ export async function middleware(request: NextRequest) {
 
     return NextResponse.next({
       request: {
-        headers,
+        headers: headers,
       },
     });
-  } catch (err) {}
+  } catch (err) {
+    ApiRoutesErrorHandler(err as Error);
+  }
 }
 
 export const config = {

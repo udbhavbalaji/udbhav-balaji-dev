@@ -1,5 +1,10 @@
 import {
+  AppVerificationMiddleware,
+  AuthMiddleware,
+  InputValidationMiddleware,
   LoginStatus,
+  SpentAPISuccessResponse,
+  SpentErrorWrapper,
   SpentExceptionCodes,
   SpentRouteHandler,
 } from "@/types/spent";
@@ -14,13 +19,15 @@ import {
 import { env } from "@/env";
 import { isEqual } from "lodash";
 import { db } from "@/server/db";
-import { verify } from "./utils";
-import { AppConfig } from "@/types/old";
+import { printHeadersToTerminal, verify } from "./utils";
+import { AppConfig, ResponseTypes } from "@/types";
 import { ApiRoutesErrorHandler } from "../../_lib/middleware";
 
-const appVerificationMiddleware = (headers: Headers): Headers => {
+const appVerificationMiddleware: AppVerificationMiddleware = (
+  headers: Headers,
+): Headers => {
   const clonedHeaders = new Headers(headers);
-  const secretAppKey = clonedHeaders.get("secret-app-key");
+  const secretAppKey = headers.get("secret-app-key");
 
   if (!secretAppKey)
     throw ForbiddenError("Unverified app", SpentExceptionCodes.UNVERIFIED_APP);
@@ -31,20 +38,25 @@ const appVerificationMiddleware = (headers: Headers): Headers => {
       SpentExceptionCodes.INVALID_APP_KEY,
     );
 
+  // const clonedHeaders = new Headers({
+  //   ...headers,
+  //   ["secret-app-key"]: undefined,
+  //   ["app-validated"]: "Y",
+  // });
   clonedHeaders.delete("secret-app-key");
   clonedHeaders.set("app-validated", "Y");
 
   return clonedHeaders;
 };
 
-const inputValidationMiddleware = async (
+const inputValidationMiddleware: InputValidationMiddleware = async (
   request: NextRequest,
   schema: ZodSchema,
 ): Promise<void> => {
   try {
     const reqBody = await request.json();
     const validatedBody = schema.safeParse(reqBody);
-    if (!isEqual(validatedBody, reqBody)) {
+    if (!isEqual(validatedBody.data, reqBody)) {
       throw InputValidationError(
         "Validated request body doesn't equal the original request body",
         SpentExceptionCodes.VALIDATED_BODY_MISMATCH,
@@ -54,6 +66,8 @@ const inputValidationMiddleware = async (
       );
     }
   } catch (err) {
+    console.log("there is some error");
+    console.log(err);
     if (err instanceof ZodError) {
       throw InputValidationError(
         "Request body could not be validated",
@@ -66,7 +80,7 @@ const inputValidationMiddleware = async (
   }
 };
 
-const authMiddleware = async (
+const authMiddleware: AuthMiddleware = async (
   headers: Headers,
   ignoreTokenExpiry: boolean,
 ): Promise<Headers> => {
@@ -115,17 +129,10 @@ const authMiddleware = async (
   return clonedHeaders;
 };
 
-export const withSpentRouteErrorsHandled =
-  (
-    handler: SpentRouteHandler,
-  ): ((
-    request: NextRequest,
-    ctx?: Record<string, any>,
-  ) => Promise<NextResponse>) =>
-  async (
-    request: NextRequest,
-    ctx?: Record<string, any>,
-  ): Promise<NextResponse> => {
+export const withSpentRouteErrorsHandled: SpentErrorWrapper = (
+  handler: SpentRouteHandler,
+) => {
+  return async (request: NextRequest) => {
     try {
       const userId = request.headers.get("user-id");
 
@@ -137,18 +144,55 @@ export const withSpentRouteErrorsHandled =
         );
       }
 
-      if (request.headers.get("app-validated") === "Y" || userId === null) {
+      if (request.headers.get("app-validated") !== "Y" || userId === null) {
+        console.log(request.headers);
         throw ForbiddenError(
           "App validation could not be confirmed",
           SpentExceptionCodes.APP_VALIDATION_FAILED,
         );
       }
 
-      return await handler(request, ctx ?? {});
+      return await handler(request);
     } catch (err) {
       return ApiRoutesErrorHandler(err as Error);
     }
   };
+};
+
+// export const withSpentRouteErrorsHandled: SpentErrorWrapper =
+//   (
+//     handler: SpentRouteHandler,
+//   ): ((
+//     request: NextRequest,
+//     ctx?: Record<string, any>,
+//   ) => Promise<NextResponse>) =>
+//   async (
+//     request: NextRequest,
+//     ctx?: Record<string, any>,
+//   ): Promise<NextResponse> => {
+//     try {
+//       const userId = request.headers.get("user-id");
+
+//       if (request.headers.get("logout-required") === "Y" && userId !== null) {
+//         await db.user.logout(userId);
+//         throw UnauthorizedActionError(
+//           "User has been logged out",
+//           SpentExceptionCodes.USER_LOGGED_OUT,
+//         );
+//       }
+
+//       if (request.headers.get("app-validated") === "Y" || userId === null) {
+//         throw ForbiddenError(
+//           "App validation could not be confirmed",
+//           SpentExceptionCodes.APP_VALIDATION_FAILED,
+//         );
+//       }
+
+//       return await handler(request, ctx ?? {});
+//     } catch (err) {
+//       return ApiRoutesErrorHandler(err as Error);
+//     }
+//   };
 
 export const SpentMiddleware = async (
   request: NextRequest,
@@ -156,9 +200,11 @@ export const SpentMiddleware = async (
   route: string,
 ): Promise<Headers> => {
   let headers: Headers = request.headers;
+  printHeadersToTerminal(headers, "orig spent");
 
   // 1. App Verification middleware
   headers = appVerificationMiddleware(headers);
+  printHeadersToTerminal(headers, "after appVerification");
 
   // 2. Input Validation middleware (if required)
   if (config.routesWithInputValidation.includes(route)) {
@@ -167,6 +213,7 @@ export const SpentMiddleware = async (
     if (schema) {
       await inputValidationMiddleware(request, schema);
     } else {
+      console.log("there is some error");
       throw UnregisteredSchemaError(
         "Route expecting schema not found/registered",
         SpentExceptionCodes.UNREGISTERED_SCHEMA,
@@ -176,6 +223,7 @@ export const SpentMiddleware = async (
       );
     }
   }
+  printHeadersToTerminal(headers, "after inputValidation");
 
   // 3. Auth middleware (if required)
   if (config.routesWithAuthProtection.includes(route)) {
@@ -185,6 +233,7 @@ export const SpentMiddleware = async (
     }
 
     headers = await authMiddleware(headers, ignoreTokenExpiry);
+    printHeadersToTerminal(headers, "after auth");
   }
 
   return headers;
