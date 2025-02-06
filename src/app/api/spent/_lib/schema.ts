@@ -16,7 +16,7 @@ export const LoginSchema = z
   })
   .required();
 
-const itemSchema = z.object({
+export const itemSchema = z.object({
   amount: z.number(),
   description: z.string(),
   flags: z.string().nullable(),

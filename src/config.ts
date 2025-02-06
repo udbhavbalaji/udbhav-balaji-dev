@@ -1,10 +1,11 @@
 import { SpentMiddleware } from "@spent-api-lib/middleware";
-import  type { UBDevAPIConfig } from "@/types";
+import type { UBDevAPIConfig } from "@/types";
 import {
   RegisterSchema,
   LoginSchema,
   ReceiptSchema,
 } from "@spent-api-lib/schema";
+import { ZodSchema } from "zod";
 
 export const registeredApps = ["Spent"] as const;
 
@@ -48,5 +49,12 @@ const config: UBDevAPIConfig = {
   },
   // add configs for other APIs here
 };
+
+interface RouteConfig {
+  route: string;
+  validationSchema: ZodSchema;
+  enableAuth: boolean;
+  enableExpiredToken: boolean | null;
+}
 
 export default config;

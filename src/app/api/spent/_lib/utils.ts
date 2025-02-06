@@ -6,9 +6,16 @@ import {
 } from "jose/errors";
 import bcrypt from "bcryptjs";
 
-import { BadRequestError, UnauthorizedActionError } from "@spent-api-lib/errors";
+import {
+  BadRequestError,
+  UnauthorizedActionError,
+} from "@spent-api-lib/errors";
 import { RegisteredApp, UBDevAPIConfig } from "@/types";
-import { SpentExceptionCodes } from "@/types/spent";
+import {
+  ItemInputType,
+  ReceiptInputType,
+  SpentExceptionCodes,
+} from "@/types/spent";
 import { InvalidRouteError } from "@api-lib/errors";
 import { env } from "@/env";
 
@@ -110,6 +117,33 @@ export const generate = {
     return userId;
   },
 
+  receiptID: (receipt: ReceiptInputType): string => {
+    let receiptId: string = "";
+
+    receiptId += receipt.merchantName
+      .split(" ")
+      .map((word) => word[0]?.toUpperCase())
+      .join("");
+
+    receiptId += receipt.date.split("-").join("");
+    receiptId = `${receiptId}-${receipt.items.length}`;
+
+    return receiptId;
+  },
+
+  itemID: (item: ItemInputType, date: string, idx: number) => {
+    let itemId: string = `IT${idx + 1}`;
+
+    itemId +=
+      item.description ??
+      ""
+        .split(" ")
+        .map((word) => word[0]?.toUpperCase())
+        .join("");
+    itemId += date.split("-").join("");
+    return itemId;
+  },
+
   hashedPassword: async (plainPassword: string): Promise<string> => {
     return bcrypt.hash(plainPassword, 12).then((hash) => hash);
   },
@@ -123,5 +157,3 @@ export const generate = {
       .sign(secret);
   },
 };
-
-

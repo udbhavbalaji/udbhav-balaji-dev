@@ -2,6 +2,8 @@ import { db } from "@/server/db";
 import {
   CreatePrismaUser,
   LoginStatus,
+  PrismaItem,
+  PrismaReceipt,
   PublicSafeUser,
   SpentExceptionCodes,
   UserFromAuthCheck,
@@ -31,12 +33,18 @@ export const user = {
         where: { email },
       });
     } catch (err) {
-      console.log('im here sha lala', err);
+      console.log("im here sha lala", err);
 
       console.log();
       if (err instanceof UBDevException && err.name === "PrismaNotFoundError") {
         console.log("correct error throwing");
-        throw BadRequestError("Invalid credentials", SpentExceptionCodes.NOT_FOUND, 404, err, err.details);
+        throw BadRequestError(
+          "Invalid credentials",
+          SpentExceptionCodes.NOT_FOUND,
+          404,
+          err,
+          err.details,
+        );
       } else throw err;
     }
   },
@@ -83,6 +91,21 @@ export const user = {
         lastGeneratedToken: true,
       },
       where: { userId },
+    });
+  },
+};
+
+export const receipt = {
+  add: async (receipt: PrismaReceipt, items: PrismaItem[]): Promise<void> => {
+    await db.$transaction(async (trx) => {
+      await trx.receipt.create({ data: receipt });
+      await trx.item.createMany({ data: items });
+    });
+  },
+
+  get: async (receiptId: string, userId: string): Promise<PrismaReceipt> => {
+    return await db.receipt.findFirstOrThrow({
+      where: { receiptId, userId },
     });
   },
 };

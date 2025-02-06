@@ -1,7 +1,11 @@
 import type { NextRequest, NextResponse } from "next/server";
-import type { ZodSchema } from "zod";
+import type { z, ZodSchema } from "zod";
 
-import type { UBDevErrorResponse, UBDevSuccessResponse, ResponseTypes } from "@/types";
+import type {
+  UBDevErrorResponse,
+  UBDevSuccessResponse,
+  ResponseTypes,
+} from "@/types";
 import type { User, Receipt, Item } from "@/server/db";
 
 // Enum declarations
@@ -28,6 +32,7 @@ export enum SpentExceptionCodes {
   VALIDATED_BODY_MISMATCH = 2012,
   SEARCH_PARAMS_MISSING = 2013,
   UNREGISTERED_SCHEMA = 2014,
+  AUTH_FAILED = 2015,
   USER_LOGGED_OUT = 3001,
   INTERNAL_SERVER_ERROR = 4001,
   CORRUPTED_HASHED_PASSWORD = 4002,
@@ -96,3 +101,26 @@ export type SpentErrorWrapper = (
 ) => SpentRouteHandler;
 
 // Error type declarations
+
+// export type ItemInputType = Omit<PrismaItem, "itemId" | "receiptId">;
+
+// export type ReceiptInputType = Omit<PrismaReceipt, "userId" | "receiptId"> & {
+//   items: ItemInputType[];
+// };
+
+// export interface ReceiptRequest {
+//   merchantName: string;
+//   merchantAddress: string | null;
+//   merchantPhone: string | null;
+//   merchantWebsite: string | null;
+//   receiptNo: string;
+//   date: string;
+//   time: string | null;
+//   items: ItemRequest[];
+//   currency: string;
+//   total: number;
+//   subtotal: number;
+//   tax: number | null;
+//   serviceCharge: string | null;
+//   tip: number | null;
+// }
