@@ -1,29 +1,26 @@
-import {
-  AppVerificationMiddleware,
-  AuthMiddleware,
-  InputValidationMiddleware,
-  LoginStatus,
-  SpentAPISuccessResponse,
-  SpentErrorWrapper,
-  SpentExceptionCodes,
-  SpentRouteHandler,
-} from "@/types/spent";
-import { NextRequest, NextResponse } from "next/server";
 import { ZodError, ZodSchema } from "zod";
+import { NextRequest } from "next/server";
+
+import { ApiRoutesErrorHandler } from "@api-lib/middleware";
+import { user as prisma } from "@spent-api-lib/db";
+import { verify } from "@spent-api-lib/utils";
+import { AppConfig } from "@/types";
+import { env } from "@/env";
 import {
   ForbiddenError,
   InputValidationError,
   UnauthorizedActionError,
   UnregisteredSchemaError,
-} from "./errors";
-import { env } from "@/env";
-import { isEqual } from "lodash";
-import { db } from "@/server/db";
-import { printHeadersToTerminal, verify } from "./utils";
-import { AppConfig, ResponseTypes } from "@/types";
-import { ApiRoutesErrorHandler } from "../../_lib/middleware";
-import deepEqual from "deep-equal";
-import { user as prisma } from "./db";
+} from "@spent-api-lib/errors";
+import {
+  AppVerificationMiddleware,
+  AuthMiddleware,
+  InputValidationMiddleware,
+  LoginStatus,
+  SpentErrorWrapper,
+  SpentExceptionCodes,
+  SpentRouteHandler,
+} from "@/types/spent";
 
 const appVerificationMiddleware: AppVerificationMiddleware = (
   headers: Headers,
@@ -40,11 +37,6 @@ const appVerificationMiddleware: AppVerificationMiddleware = (
       SpentExceptionCodes.INVALID_APP_KEY,
     );
 
-  // const clonedHeaders = new Headers({
-  //   ...headers,
-  //   ["secret-app-key"]: undefined,
-  //   ["app-validated"]: "Y",
-  // });
   clonedHeaders.delete("secret-app-key");
   clonedHeaders.set("app-validated", "Y");
 
@@ -57,7 +49,7 @@ const inputValidationMiddleware: InputValidationMiddleware = async (
 ): Promise<void> => {
   try {
     const reqBody = await request.json();
-    const validatedBody = schema.parse(reqBody);
+    schema.parse(reqBody);
 
     return;
   } catch (err) {
@@ -71,8 +63,6 @@ const inputValidationMiddleware: InputValidationMiddleware = async (
         err.issues,
       );
     } else throw err;
-    // throw err
-    // throw ApiRoutesErrorHandler(err as Error);
   }
 };
 
@@ -99,7 +89,6 @@ const authMiddleware: AuthMiddleware = async (
     );
   }
 
-  // const user = await db.user.authCheck(payload.userId);
   const user = await prisma.authCheck(payload.userId);
 
   if (user.loggedIn === LoginStatus.LOGGED_OUT) {

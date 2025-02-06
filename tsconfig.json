@@ -26,6 +26,10 @@
     /* Path Aliases */
     "baseUrl": ".",
     "paths": {
+      "@spent-api/*": ["./src/app/api/spent/*"],
+      "@spent-api-lib/*": ["./src/app/api/spent/_lib/*"],
+      "@api/*": ["./src/app/api/*"],
+      "@api-lib/*": ["./src/app/api/_lib/*"],
       "@/*": ["./src/*"]
     }
   },

@@ -1,15 +1,16 @@
-import bcrypt from "bcryptjs";
 import { jwtVerify, SignJWT } from "jose";
 import {
   JWTExpired,
   JWSInvalid,
   JWSSignatureVerificationFailed,
 } from "jose/errors";
-import { BadRequestError, UnauthorizedActionError } from "./errors";
-import { SpentExceptionCodes } from "@/types/spent";
-import { env } from "@/env";
+import bcrypt from "bcryptjs";
+
+import { BadRequestError, UnauthorizedActionError } from "@spent-api-lib/errors";
 import { RegisteredApp, UBDevAPIConfig } from "@/types";
-import { InvalidRouteError } from "../../_lib/errors";
+import { SpentExceptionCodes } from "@/types/spent";
+import { InvalidRouteError } from "@api-lib/errors";
+import { env } from "@/env";
 
 export const verify = {
   JWToken: async (
@@ -79,9 +80,11 @@ export const extract = {
       }
     }
 
-    if (!appBaseUrl || !route || !appName) {
+    if (!appBaseUrl || !appName) {
       throw InvalidRouteError("Invalid route | App not registered");
     }
+
+    route ??= "";
 
     return { appBaseUrl, route, appName };
   },
@@ -121,7 +124,4 @@ export const generate = {
   },
 };
 
-export const printHeadersToTerminal = (input: Headers, tag?: string) => {
-  const headerObj = Object.fromEntries(input);
-  console.log(tag, headerObj);
-};
+

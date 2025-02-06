@@ -1,8 +1,8 @@
-import type { User, Receipt, Item } from "@/server/db";
-import type { UBDevErrorResponse, UBDevSuccessResponse } from ".";
-import type { ResponseTypes } from "./index";
 import type { NextRequest, NextResponse } from "next/server";
 import type { ZodSchema } from "zod";
+
+import type { UBDevErrorResponse, UBDevSuccessResponse, ResponseTypes } from "@/types";
+import type { User, Receipt, Item } from "@/server/db";
 
 // Enum declarations
 
@@ -94,3 +94,5 @@ export type SpentRouteHandler = (
 export type SpentErrorWrapper = (
   handler: SpentRouteHandler,
 ) => SpentRouteHandler;
+
+// Error type declarations

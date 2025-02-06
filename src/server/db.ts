@@ -1,9 +1,11 @@
 import { Prisma, PrismaClient } from "@prisma/client";
+
 export type { User, Receipt, Item } from "@prisma/client";
-import { adapter } from "./libsql";
+
+import { adapter } from "@/server/libsql";
 import { env } from "@/env";
 
-import { PrismaNotFoundError } from "@/app/api/_lib/errors";
+import { PrismaNotFoundError } from "@api-lib/errors";
 
 const createPrismaClient = () => {
   const db = new PrismaClient({

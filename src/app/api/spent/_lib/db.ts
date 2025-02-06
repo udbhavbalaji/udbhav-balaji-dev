@@ -3,9 +3,12 @@ import {
   CreatePrismaUser,
   LoginStatus,
   PublicSafeUser,
+  SpentExceptionCodes,
   UserFromAuthCheck,
   UserFromLoginCheck,
 } from "@/types/spent";
+import { UBDevException } from "@api-lib/errors";
+import { BadRequestError } from "@spent-api-lib/errors";
 
 export const user = {
   create: async (user: CreatePrismaUser) => {
@@ -17,15 +20,25 @@ export const user = {
   },
 
   loginCheck: async (email: string): Promise<UserFromLoginCheck> => {
-    return await db.user.findFirstOrThrow({
-      select: {
-        userId: true,
-        loggedIn: true,
-        password: true,
-        lastGeneratedToken: true,
-      },
-      where: { email },
-    });
+    try {
+      return await db.user.findFirstOrThrow({
+        select: {
+          userId: true,
+          loggedIn: true,
+          password: true,
+          lastGeneratedToken: true,
+        },
+        where: { email },
+      });
+    } catch (err) {
+      console.log('im here sha lala', err);
+
+      console.log();
+      if (err instanceof UBDevException && err.name === "PrismaNotFoundError") {
+        console.log("correct error throwing");
+        throw BadRequestError("Invalid credentials", SpentExceptionCodes.NOT_FOUND, 404, err, err.details);
+      } else throw err;
+    }
   },
 
   login: async (userId: string, token: string) => {

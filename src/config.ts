@@ -1,10 +1,10 @@
-import { SpentMiddleware } from "./app/api/spent/_lib/middleware";
-import { UBDevAPIConfig } from "@/types";
+import { SpentMiddleware } from "@spent-api-lib/middleware";
+import  type { UBDevAPIConfig } from "@/types";
 import {
   RegisterSchema,
   LoginSchema,
   ReceiptSchema,
-} from "@/app/api/spent/_lib/schema";
+} from "@spent-api-lib/schema";
 
 export const registeredApps = ["Spent"] as const;
 

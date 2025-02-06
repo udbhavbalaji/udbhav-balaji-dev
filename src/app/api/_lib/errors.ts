@@ -1,6 +1,7 @@
+import { NextResponse } from "next/server";
+
 import { UBDevErrorResponse } from "@/types";
 import { SpentAPIErrorResponse, SpentExceptionCodes } from "@/types/spent";
-import { NextResponse } from "next/server";
 
 export class UBDevException extends Error {
   name: string;
@@ -17,7 +18,7 @@ export class UBDevException extends Error {
     details?: any,
   ) {
     super(message);
-    Object.setPrototypeOf(this, new.target.prototype);
+    Object.setPrototypeOf(this, UBDevException.prototype);
     this.name = name ?? "UBDevException";
     this.message = message;
     this.statusCode = statusCode;
@@ -54,7 +55,7 @@ export class SpentException extends UBDevException {
     details?: any,
   ) {
     super(message, statusCode ?? 400, name, underlyingError, details);
-    Object.setPrototypeOf(this, new.target.prototype);
+    Object.setPrototypeOf(this, SpentException.prototype);
     this.name = name ?? "SpentException";
     this.message = message;
     this.errorCode = errorCode;
@@ -101,6 +102,21 @@ export const InvalidRouteError = (
     message,
     statusCode ?? 404,
     "InvalidRouteError",
+    underlyingError,
+    details,
+  );
+};
+
+export const InputValidationError = (
+  message: string,
+  statusCode?: number,
+  underlyingError?: Error,
+  details?: any,
+) => {
+  return new UBDevException(
+    message,
+    statusCode ?? 422,
+    "InputValidationError",
     underlyingError,
     details,
   );

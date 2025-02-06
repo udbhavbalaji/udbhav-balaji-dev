@@ -1,7 +1,9 @@
+import { NextRequest, NextResponse } from "next/server";
+import { ZodError, ZodSchema } from "zod";
+
+import { InputValidationError, SpentException, UBDevException } from "@api-lib/errors";
 import { SpentAPIErrorResponse } from "@/types/spent";
-import { SpentException, UBDevException } from "./errors";
 import { UBDevErrorResponse } from "@/types";
-import { NextResponse } from "next/server";
 
 export const ApiRoutesErrorHandler = (
   err: Error,
@@ -24,4 +26,28 @@ export const ApiRoutesErrorHandler = (
   }
 
   return response;
+};
+
+const InputValidator = async (
+  request: NextRequest,
+  schema: ZodSchema,
+): Promise<void> => {
+  try {
+    const reqBody = await request.json();
+    schema.parse(reqBody);
+
+    return;
+  } catch (err) {
+    if (err instanceof ZodError) {
+      console.log("coming in correctly");
+      throw InputValidationError(
+        "Request body could not be validated",
+        422,
+        err,
+        err.issues,
+      );
+    } else if (err instanceof SyntaxError) {
+      throw InputValidationError("Invalid JSON found in request body", 422, err, err.message);
+    } else throw err;
+  }
 };

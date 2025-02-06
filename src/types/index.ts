@@ -1,6 +1,8 @@
-import { registeredApps } from "@/config";
 import { NextRequest } from "next/server";
 import { ZodSchema } from "zod";
+
+import type { UBDevException } from "@api-lib/errors";
+import { registeredApps } from "@/config";
 
 // UBDev API Config types
 
@@ -44,3 +46,8 @@ export interface UBDevErrorResponse {
   causedBy?: Error["name"];
   details?: any;
 }
+
+// UBDev Error type declarations
+
+export type UBDevExceptionInvocator = (message: string, statusCode: number, name?: string, causeBy?: Error, details?: any) => UBDevException;
+
