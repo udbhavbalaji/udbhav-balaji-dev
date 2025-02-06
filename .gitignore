@@ -51,3 +51,6 @@ dev.db
 .vscode/
 
 old/
+
+# Example app dir
+app.example/
