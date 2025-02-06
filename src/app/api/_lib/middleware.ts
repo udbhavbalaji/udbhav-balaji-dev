@@ -15,7 +15,7 @@ export const ApiRoutesErrorHandler = (
     response = err.toResponse();
   } else {
     response = new UBDevException(
-      "Something went wrong",
+      `Something went wrong: ${err.message}`,
       500,
       undefined,
       err,

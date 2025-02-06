@@ -1,6 +1,5 @@
-import { db } from "@/server/db";
-import { ResponseTypes } from "@/types";
 import {
+  CreatePrismaUser,
   SpentAPISuccessResponse,
   SpentExceptionCodes,
   SpentRouteHandler,
@@ -9,16 +8,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { BadRequestError } from "../../_lib/errors";
 import { generate } from "../../_lib/utils";
 import { withSpentRouteErrorsHandled } from "../../_lib/middleware";
+import { user as prisma } from "../../_lib/db";
 
 const RegisterRouteHandler: SpentRouteHandler = async (
-  // const RegisterRouteHandler = async <T extends ResponseTypes>(
   request: NextRequest,
 ) => {
   const validatedUserDetails = await request.json();
 
-  const userCheck = await db.user.findFirst({
-    where: { email: validatedUserDetails.email },
-  });
+  const userCheck = await prisma.registerCheck(validatedUserDetails.email);
 
   if (userCheck) {
     throw BadRequestError(
@@ -35,9 +32,13 @@ const RegisterRouteHandler: SpentRouteHandler = async (
     validatedUserDetails.password,
   );
 
-  const user = { ...validatedUserDetails, userId, password: hashedPassword };
+  const user: CreatePrismaUser = {
+    ...validatedUserDetails,
+    userId,
+    password: hashedPassword,
+  };
 
-  await db.user.create({ data: { ...user } });
+  await prisma.create(user);
 
   const response: SpentAPISuccessResponse<string> = {
     status: 201,

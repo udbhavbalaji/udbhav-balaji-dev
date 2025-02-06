@@ -23,6 +23,7 @@ import { printHeadersToTerminal, verify } from "./utils";
 import { AppConfig, ResponseTypes } from "@/types";
 import { ApiRoutesErrorHandler } from "../../_lib/middleware";
 import deepEqual from "deep-equal";
+import { user as prisma } from "./db";
 
 const appVerificationMiddleware: AppVerificationMiddleware = (
   headers: Headers,
@@ -61,7 +62,7 @@ const inputValidationMiddleware: InputValidationMiddleware = async (
     return;
   } catch (err) {
     if (err instanceof ZodError) {
-      console.log('coming in correctly')
+      console.log("coming in correctly");
       throw InputValidationError(
         "Request body could not be validated",
         SpentExceptionCodes.VALIDATION_ERROR,
@@ -98,7 +99,8 @@ const authMiddleware: AuthMiddleware = async (
     );
   }
 
-  const user = await db.user.authCheck(payload.userId);
+  // const user = await db.user.authCheck(payload.userId);
+  const user = await prisma.authCheck(payload.userId);
 
   if (user.loggedIn === LoginStatus.LOGGED_OUT) {
     throw UnauthorizedActionError(
@@ -132,15 +134,14 @@ export const withSpentRouteErrorsHandled: SpentErrorWrapper = (
       const userId = request.headers.get("user-id");
 
       if (request.headers.get("logout-required") === "Y" && userId !== null) {
-        await db.user.logout(userId);
+        await prisma.logout(userId);
         throw UnauthorizedActionError(
           "User has been logged out",
           SpentExceptionCodes.USER_LOGGED_OUT,
         );
       }
 
-      if (request.headers.get("app-validated") !== "Y"/* || userId === null */) {
-        // console.log(request.headers);
+      if (request.headers.get("app-validated") !== "Y") {
         throw ForbiddenError(
           "App validation could not be confirmed",
           SpentExceptionCodes.APP_VALIDATION_FAILED,
@@ -154,53 +155,15 @@ export const withSpentRouteErrorsHandled: SpentErrorWrapper = (
   };
 };
 
-// export const withSpentRouteErrorsHandled: SpentErrorWrapper =
-//   (
-//     handler: SpentRouteHandler,
-//   ): ((
-//     request: NextRequest,
-//     ctx?: Record<string, any>,
-//   ) => Promise<NextResponse>) =>
-//   async (
-//     request: NextRequest,
-//     ctx?: Record<string, any>,
-//   ): Promise<NextResponse> => {
-//     try {
-//       const userId = request.headers.get("user-id");
-
-//       if (request.headers.get("logout-required") === "Y" && userId !== null) {
-//         await db.user.logout(userId);
-//         throw UnauthorizedActionError(
-//           "User has been logged out",
-//           SpentExceptionCodes.USER_LOGGED_OUT,
-//         );
-//       }
-
-//       if (request.headers.get("app-validated") === "Y" || userId === null) {
-//         throw ForbiddenError(
-//           "App validation could not be confirmed",
-//           SpentExceptionCodes.APP_VALIDATION_FAILED,
-//         );
-//       }
-
-//       return await handler(request, ctx ?? {});
-//     } catch (err) {
-//       return ApiRoutesErrorHandler(err as Error);
-//     }
-//   };
-
 export const SpentMiddleware = async (
   request: NextRequest,
   config: AppConfig,
   route: string,
 ): Promise<Headers> => {
   let headers: Headers = request.headers;
-  // printHeadersToTerminal(headers, "orig spent");
 
-  // try {
   // 1. App Verification middleware
   headers = appVerificationMiddleware(headers);
-  // printHeadersToTerminal(headers, "after appVerification");
 
   // 2. Input Validation middleware (if required)
   if (config.routesWithInputValidation.includes(route)) {
@@ -218,7 +181,6 @@ export const SpentMiddleware = async (
       );
     }
   }
-  // printHeadersToTerminal(headers, "after inputValidation");
 
   // 3. Auth middleware (if required)
   if (config.routesWithAuthProtection.includes(route)) {
@@ -229,11 +191,6 @@ export const SpentMiddleware = async (
 
     headers = await authMiddleware(headers, ignoreTokenExpiry);
   }
-  // printHeadersToTerminal(headers, "after auth");
 
   return headers;
-  // } catch (err) {
-  //   console.log(err);
-  //   throw err;
-  // }
 };

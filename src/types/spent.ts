@@ -41,6 +41,11 @@ export type PrismaUser = Omit<User, "id">;
 export type PrismaReceipt = Omit<Receipt, "id">;
 export type PrismaItem = Omit<Item, "id">;
 
+export type CreatePrismaUser = Omit<
+  PrismaUser,
+  "lastGeneratedToken" | "loggedIn"
+>;
+
 export type UserFromAuthCheck = Pick<
   PrismaUser,
   "userId" | "loggedIn" | "lastGeneratedToken"

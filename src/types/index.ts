@@ -19,7 +19,8 @@ export interface UBDevAPIConfig {
 }
 
 export interface AppConfig {
-  appBaseUrl: string;
+  // appBaseUrl: string;
+  appBaseUrl: keyof UBDevAPIConfig["appUrlMapping"];
   middlewareFn: (
     request: NextRequest,
     config: AppConfig,

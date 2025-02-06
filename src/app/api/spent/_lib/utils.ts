@@ -1,6 +1,10 @@
 import bcrypt from "bcryptjs";
 import { jwtVerify, SignJWT } from "jose";
-import { JWTExpired, JWSInvalid } from "jose/errors";
+import {
+  JWTExpired,
+  JWSInvalid,
+  JWSSignatureVerificationFailed,
+} from "jose/errors";
 import { BadRequestError, UnauthorizedActionError } from "./errors";
 import { SpentExceptionCodes } from "@/types/spent";
 import { env } from "@/env";
@@ -25,6 +29,14 @@ export const verify = {
           401,
           err,
           err.stack,
+        );
+      } else if (err instanceof JWSSignatureVerificationFailed) {
+        throw UnauthorizedActionError(
+          "User was created from different server. User must be deleted from the database manually.",
+          SpentExceptionCodes.JWT_ERROR,
+          undefined,
+          err,
+          err.cause,
         );
       } else throw err;
     }
@@ -109,10 +121,7 @@ export const generate = {
   },
 };
 
-export const printHeadersToTerminal = (
-  input: Headers,
-  tag?: string,
-) /*: Record<string, any> */ => {
+export const printHeadersToTerminal = (input: Headers, tag?: string) => {
   const headerObj = Object.fromEntries(input);
   console.log(tag, headerObj);
 };

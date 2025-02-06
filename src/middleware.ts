@@ -36,5 +36,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: "/api/spent/:path*",
+  // matcher: "/api/spent/:path*",
+  matcher: "/api/:path*",
+  // matcher: `${globalConfig.configs.Spent.appBaseUrl}/:path*`,
 };

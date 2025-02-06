@@ -1,18 +1,22 @@
-import { db } from "@/server/db";
-import { LoginStatus, SpentExceptionCodes, SpentRouteHandler } from "@/types/spent";
+import {
+  LoginStatus,
+  SpentExceptionCodes,
+  SpentRouteHandler,
+} from "@/types/spent";
 import { NextRequest, NextResponse } from "next/server";
 import { generate, verify } from "../../_lib/utils";
 import { BadRequestError, ForbiddenError } from "../../_lib/errors";
 import { withSpentRouteErrorsHandled } from "../../_lib/middleware";
+import { user as prisma } from "../../_lib/db";
 
 const LoginRouteHandler: SpentRouteHandler = async (request: NextRequest) => {
-    const { email, password } = await request.json();
+  const { email, password } = await request.json();
 
-    const user = await db.user.loginCheck(email);
-    
-    const passwordVerified = await verify.password(password, user.password);
+  const user = await prisma.loginCheck(email);
 
-    if (!passwordVerified) {
+  const passwordVerified = await verify.password(password, user.password);
+
+  if (!passwordVerified) {
     throw BadRequestError(
       "Invalid credentials",
       SpentExceptionCodes.INCORRECT_PASSWORD,
@@ -31,7 +35,7 @@ const LoginRouteHandler: SpentRouteHandler = async (request: NextRequest) => {
 
   const token = await generate.JWToken(user.userId);
 
-  await db.user.login(user.userId, token);
+  await prisma.login(user.userId, token);
 
   const response = {
     status: 200,
@@ -40,7 +44,6 @@ const LoginRouteHandler: SpentRouteHandler = async (request: NextRequest) => {
   };
 
   return NextResponse.json({ ...response }, { status: response.status });
-
 };
 
 export const PUT = withSpentRouteErrorsHandled(LoginRouteHandler);
