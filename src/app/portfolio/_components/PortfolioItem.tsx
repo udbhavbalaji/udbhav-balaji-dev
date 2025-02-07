@@ -1,4 +1,5 @@
 import { PortfolioItem } from "@/types/portfolio";
+// import Image from "next/image";
 
 export default function ({
   title,
@@ -19,6 +20,15 @@ export default function ({
         alt="Project Image"
         className="h-36 w-full cursor-pointer object-cover md:h-48"
       />
+      {/* <div className="h-36 w-full cursor-pointer object-cover md:h-48">
+        <Image
+          src={imgUrl}
+          alt="Project Image"
+          layout="fill"
+          // fill={true}
+          objectFit="contain"
+        />
+      </div> */}
       <div className="w-full p-4">
         <h3 className="md:txt-xl mb-2 text-lg font-semibold md:mb-3">
           {title}
