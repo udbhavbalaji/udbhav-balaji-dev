@@ -49,5 +49,19 @@ export interface UBDevErrorResponse {
 
 // UBDev Error type declarations
 
-export type UBDevExceptionInvocator = (message: string, statusCode: number, name?: string, causeBy?: Error, details?: any) => UBDevException;
+export type UBDevExceptionInvocator = (
+  message: string,
+  statusCode: number,
+  name?: string,
+  causeBy?: Error,
+  details?: any,
+) => UBDevException;
 
+// Frontend Client Type Declarations
+
+// Track Rev
+
+export interface TitleContextType {
+  title: string;
+  updateTitle: (title: string) => void;
+}

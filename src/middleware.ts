@@ -9,22 +9,30 @@ export async function middleware(request: NextRequest) {
   let headers: Headers = request.headers;
 
   try {
-    const routes = getAllRegisteredRoutes(globalConfig);
-
     const { pathname } = request.nextUrl;
 
-    if (!routes.includes(pathname)) throw InvalidRouteError("This url has no registered app/endpoint associated with it", 405);
+    if (pathname === "/api/trpc/trackRev/constructorStandings") {
+      return NextResponse.next();
+    }
 
-    const { route, appName } = extract.route(
-      pathname,
-      globalConfig,
-    );
+    const routes = getAllRegisteredRoutes(globalConfig);
+
+    if (!routes.includes(pathname))
+      throw InvalidRouteError(
+        "This url has no registered app/endpoint associated with it",
+        405,
+      );
+
+    const { route, appName } = extract.route(pathname, globalConfig);
 
     const appConfig = globalConfig.configs[appName];
 
     if (appConfig && appName === "Spent") {
       if (!appConfig.registeredRoutes.includes(route)) {
-        throw InvalidRouteError("This route is not registered for this app", 405);
+        throw InvalidRouteError(
+          "This route is not registered for this app",
+          405,
+        );
       }
       headers = await appConfig.middlewareFn(request, appConfig, route);
     }
