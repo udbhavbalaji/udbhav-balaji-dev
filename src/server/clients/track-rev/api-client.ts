@@ -8,6 +8,8 @@ const sendIt = async (url: string, limit?: number, offset?: number) => {
 
     const responseData = response.data.MRData;
 
+    console.log("responseData", responseData);
+
     return responseData;
   } catch (err) {
     console.error(err);

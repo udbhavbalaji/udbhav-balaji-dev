@@ -102,11 +102,11 @@ export type SpentErrorWrapper = (
 
 // Error type declarations
 
-// export type ItemInputType = Omit<PrismaItem, "itemId" | "receiptId">;
+export type ItemInputType = Omit<PrismaItem, "itemId" | "receiptId">;
 
-// export type ReceiptInputType = Omit<PrismaReceipt, "userId" | "receiptId"> & {
-//   items: ItemInputType[];
-// };
+export type ReceiptInputType = Omit<PrismaReceipt, "userId" | "receiptId"> & {
+  items: ItemInputType[];
+};
 
 // export interface ReceiptRequest {
 //   merchantName: string;

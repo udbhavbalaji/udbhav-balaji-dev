@@ -12,6 +12,22 @@ import useYear from "../_hooks/useYear";
 
 export const ErgastContext = createContext<ErgastContextType | null>(null);
 
+const fetchConstructorStandings = async (year: string) => {
+  try {
+    // todo: continue from here
+    const processedStandings = api.trackRev.constructorStandings.useQuery({
+      year,
+    });
+
+    if (!processedStandings.data) throw new Error("Error while fetching");
+
+    return processedStandings.data;
+  } catch (err) {
+    // throw new Error("Error while fetching");
+    throw err;
+  }
+};
+
 const ErgastProvider: React.FC<ProviderPropsType> = ({ children }) => {
   const [constructorStandings, setConstructorStandings] = useState<
     ConstructorStandingsContextType["ConstructorStandings"]
@@ -38,27 +54,27 @@ const ErgastProvider: React.FC<ProviderPropsType> = ({ children }) => {
     }
   };
 
-  const fetchConstructorStandings = async (year: string) => {
-    setError(null);
-    setLoading(true);
-    try {
-      // todo: continue from here
-      const processedStandings = api.trackRev.constructorStandings.useQuery({
-        year,
-      });
+  // const fetchConstructorStandings = async (year: string) => {
+  //   setError(null);
+  //   setLoading(true);
+  //   try {
+  //     // todo: continue from here
+  //     const processedStandings = api.trackRev.constructorStandings.useQuery({
+  //       year,
+  //     });
 
-      if (!processedStandings.data) throw new Error("Error while fetching");
+  //     if (!processedStandings.data) throw new Error("Error while fetching");
 
-      setConstructorStandings({
-        ...constructorStandings,
-        [year]: processedStandings.data,
-      });
-    } catch (err) {
-      handleError(err as Error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     setConstructorStandings({
+  //       ...constructorStandings,
+  //       [year]: processedStandings.data,
+  //     });
+  //   } catch (err) {
+  //     handleError(err as Error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const fetchDriverStandings = async (year: string) => {
     setError(null);
@@ -75,7 +91,20 @@ const ErgastProvider: React.FC<ProviderPropsType> = ({ children }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetchConstructorStandings(yearC);
+      setLoading(true);
+      setError(null);
+      try {
+        const cStandings = await fetchConstructorStandings(yearC);
+        // setConstructorStandings({ ...cStandings, [yearC]: cStandings });
+        setConstructorStandings({
+          ...constructorStandings,
+          [yearC]: cStandings,
+        });
+      } catch (err) {
+        handleError(err as Error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();

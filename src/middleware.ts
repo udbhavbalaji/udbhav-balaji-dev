@@ -17,17 +17,34 @@ export async function middleware(request: NextRequest) {
 
     const routes = getAllRegisteredRoutes(globalConfig);
 
-    if (!routes.includes(pathname))
-      throw InvalidRouteError(
-        "This url has no registered app/endpoint associated with it",
-        405,
-      );
+    console.log("pathname", pathname);
+    console.log("routes", routes);
+
+    // if (!routes.includes(pathname)) {
+    //   console.log("why am i coming here?");
+    //   throw InvalidRouteError(
+    //     "This url has no registered app/endpoint associated with it",
+    //     405,
+    //   );
+    // }
 
     const { route, appName } = extract.route(pathname, globalConfig);
 
     const appConfig = globalConfig.configs[appName];
 
-    if (appConfig && appName === "Spent") {
+    if (appConfig && appConfig.bypassMiddleware) {
+      return NextResponse.next();
+    }
+
+    if (!routes.includes(pathname)) {
+      console.log("why am i coming here?");
+      throw InvalidRouteError(
+        "This url has no registered app/endpoint associated with it",
+        405,
+      );
+    }
+
+    if (appConfig && appName === "Spent" && appConfig.middlewareFn) {
       if (!appConfig.registeredRoutes.includes(route)) {
         throw InvalidRouteError(
           "This route is not registered for this app",
@@ -37,6 +54,8 @@ export async function middleware(request: NextRequest) {
       headers = await appConfig.middlewareFn(request, appConfig, route);
     }
     // Middleware functionality for other apps can go here
+
+    console.log("leaving middleware successfully");
 
     return NextResponse.next({
       request: {

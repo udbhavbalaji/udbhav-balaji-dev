@@ -23,16 +23,18 @@ export interface UBDevAPIConfig {
 export interface AppConfig {
   // appBaseUrl: string;
   appBaseUrl: keyof UBDevAPIConfig["appUrlMapping"];
-  middlewareFn: (
+  middlewareFn?: (
     request: NextRequest,
     config: AppConfig,
     route: string,
   ) => Promise<Headers>;
+  // registeredRoutes: string[] | "*";
   registeredRoutes: string[];
-  routesWithInputValidation: string[];
-  routesWithAuthProtection: string[];
-  routesWithExpiredTokensAllowed: string[];
-  inputValidationSchemaMapping: Record<string, ZodSchema>;
+  bypassMiddleware?: boolean;
+  routesWithInputValidation?: string[];
+  routesWithAuthProtection?: string[];
+  routesWithExpiredTokensAllowed?: string[];
+  inputValidationSchemaMapping?: Record<string, ZodSchema>;
 }
 
 export interface UBDevSuccessResponse<T extends ResponseTypes> {

@@ -71,10 +71,13 @@ export const extract = {
     appBaseUrl: keyof UBDevAPIConfig["appUrlMapping"];
     route: string;
     appName: RegisteredApp;
+    paramName?: string;
   } => {
     let appBaseUrl: keyof UBDevAPIConfig["appUrlMapping"] | undefined;
     let route: string | undefined;
     let appName: RegisteredApp | undefined;
+    let paramName: string | undefined;
+    let updatedPathname = pathname;
 
     const registeredAppUrls = Object.keys(config.appUrlMapping);
 
@@ -83,6 +86,23 @@ export const extract = {
         appBaseUrl = url;
         route = pathname.split(url)[1] ?? "";
         appName = config.appUrlMapping[url];
+
+        // if (!appBaseUrl || !appName) {
+        //   throw InvalidRouteError("Invalid route | App not registered");
+        // }
+
+        // const queryRoutes = config.configs[appName].routesWithQueryParams ?? [];
+        // if (queryRoutes.length > 0) {
+        //   for (const rt of queryRoutes) {
+        //     const endpoint = rt.split(":")[0]!;
+        //     if (route.startsWith(endpoint)) {
+        //       paramName = rt.split(":")[1];
+        //       route = rt;
+        //       break;
+        //     }
+        //   }
+        // }
+
         break;
       }
     }
@@ -94,6 +114,7 @@ export const extract = {
     route ??= "";
 
     return { appBaseUrl, route, appName };
+    // return { appBaseUrl, route, appName, paramName };
   },
 };
 
