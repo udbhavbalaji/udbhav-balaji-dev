@@ -13,7 +13,7 @@ export const navbarItems: NavbarItem[] = [
   },
   {
     title: "Season Schedule",
-    link: "/races/schedule",
+    link: "/track-rev/schedule",
     linkType: "route",
   },
 ];

@@ -1,0 +1,56 @@
+import { type NextRequest, NextResponse } from "next/server";
+import { RaceTable, RawRaceEntry, SeasonScheduleItem } from "@/types/track-rev";
+import sendIt from "@/server/clients/track-rev/api-client";
+
+export const GET = async (request: NextRequest, { params }: { params: { year: string } }) => {
+  try{
+    // const round = params.round;
+    console.log('params', params);
+    const year = params.year;
+
+    if (!year) throw new Error("Both year and round are required");
+    // if (!round || !year) throw new Error("Both year and round are required");
+
+  const response = await sendIt(`http://api.jolpi.ca/ergast/f1/${year}/races/`);
+
+    if (!("RaceTable" in response))
+      throw new Error("Invalid response format");
+
+    const raceTable = response.RaceTable as RaceTable;
+
+    if (!("Races" in raceTable)) {
+      throw new Error("Invalid response format");
+    }
+
+    const schedule = raceTable.Races as RawRaceEntry[];
+    const processedSchedule = schedule.map((race) => {
+      const item: SeasonScheduleItem = {
+        season: race.season,
+        round: parseInt(race.round),
+        url: race.url,
+        raceName: race.raceName,
+        circuitName: race.Circuit.circuitName,
+        Sessions: {
+          FirstPractice: race.FirstPractice,
+          SecondPractice: race.SecondPractice,
+          ThirdPractice: race.ThirdPractice,
+          Qualifying: race.Qualifying,
+          SprintQualifying: race.SprintQualifying,
+          SprintRace: race.Sprint,
+          Race: {
+            date: race.date,
+            time: race.time,
+          },
+        }
+      };
+
+      return item;
+    });
+
+    return NextResponse.json({ [year]: processedSchedule }, { status: 200 });
+  } catch (err) {
+    console.log('error', err);
+    return NextResponse.json({ error: (err as Error).message }, { status: 500 });
+  }
+};
+

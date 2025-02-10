@@ -8,13 +8,14 @@ import DropDown from "@/app/_components/ui/DropDown";
 import { Seasons } from "../../_resources";
 import DriverStandingCardItem from "../../_components/DriverStandingsCardItem";
 
+
 export default function DriverStandings() {
   const { updateTitle } = useTitle();
   const { driverStandings: year, updateYear } = useYear();
   const { data, isLoading, error } = useDriverStandings(year);
 
   useEffect(() => {
-    updateTitle(`${year} Constructor Standings`);
+    updateTitle(`${year} Drivers Standings`);
   }, [year]);
 
   if (isLoading) return <div>Loading...</div>;
@@ -26,7 +27,7 @@ export default function DriverStandings() {
   return (
     <div className="container mx-auto flex w-full flex-wrap items-center justify-center rounded-lg">
       <DropDown
-        field="constructorStandings"
+        field="driverStandings"
         options={Seasons}
         currentValue={year}
         onYearChange={updateYear}
@@ -42,20 +43,3 @@ export default function DriverStandings() {
   );
 }
 
-const DataComponent = ({
-  name,
-  position,
-  points,
-}: {
-  name: string;
-  position: number;
-  points: number;
-}) => {
-  return (
-    <div className="flex flex-row justify-between gap-2">
-      Name: {name}
-      Position: {position}
-      Points: {points}
-    </div>
-  );
-};

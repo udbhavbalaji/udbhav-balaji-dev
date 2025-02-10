@@ -25,7 +25,7 @@ export default function ConstructorStandings() {
   if (!data || !data[year]) return <div>No data</div>;
 
   return (
-    <div className="container mx-auto flex w-full flex-wrap items-center justify-center rounded-lg">
+     <div className="container mx-auto flex w-full flex-wrap items-center justify-center rounded-lg">
       <DropDown
         field="constructorStandings"
         options={Seasons}

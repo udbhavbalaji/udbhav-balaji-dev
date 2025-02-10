@@ -36,7 +36,7 @@ const config: UBDevAPIConfig = {
       routesWithAuthProtection: [],
       routesWithExpiredTokensAllowed: [],
       inputValidationSchemaMapping: {
-        "/standings/constructors": yearSchema,
+        // "/standings/constructors": yearSchema,
       },
     },
     Spent: {
@@ -74,11 +74,11 @@ const config: UBDevAPIConfig = {
   // add configs for other APIs here
 };
 
-interface RouteConfig {
-  route: string;
-  validationSchema: ZodSchema;
-  enableAuth: boolean;
-  enableExpiredToken: boolean | null;
-}
+// interface RouteConfig {
+  // route: string;
+//   validationSchema: ZodSchema;
+//   enableAuth: boolean;
+//   enableExpiredToken: boolean | null;
+// }
 
 export default config;

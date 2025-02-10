@@ -1,3 +1,4 @@
+import { StringNullableChain } from "lodash";
 import { ReactNode } from "react";
 
 export interface NavbarItem {
@@ -22,14 +23,14 @@ export interface TrackRevLayoutProps {
 
 export type ProviderPropsType = React.PropsWithChildren;
 
-export interface ErgastContextType {
-  error: string | null;
-  loading: boolean;
-  toggleLoading: () => void;
-  handleError: (error: string) => void;
-  constructorStandings?: ConstructorStandingsContextType;
-  driverStandings?: DriverStandingsContextType;
-}
+// export interface ErgastContextType {
+//   error: string | null;
+//   loading: boolean;
+//   toggleLoading: () => void;
+//   handleError: (error: string) => void;
+//   constructorStandings?: ConstructorStandingsContextType;
+//   driverStandings?: DriverStandingsContextType;
+// }
 
 export interface ConstructorStandingsContextType {
   fetchData: (year: string) => Promise<ConstructorStandingsItem[]>;
@@ -39,6 +40,11 @@ export interface ConstructorStandingsContextType {
 export interface DriverStandingsContextType {
   fetchData: (year: string) => Promise<void>;
   DriverStandings: Record<string, DriverStandingsItem[]>;
+}
+
+export interface SeasonScheduleContextType {
+  fetchData: (year: string) => Promise<void>;
+  SeasonSchedule: Record<string, SeasonScheduleItem[]>;
 }
 
 export interface ConstructorStandingsItem {
@@ -58,6 +64,24 @@ export interface DriverStandingsItem {
   constructorName: string;
   constructorId: string;
 }
+
+export interface SeasonScheduleItem {
+  season: string;
+  round: number;
+  url: string;
+  raceName: string;
+  circuitName: string;
+  Sessions: {
+    FirstPractice: SessionTiming;
+    SecondPractice?: SessionTiming;
+    ThirdPractice?: SessionTiming;
+    Qualifying: SessionTiming;
+    SprintQualifying?: SessionTiming;
+    SprintRace?: SessionTiming;
+    Race: SessionTiming;
+  }
+}
+
 
 export interface RawDriverStanding {
   position: string;
@@ -87,6 +111,39 @@ export interface RawConstructorStanding {
   Constructor: Constructor;
 }
 
+export interface RawRaceEntry {
+  season: string;
+  round: string;
+  url: string;
+  raceName: string;
+  Circuit: Circuit;
+  date: string;
+  time: string;
+  FirstPractice: SessionTiming;
+  SecondPractice?: SessionTiming;
+  ThirdPractice?: SessionTiming;
+  Qualifying: SessionTiming;
+  SprintQualifying?: SessionTiming;
+  Sprint?: SessionTiming;
+}
+
+interface Circuit {
+  circuitId: string;
+  url: string;
+  circuitName: string;
+  Location: {
+    lat: string;
+    long: string;
+    locality: string;
+    country: string;
+  }
+}
+
+interface SessionTiming {
+  date: string;
+  time: string;
+}
+
 export interface Constructor {
   constructorId: string;
   constructorName: string;
@@ -99,6 +156,7 @@ export type StandingsTable = { season: string; round: string } & Record<
   Categories,
   unknown[]
 >;
+export type RaceTable = { season: string; Races: unknown[] };
 
 // export type StandingsLists = StandingsList[];
 
@@ -124,4 +182,9 @@ export interface ConstructorStandingCardItemProps {
 export interface DriverStandingCardItemProps {
   index: number;
   cardData: DriverStandingsItem;
+}
+
+export interface SeasonScheduleCardItemProps {
+  index: number;
+  cardData: SeasonScheduleItem;
 }
