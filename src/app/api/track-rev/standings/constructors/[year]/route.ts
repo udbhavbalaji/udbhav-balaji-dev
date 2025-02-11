@@ -50,7 +50,7 @@ export const GET = async (
   >
 > => {
   try {
-    const year = params.year;
+    const year = (await params).year;
     // const year = request.nextUrl.searchParams.get("year");
     console.log(request.nextUrl);
     // const { year } = await request.json();

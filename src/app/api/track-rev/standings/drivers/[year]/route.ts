@@ -17,7 +17,7 @@ export const GET = async (
   NextResponse<{ [year: string]: DriverStandingsItem[] } | { error: string }>
 > => {
   try {
-    const year = params.year;
+    const year = (await params).year;
 
     if (!year) throw new Error("Year is required");
 

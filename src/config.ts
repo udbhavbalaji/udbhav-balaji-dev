@@ -1,43 +1,28 @@
 import { SpentMiddleware } from "@spent-api-lib/middleware";
-import type { AppConfig, UBDevAPIConfig } from "@/types";
+import type { UBDevAPIConfig } from "@/types";
 import {
   RegisterSchema,
   LoginSchema,
   ReceiptSchema,
 } from "@spent-api-lib/schema";
-import { z, ZodSchema } from "zod";
-import { NextRequest } from "next/server";
-
-const yearSchema = z.object({ year: z.string() });
 
 export const registeredApps = ["Spent", "TrackRev"] as const;
 
 const config: UBDevAPIConfig = {
   appUrlMapping: {
     "/api/spent": "Spent",
-    // add more when more apps are made
     "/api/track-rev": "TrackRev",
+    // NOTE: add more when more apps are made
   },
   configs: {
     TrackRev: {
       appBaseUrl: "api/track-rev",
       bypassMiddleware: true,
-      // middlewareFn: async (
-      //   req: NextRequest,
-      //   config: AppConfig,
-      //   route: string,
-      // ) => {
-      //   return Promise.resolve(req.headers);
-      // },
       registeredRoutes: [],
-      // routesWithQueryParams: ["/standings/constructors/:year"],
-      // actual route: "/standings/constructors/2024"
       routesWithInputValidation: [],
       routesWithAuthProtection: [],
       routesWithExpiredTokensAllowed: [],
-      inputValidationSchemaMapping: {
-        // "/standings/constructors": yearSchema,
-      },
+      inputValidationSchemaMapping: {},
     },
     Spent: {
       appBaseUrl: "/api/spent",
@@ -71,14 +56,7 @@ const config: UBDevAPIConfig = {
       },
     },
   },
-  // add configs for other APIs here
+  // NOTE: add configs for other APIs here
 };
-
-// interface RouteConfig {
-  // route: string;
-//   validationSchema: ZodSchema;
-//   enableAuth: boolean;
-//   enableExpiredToken: boolean | null;
-// }
 
 export default config;

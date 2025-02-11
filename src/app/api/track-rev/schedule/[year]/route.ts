@@ -2,19 +2,21 @@ import { type NextRequest, NextResponse } from "next/server";
 import { RaceTable, RawRaceEntry, SeasonScheduleItem } from "@/types/track-rev";
 import sendIt from "@/server/clients/track-rev/api-client";
 
-export const GET = async (request: NextRequest, { params }: { params: { year: string } }) => {
-  try{
-    // const round = params.round;
-    console.log('params', params);
-    const year = params.year;
+export const GET = async (
+  request: NextRequest,
+  { params }: { params: { year: string } },
+) => {
+  try {
+    const year = (await params).year;
 
     if (!year) throw new Error("Both year and round are required");
     // if (!round || !year) throw new Error("Both year and round are required");
 
-  const response = await sendIt(`http://api.jolpi.ca/ergast/f1/${year}/races/`);
+    const response = await sendIt(
+      `http://api.jolpi.ca/ergast/f1/${year}/races/`,
+    );
 
-    if (!("RaceTable" in response))
-      throw new Error("Invalid response format");
+    if (!("RaceTable" in response)) throw new Error("Invalid response format");
 
     const raceTable = response.RaceTable as RaceTable;
 
@@ -41,7 +43,7 @@ export const GET = async (request: NextRequest, { params }: { params: { year: st
             date: race.date,
             time: race.time,
           },
-        }
+        },
       };
 
       return item;
@@ -49,8 +51,10 @@ export const GET = async (request: NextRequest, { params }: { params: { year: st
 
     return NextResponse.json({ [year]: processedSchedule }, { status: 200 });
   } catch (err) {
-    console.log('error', err);
-    return NextResponse.json({ error: (err as Error).message }, { status: 500 });
+    console.log("error", err);
+    return NextResponse.json(
+      { error: (err as Error).message },
+      { status: 500 },
+    );
   }
 };
-
