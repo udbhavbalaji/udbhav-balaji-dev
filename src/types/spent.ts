@@ -7,6 +7,7 @@ import type {
   ResponseTypes,
 } from "@/types";
 import type { User, Receipt, Item } from "@/server/db";
+import { Expense } from "@prisma/client";
 
 // Enum declarations
 
@@ -45,6 +46,8 @@ export enum SpentExceptionCodes {
 export type PrismaUser = Omit<User, "id">;
 export type PrismaReceipt = Omit<Receipt, "id">;
 export type PrismaItem = Omit<Item, "id">;
+export type PrismaExpense = Omit<Expense, "id">;
+export type { Merchant, SubCategory } from '@prisma/client';
 
 export type CreatePrismaUser = Omit<
   PrismaUser,
@@ -67,7 +70,7 @@ export type PublicSafeUser = Omit<
 // Spent API Response type declarations
 
 export interface SpentAPISuccessResponse<T extends ResponseTypes = never>
-  extends UBDevSuccessResponse<T> {}
+  extends UBDevSuccessResponse<T> { }
 
 export interface SpentAPIErrorResponse extends UBDevErrorResponse {
   errorCode: SpentExceptionCodes;
@@ -124,3 +127,11 @@ export type ReceiptInputType = Omit<PrismaReceipt, "userId" | "receiptId"> & {
 //   serviceCharge: string | null;
 //   tip: number | null;
 // }
+//
+//
+//
+
+
+export type TimeRange = "1 week" | "2 weeks" | "1 month" | "3 months" | "6 months" | "1 year";
+
+

@@ -10,7 +10,8 @@ import { ForbiddenError, UnauthorizedActionError } from "@spent-api-lib/errors";
 import { itemSchema, ReceiptSchema } from "@spent-api-lib/schema";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { receipt as prisma } from "@spent-api-lib/db";
+import { createTrx } from "@spent-api-lib/db";
+import { getExpenseFromReeceipt } from "@spent-api/expenses/_lib/utils";
 
 export type ItemInputType = z.infer<typeof itemSchema>;
 export type ReceiptInputType = z.infer<typeof ReceiptSchema>;
@@ -41,11 +42,14 @@ const AddReceiptRouteHandler = async (request: Request) => {
     return { itemId, receiptId, ...item } as PrismaItem;
   });
 
-  await prisma.add(processedReceipt, processedItems);
+  // todo: have to test this tomoorrow, test data is on other system
+  const processedExpense = await getExpenseFromReeceipt(processedReceipt);
+
+  await createTrx(processedReceipt, processedItems, processedExpense);
 
   const response: SpentAPISuccessResponse<string> = {
     status: 201,
-    body: "Receipt Created",
+    body: "Receipt Created & Expense added",
   };
 
   return NextResponse.json({ ...response }, { status: response.status });

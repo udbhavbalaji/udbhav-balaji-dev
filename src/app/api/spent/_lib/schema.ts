@@ -21,7 +21,7 @@ export const itemSchema = z.object({
   description: z.string(),
   flags: z.string().nullable(),
   qty: z.number(),
-  unitPrice: z.number().nullable(),
+  unitPrice: z.number(),
 });
 
 export const ReceiptSchema = z.object({
@@ -30,7 +30,7 @@ export const ReceiptSchema = z.object({
   merchantPhone: z.string().nullable(),
   merchantWebsite: z.string().nullable(),
   receiptNo: z.string(),
-  date: z.string(),
+  date: z.string().date("Date must be in the correct (and only accepted format): YYYY-MM-DD"),
   time: z.string().nullable(),
   items: z.array(itemSchema),
   currency: z.string(),
@@ -40,3 +40,10 @@ export const ReceiptSchema = z.object({
   serviceCharge: z.string().nullable(),
   tip: z.number().nullable(),
 });
+
+
+export const ExpenseDateFilterSchema = z.object({
+  startDate: z.string().date("Input must be a valid date (Accepted format: YYYY-MM-DD"),
+  endDate: z.string().date("Input must be a valid date (Accepted format: YYYY-MM-DD"),
+});
+
