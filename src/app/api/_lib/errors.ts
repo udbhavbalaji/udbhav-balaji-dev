@@ -18,7 +18,7 @@ export class UBDevException extends Error {
     details?: any,
   ) {
     super(message);
-    Object.setPrototypeOf(this, UBDevException.prototype);
+    Object.setPrototypeOf(this, new.target.prototype);
     this.name = name ?? "UBDevException";
     this.message = message;
     this.statusCode = statusCode;
@@ -55,7 +55,7 @@ export class SpentException extends UBDevException {
     details?: any,
   ) {
     super(message, statusCode ?? 400, name, underlyingError, details);
-    Object.setPrototypeOf(this, SpentException.prototype);
+    Object.setPrototypeOf(this, new.target.prototype);
     this.name = name ?? "SpentException";
     this.message = message;
     this.errorCode = errorCode;

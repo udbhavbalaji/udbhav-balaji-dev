@@ -38,6 +38,7 @@ const RegisterRouteHandler: SpentRouteHandler = async (
     password: hashedPassword,
   };
 
+  // todo: need to add default catetgory and sub-categories in the db for the user as part of the creation process
   await prisma.create(user);
 
   const response: SpentAPISuccessResponse<string> = {

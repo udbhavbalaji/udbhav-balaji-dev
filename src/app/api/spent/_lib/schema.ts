@@ -30,7 +30,9 @@ export const ReceiptSchema = z.object({
   merchantPhone: z.string().nullable(),
   merchantWebsite: z.string().nullable(),
   receiptNo: z.string(),
-  date: z.string().date("Date must be in the correct (and only accepted format): YYYY-MM-DD"),
+  date: z
+    .string()
+    .date("Date must be in the correct (and only accepted format): YYYY-MM-DD"),
   time: z.string().nullable(),
   items: z.array(itemSchema),
   currency: z.string(),
@@ -41,9 +43,14 @@ export const ReceiptSchema = z.object({
   tip: z.number().nullable(),
 });
 
-
 export const ExpenseDateFilterSchema = z.object({
-  startDate: z.string().date("Input must be a valid date (Accepted format: YYYY-MM-DD"),
-  endDate: z.string().date("Input must be a valid date (Accepted format: YYYY-MM-DD"),
+  startDate: z
+    .string()
+    .date("Input must be a valid date (Accepted format: YYYY-MM-DD"),
+  endDate: z
+    .string()
+    .date("Input must be a valid date (Accepted format: YYYY-MM-DD"),
+  categories: z.string().array().optional(),
+  merchants: z.string().array().optional(),
+  subCategories: z.string().array().optional(),
 });
-

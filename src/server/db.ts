@@ -29,7 +29,7 @@ const createPrismaClient = () => {
         try {
           return await query(args);
         } catch (err) {
-          console.log(err);
+          // console.log(err);
           if (err instanceof Prisma.PrismaClientKnownRequestError) {
             if (err.code === "P2025") {
               throw PrismaNotFoundError("Not found", 404, err, {

@@ -99,7 +99,11 @@ export const user = {
 };
 
 export const receipt = {
-  add: async (receipt: PrismaReceipt, items: PrismaItem[], expense: PrismaExpense): Promise<void> => {
+  add: async (
+    receipt: PrismaReceipt,
+    items: PrismaItem[],
+    expense: PrismaExpense,
+  ): Promise<void> => {
     await db.$transaction(async (trx) => {
       await trx.receipt.create({ data: receipt });
       await trx.item.createMany({ data: items });
@@ -114,16 +118,14 @@ export const receipt = {
   },
 };
 
-
 export const expense = {
   getAll: async (userId: string): Promise<PrismaExpense[]> => {
     return await db.expense.findMany({
-      omit: { id: true, },
+      omit: { id: true },
       where: { userId },
     });
   },
-}
-
+};
 
 export const merchant = {
   // info: throws PrismaClientKnownRequestError when merchant isn't found
@@ -135,20 +137,24 @@ export const merchant = {
 };
 
 export const subCategory = {
-  get: async (subCategoryName: string, userId: string): Promise<SubCategory> => {
+  get: async (
+    subCategoryName: string,
+    userId: string,
+  ): Promise<SubCategory> => {
     return await db.subCategory.findFirstOrThrow({
       where: { name: subCategoryName, userId },
     });
   },
-}
+};
 
-export const createTrx = async (receipt: PrismaReceipt, items: PrismaItem[], expense: PrismaExpense): Promise<void> => {
+export const createTrx = async (
+  receipt: PrismaReceipt,
+  items: PrismaItem[],
+  expense: PrismaExpense,
+): Promise<void> => {
   await db.$transaction(async (trx) => {
     await trx.receipt.create({ data: receipt });
     await trx.item.createMany({ data: items });
     await trx.expense.create({ data: expense });
   });
 };
-
-
-
