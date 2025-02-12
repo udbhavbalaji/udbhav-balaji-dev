@@ -36,7 +36,10 @@ const config: UBDevAPIConfig = {
         "/auth/delete",
         "/receipts/add",
         "/receipts/get",
-        "/expenses/filtered-by-date"
+        "/expenses/filtered-by-date",
+        "/expenses/filtered-by-range",
+        // warn: it seems that input validation has to be moved to outer middleware (and applied only as the last step, because the merchants route has multiple request body schemas depending on the method of the request)
+        "/user/merchants",
       ],
       routesWithInputValidation: [
         "/auth/register",

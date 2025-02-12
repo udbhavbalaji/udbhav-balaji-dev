@@ -1,3 +1,4 @@
+import { timeRanges } from "@/types/spent";
 import z from "zod";
 
 export const RegisterSchema = z
@@ -24,6 +25,7 @@ export const itemSchema = z.object({
   unitPrice: z.number(),
 });
 
+
 export const ReceiptSchema = z.object({
   merchantName: z.string(),
   merchantAddress: z.string().nullable(),
@@ -43,6 +45,11 @@ export const ReceiptSchema = z.object({
   tip: z.number().nullable(),
 });
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Expense Schema
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export const ExpenseDateFilterSchema = z.object({
   startDate: z
     .string()
@@ -54,3 +61,33 @@ export const ExpenseDateFilterSchema = z.object({
   merchants: z.string().array().optional(),
   subCategories: z.string().array().optional(),
 });
+
+export const ExpenseRangeFilterSchema = z.object({
+  timeRange: z.enum(timeRanges),
+  categories: z.string().array().optional(),
+  merchants: z.string().array().optional(),
+  subCategories: z.string().array().optional(),
+});
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Merchant Schema
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+export const MerchantSchema = z.object({
+  merchantName: z.string(),
+  category: z.string(),
+  subCategory: z.string(),
+}).required();
+
+
+
+
+
+
+
+
+
+
+

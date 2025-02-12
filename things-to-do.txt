@@ -207,7 +207,22 @@ Page: Manage merchants/categories/sub-categories
   Front-end state: Updated choices
 
   Back End: {
-      endpoint: PUT /api/spent/user/settings
+      endpoint: PUT /api/spent/user/merchants
+      endpoint: PUT /api/spent/user/categories
+      endpoint: PUT /api/spent/user/sub-categories
+
+      endpoint: POST /api/spent/user/merchants
+      endpoint: POST /api/spent/user/categories
+      endpoint: POST /api/spent/user/sub-categories
+
+      endpoint: DELETE /api/spent/user/merchants
+      endpoint: DELETE /api/spent/user/categories
+      endpoint: DELETE /api/spent/user/sub-categories
+
+      - Just returns all merchants, categories, sub-categories,
+      endpoint: GET /api/spent/user/merchants
+      endpoint: GET /api/spent/user/categories
+      endpoint: GET /api/spent/user/sub-categories
       headers: { secret-app-key: string, authorization: string }
       body: {
           time-frame: string,

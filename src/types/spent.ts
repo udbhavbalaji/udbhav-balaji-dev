@@ -47,7 +47,7 @@ export type PrismaUser = Omit<User, "id">;
 export type PrismaReceipt = Omit<Receipt, "id">;
 export type PrismaItem = Omit<Item, "id">;
 export type PrismaExpense = Omit<Expense, "id">;
-export type { Merchant, SubCategory } from '@prisma/client';
+export type { Merchant, Category, SubCategory } from '@prisma/client';
 
 export type CreatePrismaUser = Omit<
   PrismaUser,
@@ -131,7 +131,11 @@ export type ReceiptInputType = Omit<PrismaReceipt, "userId" | "receiptId"> & {
 //
 //
 
+export const timeRanges = ["7d", "14d", "30d", "3m", "6m", "1y"] as const;
 
-export type TimeRange = "1 week" | "2 weeks" | "1 month" | "3 months" | "6 months" | "1 year";
+export type TimeRange = (typeof timeRanges)[number];
+
+
+// export type TimeRange = "1 week" | "2 weeks" | "1 month" | "3 months" | "6 months" | "1 year";
 
 

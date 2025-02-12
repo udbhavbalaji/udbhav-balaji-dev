@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { BadRequestError } from "../../_lib/errors";
 import { generate } from "../../_lib/utils";
 import { withSpentRouteErrorsHandled } from "../../_lib/middleware";
-import { user as prisma } from "../../_lib/db";
+import { user as prisma, createUserTrx } from "../../_lib/db";
 
 const RegisterRouteHandler: SpentRouteHandler = async (
   request: NextRequest,
@@ -39,7 +39,11 @@ const RegisterRouteHandler: SpentRouteHandler = async (
   };
 
   // todo: need to add default catetgory and sub-categories in the db for the user as part of the creation process
-  await prisma.create(user);
+  await createUserTrx(user);
+
+
+  // LEGACY: need to keep these till the transaction approach is tested
+  // await prisma.create(user);
 
   const response: SpentAPISuccessResponse<string> = {
     status: 201,

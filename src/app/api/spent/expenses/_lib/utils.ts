@@ -26,7 +26,23 @@ export const getExpenseFromReeceipt = async (
   return expense;
 };
 
-// todo: need to add merchant name function as well (basically returning user-mapped merchant name, or else the merchant name iteslf)
+// todo: need to add merchant name function as well (basically returning user-mapped merchant name, or else the merchant name iteslf) -> This means that the mapping operation is done on server
+
+
+/* note:  Once the receipt is processed, the user is shown the output of the 
+          receipt to confirm. Here, I want them to see the mapped name (if any)
+          else the received name itself
+          results in once the asprise api responce is received, the user's mappings are retrieved 
+          and the merchant name is mapped if the name matches.
+          So, in the backend, when user adds a receipt, then the merchant name being receieved is
+          already a name that has been mapped if the user wants it to happen. So, we don't modify the 
+          merchant name upon creating expense */
+
+// const merchant = {
+//
+//   get: async () => { },
+// };
+
 
 const subcategory = {
   get: async (merchantName: string, userId: string): Promise<string> => {

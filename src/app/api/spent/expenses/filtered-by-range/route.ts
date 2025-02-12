@@ -37,6 +37,7 @@ const FilterRangeRouteHandler = async (
 
   let startDate: Date;
 
+  // bug: definitely need to triple check this, ill be surpised if this works as is
   switch (timeRange) {
     case "1 week":
       startDate = new Date(currDate.setDate(currDate.getDate() - 7));

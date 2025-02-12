@@ -1,11 +1,13 @@
 import { db } from "@/server/db";
 import {
+  Category,
   CreatePrismaUser,
   LoginStatus,
   Merchant,
   PrismaExpense,
   PrismaItem,
   PrismaReceipt,
+  PrismaUser,
   PublicSafeUser,
   SpentExceptionCodes,
   SubCategory,
@@ -134,7 +136,72 @@ export const merchant = {
       where: { name: merchantName, userId },
     });
   },
+
+  getAll: async (userId: string): Promise<Merchant[]> => {
+    return await db.merchant.findMany({
+      where: { userId },
+    });
+  },
+
+  update: async (merchant: Merchant): Promise<void> => {
+    await db.merchant.update({
+      where: { name: merchant.name, userId: merchant.userId },
+      data: merchant,
+    });
+  },
+
+  getSafely: async (merchantName: string, userId: string): Promise<Merchant | undefined> => {
+    const merchant = await db.merchant.findFirst({
+      where: { name: merchantName, userId },
+    });
+
+    if (!merchant) return undefined;
+    else return merchant;
+  },
+
+  add: async (merchant: Merchant): Promise<void> => {
+    await db.merchant.create({
+      data: merchant,
+    });
+  },
+
+  delete: async (merchantName: string, userId: string): Promise<void> => {
+    await db.merchant.delete({
+      where: { name: merchantName, userId },
+    });
+  },
 };
+
+export const category = {
+  getAll: async (userId: string): Promise<Category[]> => {
+    return await db.category.findMany({
+      where: { userId },
+    });
+  },
+
+  get: async (name: string, userId: string) => {
+    return await db.category.findFirstOrThrow({
+      where: { name, userId },
+    });
+  },
+
+  getSafely: async (name: string, userId: string): Promise<Catgory | undefined> => {
+    const category = await db.category.findFirst({
+      where: { name, userId },
+    });
+
+    if (!category) return undefined;
+    else return category;
+  },
+
+  add: async (category: Category): Promise<void> => {
+    await db.category.create({
+      data: category
+    });
+  },
+
+}
+
 
 export const subCategory = {
   get: async (
@@ -147,14 +214,48 @@ export const subCategory = {
   },
 };
 
+
+
+
 export const createTrx = async (
   receipt: PrismaReceipt,
   items: PrismaItem[],
   expense: PrismaExpense,
 ): Promise<void> => {
   await db.$transaction(async (trx) => {
-    await trx.receipt.create({ data: receipt });
-    await trx.item.createMany({ data: items });
-    await trx.expense.create({ data: expense });
+    const receiptPromise = await trx.receipt.create({ data: receipt });
+    const itemsPromise = await trx.item.createMany({ data: items });
+    const expensePromise = await trx.expense.create({ data: expense });
+
+
+    // warn: nees to check that this works to ensure that the treansaction fails, otherwise there's no point of doing it as a transaction.
+    return Promise.all([receiptPromise, itemsPromise, expensePromise]);
   });
 };
+
+
+
+
+
+
+
+
+
+
+
+export const createUserTrx = async (user: CreatePrismaUser) => {
+  await db.$transaction(async (trx) => {
+    const userPromise = await trx.user.create({ data: user });
+    const categoryPromise = await trx.category.create({ data: { name: "Unknown", userId: user.userId } });
+    const subCategoryPromise = await trx.subCategory.create({ data: { name: "Unknown", categoryName: "Unknown", userId: user.userId } });
+
+
+    return Promise.all([userPromise, categoryPromise, subCategoryPromise]);
+  });
+};
+
+
+
+
+
+
