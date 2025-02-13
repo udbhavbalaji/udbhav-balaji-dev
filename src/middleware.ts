@@ -5,6 +5,20 @@ import { ApiRoutesErrorHandler } from "@api-lib/middleware";
 import { InvalidRouteError } from "@api-lib/errors";
 import { getAllRegisteredRoutes } from "@api-lib/utils";
 
+export const meddlewareActual = async (request: NextRequest) => {
+  let headers: Headers = request.headers;
+
+  try {
+    const { pathname } = request.nextUrl;
+
+    // warn: skipping for now (must come back to it danger)
+    //
+    // const routes = getAllRegisteredRoutes(globalConfig);
+
+    const { route, appName } = extract.route(pathname, globalConfig);
+  } catch (err) { }
+};
+
 export async function middleware(request: NextRequest) {
   let headers: Headers = request.headers;
 

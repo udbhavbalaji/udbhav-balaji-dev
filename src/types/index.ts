@@ -20,6 +20,24 @@ export interface UBDevAPIConfig {
   configs: Record<RegisteredApp, AppConfig>;
 }
 
+export interface TestUBDevAPIConfig {
+  appUrlMapping: Record<string, RegisteredApp>;
+  configs: Record<RegisteredApp, AppConfig>;
+}
+
+export interface TestAppConfig {
+  appBaseUrl: string;
+  middlewareFn?: (
+    request: NextRequest,
+    config: TestAppConfig,
+    route: string,
+  ) => Promise<Headers>;
+  bypassMiddleware?: boolean;
+  registeredRoutes: string[];
+  routesWithInputValidation: Record<string, ZodSchema>;
+  authProtectedRoutesWithExpiryFlag: Record<string, boolean>;
+}
+
 export interface AppConfig {
   // appBaseUrl: string;
   appBaseUrl: keyof UBDevAPIConfig["appUrlMapping"];

@@ -15,10 +15,6 @@ export const getAllRegisteredRoutes = (globalConfig: UBDevAPIConfig) => {
     } else {
       routes.push(`${baseUrl}/${config.registeredRoutes}`);
     }
-
-    // config.registeredRoutes.forEach((route) => {
-    //     routes.push(`${baseUrl}${route}`);
-    // });
   });
 
   return routes;

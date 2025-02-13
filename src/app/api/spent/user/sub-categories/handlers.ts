@@ -1,15 +1,15 @@
 import {
-  Category,
   SpentAPISuccessResponse,
   SpentExceptionCodes,
+  SubCategory,
 } from "@/types/spent";
 import { ForbiddenError } from "@spent-api/_lib/errors";
 import { NextRequest, NextResponse } from "next/server";
-import { category as prisma } from "@/app/api/spent/_lib/db";
+import { subCategory as prisma } from "@/app/api/spent/_lib/db";
 
-export const GetCategoriesRouteHandler = async (
+export const GetSubCategoriesHandler = async (
   request: NextRequest,
-): Promise<NextResponse> => {
+): Promise<NextResponse<SpentAPISuccessResponse<SubCategory[]>>> => {
   const userId = request.headers.get("user-id");
 
   if (!userId)
@@ -18,21 +18,21 @@ export const GetCategoriesRouteHandler = async (
       SpentExceptionCodes.FORBIDDEN,
     );
 
-  const categories = await prisma.getAll(userId);
+  const subCategories = await prisma.getAll(userId);
 
-  const response: SpentAPISuccessResponse<Category[]> = {
+  const response: SpentAPISuccessResponse<SubCategory[]> = {
     status: 200,
-    body: categories,
+    body: subCategories,
   };
 
   return NextResponse.json({ ...response }, { status: response.status });
 };
 
-export const AddCategoriesRouteHandler = async (
+export const AddSubCategoriesHandler = async (
   request: NextRequest,
-): Promise<NextResponse> => {
+): Promise<NextResponse<SpentAPISuccessResponse<string>>> => {
   const userId = request.headers.get("user-id");
-  const { categoryName } = await request.json();
+  const { subCategoryName, category } = await request.json();
 
   if (!userId)
     throw ForbiddenError(
@@ -40,30 +40,31 @@ export const AddCategoriesRouteHandler = async (
       SpentExceptionCodes.FORBIDDEN,
     );
 
-  const category = await prisma.getSafely(categoryName, userId);
+  const subCategory = await prisma.getSafely(subCategoryName, userId);
 
-  if (category) throw new Error("Category aleady exists");
+  if (subCategory) throw new Error("Category aleady exists");
 
-  const newCategory: Category = {
-    name: categoryName,
+  const newSubCategory: SubCategory = {
+    name: subCategoryName,
+    categoryName: category,
     userId,
   };
 
-  await prisma.add(newCategory);
+  await prisma.add(newSubCategory);
 
   const response: SpentAPISuccessResponse<string> = {
     status: 201,
-    body: "Category added",
+    body: "Sub-category added",
   };
 
   return NextResponse.json({ ...response }, { status: response.status });
 };
 
-export const UpdateCategoriesRouteHandler = async (
+export const UpdateSubCategoriesHandler = async (
   request: NextRequest,
 ): Promise<NextResponse<SpentAPISuccessResponse<string>>> => {
   const userId = request.headers.get("user-id");
-  const { categoryName } = await request.json();
+  const { subCategoryName, category } = await request.json();
 
   if (!userId)
     throw ForbiddenError(
@@ -71,30 +72,29 @@ export const UpdateCategoriesRouteHandler = async (
       SpentExceptionCodes.FORBIDDEN,
     );
 
-  await prisma.get(categoryName, userId);
+  await prisma.get(subCategoryName, userId);
 
-  const updatedCategory: Category = {
-    name: categoryName,
+  const updatedSubCategory: SubCategory = {
+    name: subCategoryName,
+    categoryName: category,
     userId,
   };
 
-  // todo: check and add prisma.update
-  await prisma.update(updatedCategory);
+  await prisma.update(updatedSubCategory);
 
   const response: SpentAPISuccessResponse<string> = {
     status: 200,
-    body: "Category updated",
+    body: "Sub-category updated",
   };
 
   return NextResponse.json({ ...response }, { status: response.status });
 };
 
-// todo: still need to implement this
-export const DeleteCategoriesRouteHandler = async (
+export const DeleteSubCategoriesHandler = async (
   request: NextRequest,
 ): Promise<NextResponse<SpentAPISuccessResponse<string>>> => {
   const userId = request.headers.get("user-id");
-  const { categoryName } = await request.json();
+  const { subCategoryName } = await request.json();
 
   if (!userId)
     throw ForbiddenError(
@@ -102,13 +102,13 @@ export const DeleteCategoriesRouteHandler = async (
       SpentExceptionCodes.FORBIDDEN,
     );
 
-  await prisma.get(categoryName, userId);
+  await prisma.get(subCategoryName, userId);
 
-  await prisma.delete(categoryName, userId);
+  await prisma.delete(subCategoryName, userId);
 
   const response: SpentAPISuccessResponse<string> = {
     status: 200,
-    body: "Category deleted",
+    body: "Sub-category deleted",
   };
 
   return NextResponse.json({ ...response }, { status: response.status });

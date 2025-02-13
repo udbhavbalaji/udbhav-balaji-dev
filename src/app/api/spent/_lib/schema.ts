@@ -1,5 +1,6 @@
 import { timeRanges } from "@/types/spent";
 import z from "zod";
+import { subCategory } from "./db";
 
 export const RegisterSchema = z
   .object({
@@ -25,7 +26,6 @@ export const itemSchema = z.object({
   unitPrice: z.number(),
 });
 
-
 export const ReceiptSchema = z.object({
   merchantName: z.string(),
   merchantAddress: z.string().nullable(),
@@ -44,7 +44,6 @@ export const ReceiptSchema = z.object({
   serviceCharge: z.string().nullable(),
   tip: z.number().nullable(),
 });
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Expense Schema
@@ -69,25 +68,40 @@ export const ExpenseRangeFilterSchema = z.object({
   subCategories: z.string().array().optional(),
 });
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Merchant Schema
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+export const AddMerchantSchema = z
+  .object({
+    merchantName: z.string(),
+    category: z.string(),
+    subCategory: z.string(),
+  })
+  .required();
 
-export const MerchantSchema = z.object({
-  merchantName: z.string(),
+export const UpdateMerchantSchema = z
+  .object({
+    category: z.string(),
+    subCategory: z.string(),
+  })
+  .required();
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Category Schema
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const AddCategorySchema = z.object({ categoryName: z.string() });
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Sub-Category Schema
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const AddSubCategorySchema = z.object({
+  subCategoryName: z.string(),
   category: z.string(),
-  subCategory: z.string(),
-}).required();
+});
 
-
-
-
-
-
-
-
-
-
-
+export const UpdateSubCategorySchema = z.object({
+  category: z.string(),
+});

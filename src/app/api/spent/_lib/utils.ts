@@ -64,6 +64,36 @@ export const verify = {
 };
 
 export const extract = {
+  routeFixed: (pathname: string, config: UBDevAPIConfig) => {
+    let appBaseUrl: keyof UBDevAPIConfig["appUrlMapping"] | undefined =
+      undefined;
+    let route: string | undefined = undefined;
+    let appName: RegisteredApp | undefined = undefined;
+
+    const registeredAppUrls = Object.keys(config.appUrlMapping);
+
+    // looping through each of the registered app urls
+    for (const url of registeredAppUrls) {
+      // if the request belongs to a particular app, then it would start with the app base url
+      if (pathname.startsWith(url)) {
+        // on confirming the app, we destrcuture the request pathname and assign it simpler processing
+        appBaseUrl = url;
+        route = pathname.split(url)[1] ?? "";
+        appName = config.appUrlMapping[url];
+        break;
+      }
+    }
+
+    // if appname wasnt found then the request isn't allowed to proceed
+    if (!appBaseUrl || !route || !appName)
+      throw InvalidRouteError("Invalid route | App not registered");
+
+    // compare the route to check if it starts with a route for a paramName?
+    const appRoutesWithParams = config.configs[appName].inputValidationSchemas;
+
+    return { appBaseUrl, route, appName };
+  },
+
   route: (
     pathname: string,
     config: UBDevAPIConfig,

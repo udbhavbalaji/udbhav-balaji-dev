@@ -237,6 +237,17 @@ Page: Manage merchants/categories/sub-categories
 
 
 
+testing playground:
+
+api/spent/receipts/get/:receiptId 
+api/spent/receipts/get/ajhsbdkSDHf-kashjebfajhsdfbajkSHdvf
+
+
+
+
+
+
+
 
 
 

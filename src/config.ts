@@ -9,6 +9,41 @@ import {
 
 export const registeredApps = ["Spent", "TrackRev"] as const;
 
+const testCOnfig: UBDevAPIConfig = {
+  appUrlMapping: {},
+  configs: {
+    TrackRev: {
+      appBaseUrl: "/api/track-rev",
+      bypassMiddleware: true,
+      registeredRoutes: [],
+    },
+    Spent: {
+      appBaseUrl: "/api/spent",
+      middlewareFn: SpentMiddleware,
+      registeredRoutes: [
+        // auth routes
+        "/auth/register",
+        "/auth/login",
+        "/auth/logout",
+        "/auth/delete",
+        "/auth/register",
+
+        // user routes
+        "/user/settings",
+        "/user/merchants",
+        "/user/categories",
+        "/user/sub-categories",
+
+        // expenses routes
+        "/expenses/filtered-by-date",
+        "/expenses/filtered-by-range",
+      ],
+
+      routesWithInputValidation: [],
+    },
+  },
+};
+
 const config: UBDevAPIConfig = {
   appUrlMapping: {
     "/api/spent": "Spent",
@@ -45,7 +80,7 @@ const config: UBDevAPIConfig = {
         "/auth/register",
         "/auth/login",
         "/receipts/add",
-        "/expenses/filtered-by-date"
+        "/expenses/filtered-by-date",
       ],
       routesWithAuthProtection: [
         "/auth/me",
@@ -53,7 +88,7 @@ const config: UBDevAPIConfig = {
         "/auth/delete",
         "/receipts/add",
         "/receipts/get",
-        "/expenses/filtered-by-date"
+        "/expenses/filtered-by-date",
       ],
       routesWithExpiredTokensAllowed: ["/auth/logout"],
       inputValidationSchemaMapping: {
