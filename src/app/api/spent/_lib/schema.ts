@@ -72,18 +72,26 @@ export const ExpenseRangeFilterSchema = z.object({
 // Merchant Schema
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const AddMerchantSchema = z
+// export const AddMerchantSchema = z
+//   .object({
+//     merchantName: z.string(),
+//     category: z.string(),
+//     subCategory: z.string(),
+//   })
+//   .required();
+//
+// export const UpdateMerchantSchema = z
+//   .object({
+//     category: z.string(),
+//     subCategory: z.string(),
+//   })
+//   .required();
+
+export const MerchantSchema = z
   .object({
     merchantName: z.string(),
-    category: z.string(),
-    subCategory: z.string(),
-  })
-  .required();
-
-export const UpdateMerchantSchema = z
-  .object({
-    category: z.string(),
-    subCategory: z.string(),
+    categoryName: z.string().optional(),
+    subCategoryName: z.string().optional(),
   })
   .required();
 
@@ -91,17 +99,28 @@ export const UpdateMerchantSchema = z
 // Category Schema
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const AddCategorySchema = z.object({ categoryName: z.string() });
+// export const AddCategorySchema = z.object({ categoryName: z.string() });
+
+export const CategorySchema = z.object({
+  categoryName: z.string(),
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Sub-Category Schema
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const AddSubCategorySchema = z.object({
-  subCategoryName: z.string(),
-  category: z.string(),
-});
+// export const AddSubCategorySchema = z.object({
+//   subCategoryName: z.string(),
+//   category: z.string(),
+// });
+//
+// export const UpdateSubCategorySchema = z.object({
+//   category: z.string(),
+// });
 
-export const UpdateSubCategorySchema = z.object({
-  category: z.string(),
-});
+export const SubCategorySchema = z
+  .object({
+    subCategoryName: z.string(),
+    category: z.string().optional(),
+  })
+  .required();

@@ -2,11 +2,12 @@ import { NextRequest } from "next/server";
 import { ZodSchema } from "zod";
 
 import type { UBDevException } from "@api-lib/errors";
-import { registeredApps } from "@/config";
+import { apps } from "@/config";
 
 // UBDev API Config types
 
-export type RegisteredApp = (typeof registeredApps)[number];
+export type RegisteredApp = (typeof apps)[number];
+// export type RegisteredApp = (typeof registeredApps)[number];
 
 export type ResponseTypes =
   | Record<string, any>
@@ -39,21 +40,32 @@ export interface TestAppConfig {
 }
 
 export interface AppConfig {
-  // appBaseUrl: string;
-  appBaseUrl: keyof UBDevAPIConfig["appUrlMapping"];
+  registeredRoutes: string[];
+  validationSchemaMapping: Record<string, ZodSchema>;
+  authProtectedRoutesWithIgnoreExpiryFlag?: Record<string, boolean>;
   middlewareFn?: (
-    request: NextRequest,
+    headers: Headers,
     config: AppConfig,
     route: string,
   ) => Promise<Headers>;
-  // registeredRoutes: string[] | "*";
-  registeredRoutes: string[];
-  bypassMiddleware?: boolean;
-  routesWithInputValidation?: string[];
-  routesWithAuthProtection?: string[];
-  routesWithExpiredTokensAllowed?: string[];
-  inputValidationSchemaMapping?: Record<string, ZodSchema>;
 }
+
+// export interface AppConfig {
+//   // appBaseUrl: string;
+//   appBaseUrl: keyof UBDevAPIConfig["appUrlMapping"];
+//   middlewareFn?: (
+//     request: NextRequest,
+//     config: AppConfig,
+//     route: string,
+//   ) => Promise<Headers>;
+//   // registeredRoutes: string[] | "*";
+//   registeredRoutes: string[];
+//   bypassMiddleware?: boolean;
+//   routesWithInputValidation?: string[];
+//   routesWithAuthProtection?: string[];
+//   routesWithExpiredTokensAllowed?: string[];
+//   inputValidationSchemaMapping?: Record<string, ZodSchema>;
+// }
 
 export interface UBDevSuccessResponse<T extends ResponseTypes> {
   status: number;

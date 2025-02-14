@@ -43,7 +43,7 @@ const appVerificationMiddleware: AppVerificationMiddleware = (
   return clonedHeaders;
 };
 
-const inputValidationMiddleware: InputValidationMiddleware = async (
+export const inputValidationMiddleware: InputValidationMiddleware = async (
   request: NextRequest,
   schema: ZodSchema,
 ): Promise<void> => {
@@ -144,42 +144,72 @@ export const withSpentRouteErrorsHandled: SpentErrorWrapper = (
   };
 };
 
-export const SpentMiddleware = async (
-  request: NextRequest,
+// export const SpentMiddleware = async (
+//   request: NextRequest,
+//   config: AppConfig,
+//   route: string,
+// ): Promise<Headers> => {
+//   let headers: Headers = request.headers;
+//
+//   // 1. App Verification middleware
+//   headers = appVerificationMiddleware(headers);
+//
+//   // 2. Input Validation middleware (if required)
+//   if (config.routesWithInputValidation.includes(route)) {
+//     const schema = config.inputValidationSchemaMapping[route];
+//
+//     if (schema) {
+//       await inputValidationMiddleware(request, schema);
+//     } else {
+//       throw UnregisteredSchemaError(
+//         "Route expecting schema not found/registered",
+//         SpentExceptionCodes.UNREGISTERED_SCHEMA,
+//         500,
+//         undefined,
+//         { route },
+//       );
+//     }
+//   }
+//
+//   // 3. Auth middleware (if required)
+//   if (config.routesWithAuthProtection.includes(route)) {
+//     let ignoreTokenExpiry = false;
+//     if (config.routesWithExpiredTokensAllowed.includes(route)) {
+//       ignoreTokenExpiry = true;
+//     }
+//
+//     headers = await authMiddleware(headers, ignoreTokenExpiry);
+//   }
+//
+//   return headers;
+// };
+//
+//
+
+const SpentMiddleware = async (
+  headers: Headers,
   config: AppConfig,
   route: string,
 ): Promise<Headers> => {
-  let headers: Headers = request.headers;
+  console.log("coming into middleware");
+  let processedHeaders: Headers = new Headers(headers);
 
-  // 1. App Verification middleware
+  // 1. App Verification
   headers = appVerificationMiddleware(headers);
 
-  // 2. Input Validation middleware (if required)
-  if (config.routesWithInputValidation.includes(route)) {
-    const schema = config.inputValidationSchemaMapping[route];
+  // 2. Auth middleware
+  const protectedRoutes = config.authProtectedRoutesWithIgnoreExpiryFlag!;
 
-    if (schema) {
-      await inputValidationMiddleware(request, schema);
-    } else {
-      throw UnregisteredSchemaError(
-        "Route expecting schema not found/registered",
-        SpentExceptionCodes.UNREGISTERED_SCHEMA,
-        500,
-        undefined,
-        { route },
+  for (const rt of Object.keys(protectedRoutes)) {
+    if (route.startsWith(rt)) {
+      processedHeaders = await authMiddleware(
+        headers,
+        protectedRoutes[rt] ?? false,
       );
+      break;
     }
   }
-
-  // 3. Auth middleware (if required)
-  if (config.routesWithAuthProtection.includes(route)) {
-    let ignoreTokenExpiry = false;
-    if (config.routesWithExpiredTokensAllowed.includes(route)) {
-      ignoreTokenExpiry = true;
-    }
-
-    headers = await authMiddleware(headers, ignoreTokenExpiry);
-  }
-
-  return headers;
+  return processedHeaders;
 };
+
+export default SpentMiddleware;
