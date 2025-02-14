@@ -44,7 +44,8 @@ export interface AppConfig {
   validationSchemaMapping: Record<string, ZodSchema>;
   authProtectedRoutesWithIgnoreExpiryFlag?: Record<string, boolean>;
   middlewareFn?: (
-    headers: Headers,
+    // headers: Headers,
+    request: NextRequest,
     config: AppConfig,
     route: string,
   ) => Promise<Headers>;

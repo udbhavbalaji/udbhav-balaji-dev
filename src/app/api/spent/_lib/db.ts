@@ -283,7 +283,7 @@ export const createTrx = async (
 };
 
 export const createUserTrx = async (user: CreatePrismaUser) => {
-  await db.$transaction(async (trx) => {
+  return await db.$transaction(async (trx) => {
     const userPromise = await trx.user.create({ data: user });
     const categoryPromise = await trx.category.create({
       data: { name: "Unknown", userId: user.userId },

@@ -91,10 +91,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import globalConfig from "@/config";
 import { RegisteredApp } from "./types";
+import { inputValidationMiddleware } from "@spent-api/_lib/middleware";
+import { ApiRoutesErrorHandler } from "@api/_lib/middleware";
+import { InvalidRouteError } from "@api/_lib/errors";
 
 const middleware = async (request: NextRequest) => {
-  let headers: Headers = request.headers;
+  console.log("coming into middleware");
+  let headers: Headers = new Headers(request.headers);
+  // let headers: Headers = request.headers;
   let isRouteValid = false;
+
+  console.log("headers", JSON.stringify(headers));
 
   try {
     const { pathname } = request.nextUrl;
@@ -107,19 +114,45 @@ const middleware = async (request: NextRequest) => {
     const registeredRoutes = appConfig.registeredRoutes;
 
     for (const rt of registeredRoutes) {
+      console.log("route", route);
+      console.log("rt", rt);
       if (route.startsWith(rt)) {
         isRouteValid = true;
         break;
       }
     }
 
-    if (!isRouteValid) return NextResponse.next();
+    // if (!isRouteValid) throw new Error("Invalid Route");
+    if (!isRouteValid) {
+      throw InvalidRouteError("This route is not registered for this app", 405);
+    }
 
     // Routing the request through the registered middleware (if any)
     if (appConfig.middlewareFn) {
-      headers = await appConfig.middlewareFn(headers, appConfig, route);
+      headers = await appConfig.middlewareFn(request, appConfig, route);
     }
-  } catch (err) { }
+
+    // Input Validation
+    const validationRoutes = appConfig.validationSchemaMapping ?? {};
+
+    for (const rt of Object.keys(validationRoutes)) {
+      if (route.startsWith(rt)) {
+        await inputValidationMiddleware(request, validationRoutes[rt]!);
+        break;
+      }
+    }
+
+    // move on to route handler with modified (or original if no middleware registered)
+    console.log("headers", headers);
+
+    return NextResponse.next({
+      request: {
+        headers: headers,
+      },
+    });
+  } catch (err) {
+    return ApiRoutesErrorHandler(err as Error);
+  }
 };
 
 const extractRoute = (
@@ -140,7 +173,8 @@ const extractRoute = (
     }
   }
 
-  if (!baseUrl || !route || !appName) throw new Error("Invalid route");
+  if (!baseUrl || !route || !appName)
+    throw InvalidRouteError("Invalid route | App not registered");
 
   return { baseUrl, route, appName };
 };

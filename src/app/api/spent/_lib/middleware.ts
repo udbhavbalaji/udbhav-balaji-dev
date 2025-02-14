@@ -119,6 +119,7 @@ export const withSpentRouteErrorsHandled: SpentErrorWrapper = (
   handler: SpentRouteHandler,
 ) => {
   return async (request: NextRequest) => {
+    // console.log("actual request", request);
     try {
       const userId = request.headers.get("user-id");
 
@@ -187,12 +188,14 @@ export const withSpentRouteErrorsHandled: SpentErrorWrapper = (
 //
 
 const SpentMiddleware = async (
-  headers: Headers,
+  request: NextRequest,
+  // headers: Headers,
   config: AppConfig,
   route: string,
 ): Promise<Headers> => {
-  console.log("coming into middleware");
-  let processedHeaders: Headers = new Headers(headers);
+  console.log("coming into spent middleware");
+  // let processedHeaders: Headers = new Headers(headers);
+  let headers = request.headers;
 
   // 1. App Verification
   headers = appVerificationMiddleware(headers);
@@ -202,14 +205,11 @@ const SpentMiddleware = async (
 
   for (const rt of Object.keys(protectedRoutes)) {
     if (route.startsWith(rt)) {
-      processedHeaders = await authMiddleware(
-        headers,
-        protectedRoutes[rt] ?? false,
-      );
+      headers = await authMiddleware(headers, protectedRoutes[rt] ?? false);
       break;
     }
   }
-  return processedHeaders;
+  return headers;
 };
 
 export default SpentMiddleware;

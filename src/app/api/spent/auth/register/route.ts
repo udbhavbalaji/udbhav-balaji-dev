@@ -41,7 +41,6 @@ const RegisterRouteHandler: SpentRouteHandler = async (
   // todo: need to add default catetgory and sub-categories in the db for the user as part of the creation process
   await createUserTrx(user);
 
-
   // LEGACY: need to keep these till the transaction approach is tested
   // await prisma.create(user);
 
