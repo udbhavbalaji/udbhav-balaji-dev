@@ -5,9 +5,9 @@ import {
   SpentRouteHandler,
 } from "@/types/spent";
 import { NextRequest, NextResponse } from "next/server";
-import { ForbiddenError } from "../../_lib/errors";
-import { withSpentRouteErrorsHandled } from "../../_lib/middleware";
-import { user as prisma } from "../../_lib/db";
+import { ForbiddenError } from "@/app/api/spent/_lib/errors";
+import { withSpentRouteErrorsHandled } from "@/app/api/spent/_lib/middleware";
+import { user as prisma } from "@/app/api/spent/_lib/db";
 
 const MeRouteHandler: SpentRouteHandler = async (request: NextRequest) => {
   const userId = request.headers.get("user-id");

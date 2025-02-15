@@ -8,8 +8,7 @@ const fetchData = async (year: string) => {
 };
 
 const useSeasonSchedule = (year: string) => {
-  // todo: need to update the type here when I figurte out what Ergast returns for the season schedule
-  return useQuery<SeasonScheduleContextType['SeasonSchedule']>({
+  return useQuery<SeasonScheduleContextType["SeasonSchedule"]>({
     queryKey: ["seasonSchedule", year],
     queryFn: async () => fetchData(year),
     enabled: !!year,
@@ -19,4 +18,3 @@ const useSeasonSchedule = (year: string) => {
 };
 
 export default useSeasonSchedule;
-

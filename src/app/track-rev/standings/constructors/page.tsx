@@ -18,9 +18,9 @@ export default function ConstructorStandings() {
     updateTitle(`${year} Constructor Standings`);
   }, [year]);
 
-  // if (isLoading) return <div>Loading...</div>;
-  //
-  // if (error) return <div>Error: {error.message}</div>;
+  if (isLoading) return <div>Loading...</div>;
+
+  if (error) return <div>Error: {error.message}</div>;
 
   if (!data || !data[year]) return <div>No data</div>;
 
@@ -33,13 +33,6 @@ export default function ConstructorStandings() {
         onYearChange={updateYear}
       />
 
-      {isLoading && <div>Loading...</div>}
-
-      {error ? (
-        <div>Error: {error.message}</div>
-      ) : (
-        <ConstructorStandingsCard data={data} year={year} />
-      )}
       <div className="my-10 flex w-11/12 flex-col justify-start rounded-md text-white md:flex-row">
         <ul className="flex flex-wrap">
           {data[year].map((item, index) => (

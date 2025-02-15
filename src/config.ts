@@ -127,14 +127,22 @@ import {
 import { UBDevAPIConfig } from "./types";
 import SpentMiddleware from "@spent-api/_lib/middleware";
 
-export const apps = ["Spent"] as const;
+export const apps = ["Spent", "TrackRev"] as const;
 
 const config: UBDevAPIConfig = {
   appUrlMapping: {
     "/api/spent": "Spent",
-    // "/api/track-rev": "TrackRev",
+    "/api/track-rev": "TrackRev",
   },
   configs: {
+    TrackRev: {
+      registeredRoutes: [
+        "/standings/constructors",
+        "/standings/drivers",
+        "/schedule",
+      ],
+      validationSchemaMapping: {},
+    },
     Spent: {
       registeredRoutes: [
         "/auth/register",

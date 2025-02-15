@@ -18,4 +18,4 @@ export const navbarItems: NavbarItem[] = [
   },
 ];
 
-export const Seasons = ["2024", "2023", "2022", "2021", "2020", "2019"];
+export const Seasons = ["2025", "2024", "2023", "2022", "2021", "2020", "2019"];

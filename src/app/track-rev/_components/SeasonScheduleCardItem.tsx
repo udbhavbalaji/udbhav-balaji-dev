@@ -3,7 +3,10 @@ import { useRouter } from "next/navigation";
 import { SeasonScheduleCardItemProps } from "@/types/track-rev";
 import { getWeeekendMonths, getMonthName } from "@/app/track-rev/_lib/utils";
 
-const SeasonSchduleCardItem = ({ index, cardData }: SeasonScheduleCardItemProps) => {
+const SeasonSchduleCardItem = ({
+  index,
+  cardData,
+}: SeasonScheduleCardItemProps) => {
   const router = useRouter();
   const { seasonSchedule: year } = useYear();
 
@@ -12,19 +15,16 @@ const SeasonSchduleCardItem = ({ index, cardData }: SeasonScheduleCardItemProps)
   const startDate = cardData.Sessions.FirstPractice.date.split("-")[2];
   const endDate = cardData.Sessions.Race.date.split("-")[2];
 
-  const { startMonth, endMonth } = getMonthName(getWeeekendMonths(cardData.Sessions));
-
-    // startMonth: getMonthName(parseInt(item.FirstPractice.date.split("-")[1])),
-    // endMonth: getMonthName(parseInt(item.Race.date.split("-")[1])),
+  const { startMonth, endMonth } = getMonthName(
+    getWeeekendMonths(cardData.Sessions),
+  );
 
   if (startMonth === endMonth) {
-    weekendSchedule = `${startDate} - ${
-      endDate
-    } ${endMonth.slice(0, 3)}`;
+    weekendSchedule = `${startDate} - ${endDate} ${endMonth.slice(0, 3)}`;
   } else {
     weekendSchedule = `${startDate} ${startMonth.slice(
       0,
-      3
+      3,
     )} - ${endDate} ${endMonth.slice(0, 3)}`;
   }
 
@@ -35,26 +35,23 @@ const SeasonSchduleCardItem = ({ index, cardData }: SeasonScheduleCardItemProps)
   return (
     <li
       key={index}
-      className='w-8/12 flex py-4 items-center justify-center mx-auto rounded-xl'
+      className="mx-auto flex w-8/12 items-center justify-center rounded-xl py-4"
     >
       <div
-        className={`flex flex-col gap p-4 w-full rounded-md shadow-lg cursor-pointer ${
-          index % 2 === 0 ? "even" : "odd"
-        }-card`}
+        className={`gap flex w-full cursor-pointer flex-col rounded-md p-4 shadow-lg ${index % 2 === 0 ? "bg-gray-800" : "bg-gray-700"
+          }-card`}
         onClick={() => handleCardClick(year, cardData.round)}
       >
-        <p className='text-sm text-red-600 font-semibold'>{`Round ${
-          index + 1
-        }`}</p>
-        <div className='text-xl font-bold text-white'>{cardData.raceName}</div>
-        <div className='text-sm text-gray-400 font-wideFont'>
+        <p className="text-sm font-semibold text-red-600">{`Round ${index + 1
+          }`}</p>
+        <div className="text-xl font-bold text-white">{cardData.raceName}</div>
+        <div className="font-wideFont text-sm text-gray-400">
           {cardData.circuitName}
         </div>
-        <p className='text-xs text-gray-500'>{weekendSchedule}</p>
+        <p className="text-xs text-gray-500">{weekendSchedule}</p>
       </div>
     </li>
   );
 };
 
 export default SeasonSchduleCardItem;
-

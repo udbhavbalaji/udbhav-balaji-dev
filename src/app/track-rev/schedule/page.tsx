@@ -8,9 +8,8 @@ import DropDown from "@/app/_components/ui/DropDown";
 import { Seasons } from "@/app/track-rev/_resources";
 import SeasonScheduleCardItem from "@/app/track-rev/_components/SeasonScheduleCardItem";
 
-
 const ScheduleCard = () => {
-  const { updateTitle } =  useTitle();
+  const { updateTitle } = useTitle();
   const { seasonSchedule: year, updateYear } = useYear();
   const { data, isLoading, error } = useSeasonSchedule(year);
 
@@ -25,9 +24,9 @@ const ScheduleCard = () => {
   if (!data || !data[year]) return <div>No data</div>;
 
   return (
-     <div className="container mx-auto flex w-full flex-wrap items-center justify-center rounded-lg">
+    <div className="container mx-auto flex w-full flex-wrap items-center justify-center rounded-lg">
       <DropDown
-        field="constructorStandings"
+        field="seasonSchedule"
         options={Seasons}
         currentValue={year}
         onYearChange={updateYear}
@@ -35,11 +34,7 @@ const ScheduleCard = () => {
       <div className="my-10 flex w-11/12 flex-col justify-start rounded-md text-white md:flex-row">
         <ul className="flex flex-wrap">
           {data[year].map((item, index) => (
-            <SeasonScheduleCardItem
-              key={index}
-              index={index}
-              cardData={item}
-            />
+            <SeasonScheduleCardItem key={index} index={index} cardData={item} />
           ))}
         </ul>
       </div>

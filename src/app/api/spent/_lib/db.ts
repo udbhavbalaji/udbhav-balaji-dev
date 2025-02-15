@@ -267,19 +267,39 @@ export const subCategory = {
   },
 };
 
+// export const createTrx = async (
+//   receipt: PrismaReceipt,
+//   items: PrismaItem[],
+//   expense: PrismaExpense,
+// ): Promise<void> => {
+//   await db.$transaction(async (trx) => {
+//     const receiptPromise = await trx.receipt.create({ data: receipt });
+//     const itemsPromise = await trx.item.createMany({ data: items });
+//     const expensePromise = await trx.expense.create({ data: expense });
+//
+//     // warn: nees to check that this works to ensure that the treansaction fails, otherwise there's no point of doing it as a transaction.
+//     return Promise.all([receiptPromise, itemsPromise, expensePromise]);
+//   });
+// };
+
 export const createTrx = async (
   receipt: PrismaReceipt,
   items: PrismaItem[],
   expense: PrismaExpense,
 ): Promise<void> => {
-  await db.$transaction(async (trx) => {
-    const receiptPromise = await trx.receipt.create({ data: receipt });
-    const itemsPromise = await trx.item.createMany({ data: items });
-    const expensePromise = await trx.expense.create({ data: expense });
-
-    // warn: nees to check that this works to ensure that the treansaction fails, otherwise there's no point of doing it as a transaction.
-    return Promise.all([receiptPromise, itemsPromise, expensePromise]);
-  });
+  await db.$transaction([
+    db.receipt.create({ data: receipt }),
+    db.item.createMany({ data: items }),
+    db.expense.create({ data: expense }),
+  ]);
+  // await db.$transaction(async (trx) => {
+  //   const receiptPromise = await trx.receipt.create({ data: receipt });
+  //   const itemsPromise = await trx.item.createMany({ data: items });
+  //   const expensePromise = await trx.expense.create({ data: expense });
+  //
+  //   // warn: nees to check that this works to ensure that the treansaction fails, otherwise there's no point of doing it as a transaction.
+  //   return Promise.all([receiptPromise, itemsPromise, expensePromise]);
+  // });
 };
 
 export const createUserTrx = async (user: CreatePrismaUser) => {
