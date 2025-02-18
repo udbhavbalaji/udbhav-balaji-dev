@@ -41,8 +41,72 @@
 // }
 //
 //
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
+//
+// export default function Home() {
+//   redirect("/portfolio");
+// }
+//
+
+import Link from "next/link";
+import { navbarItems } from "@/app/portfolio/_resources";
 
 export default function Home() {
-  redirect("/portfolio");
+  return (
+    <main className="flex min-h-screen flex-col bg-gray-900 font-portfolioFont text-stone-100">
+      <Navbar />
+      <hr className="border-5 mx-10 my-5 border-green-400 px-4 py-3" />
+      <Profile />
+      <div className="mx-auto flex h-full w-full flex-col items-center justify-center gap-12 bg-gradient-to-b from-gray-900 to-green-900 px-4 py-16">
+        Home Page Home Page Home Page Home Page Home Page Home Page Home Page
+        Home Page Home Page Home Page Home Page Home Page Home Page Home Page
+        Home Page Home Page Home Page Home Page Home Page Home Page Home Page
+        Home Page Home Page Home Page Home Page Home Page Home Page Home Page
+        Home Page Home Page Home Page Home Page Home Page Home Page Home Page
+        Home Page Home Page Home Page Home Page Home Page Home Page Home Page
+        Home Page Home Page Home Page Home Page Home Page Home Page Home Page
+        Home Page Home Page Home Page Home Page Home Page Home Page Home Page
+      </div>
+    </main>
+  );
+}
+
+function Profile() {
+  return <div></div>;
+}
+
+function Navbar() {
+  return (
+    <div className="left-0 top-0 z-20 bg-inherit pt-8">
+      <div className="container mx-auto flex flex-wrap items-center justify-between">
+        <div className="my-auto mr-3 flex items-center self-center text-2xl font-semibold">
+          <a className="hover:text-white" href="">
+            UB
+          </a>
+        </div>
+        <div>
+          <ul className="text-md inline-flex font-medium">
+            {navbarItems.map((item, idx) => (
+              <li key={idx} className="mx-8 my-2">
+                {item.linkType === "static" ? (
+                  <a
+                    href={item.link}
+                    download={item.downloadName}
+                    title="Download my Resume!"
+                    className="hover:text-green-400"
+                  >
+                    {item.display}
+                  </a>
+                ) : (
+                  <a href={item.link} className="hover:text-green-400">
+                    {item.display}
+                  </a>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
 }
