@@ -38,8 +38,8 @@ const SeasonSchduleCardItem = ({
       className="mx-auto flex w-8/12 items-center justify-center rounded-xl py-4"
     >
       <div
-        className={`gap flex w-full cursor-pointer flex-col rounded-md p-4 shadow-lg ${index % 2 === 0 ? "bg-gray-800" : "bg-gray-700"
-          }-card`}
+        className={`gap flex w-full cursor-pointer flex-col rounded-md border border-gray-900 p-4 shadow-lg hover:border-white ${index % 2 === 0 ? "bg-gray-800" : "bg-gray-700"
+          }`}
         onClick={() => handleCardClick(year, cardData.round)}
       >
         <p className="text-sm font-semibold text-red-600">{`Round ${index + 1

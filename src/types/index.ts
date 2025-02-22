@@ -92,6 +92,17 @@ export type UBDevExceptionInvocator = (
 
 // Frontend Client Type Declarations
 
+// Portfolio/Home
+
+export interface ProjectItemProps {
+  title: string;
+  imgUrl: string;
+  stack: string[];
+  techSkills: string[];
+  description: string;
+  link: string;
+}
+
 // Track Rev
 
 export interface TitleContextType {
