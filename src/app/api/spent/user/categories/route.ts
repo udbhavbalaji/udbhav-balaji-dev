@@ -1,5 +1,10 @@
 import { withSpentRouteErrorsHandled } from "@spent-api/_lib/middleware";
-import { GetCategoriesRouteHandler, AddCategoriesRouteHandler, UpdateCategoriesRouteHandler, DeleteCategoriesRouteHandler } from "./handlers";
+import {
+  GetCategoriesRouteHandler,
+  AddCategoriesRouteHandler,
+  UpdateCategoriesRouteHandler,
+  DeleteCategoriesRouteHandler,
+} from "./handlers";
 
 //@ts-ignore
 export const GET = withSpentRouteErrorsHandled(GetCategoriesRouteHandler);
@@ -8,9 +13,7 @@ export const GET = withSpentRouteErrorsHandled(GetCategoriesRouteHandler);
 export const POST = withSpentRouteErrorsHandled(AddCategoriesRouteHandler);
 
 //@ts-ignore
-export const UPDATE = withSpentRouteErrorsHandled(UpdateCategoriesRouteHandler);
+export const PUT = withSpentRouteErrorsHandled(UpdateCategoriesRouteHandler);
 
 //@ts-ignore
 export const DELETE = withSpentRouteErrorsHandled(DeleteCategoriesRouteHandler);
-
-
