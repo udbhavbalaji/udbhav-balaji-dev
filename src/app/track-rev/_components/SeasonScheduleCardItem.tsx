@@ -29,7 +29,7 @@ const SeasonSchduleCardItem = ({
   }
 
   const handleCardClick = (season: string, round: number) => {
-    router.push(`/races/${season}/${round}`);
+    router.push(`/track-rev/race/${round}/details`);
   };
 
   return (

@@ -7,15 +7,14 @@ import TitleProvider from "@/app/track-rev/_providers/TitleProvider";
 import YearProvider from "@/app/track-rev/_providers/YearProvider";
 import { TrackRevLayoutProps } from "@/types/track-rev";
 import TrackRevQueryProvider from "./_providers/TrackRevQueryProvider";
+import "../../styles/f1-animations.css";
 
-export default function TrackRevLayout({
-  children,
-}: TrackRevLayoutProps) {
+export default function TrackRevLayout({ children }: TrackRevLayoutProps) {
   return (
     <TitleProvider>
       <YearProvider>
         <TrackRevQueryProvider>
-          <div className="font-trackRevRegularFont min-h-screen w-full bg-gray-900 text-stone-100 flex flex-col">
+          <div className="flex min-h-screen w-full flex-col bg-gray-900 font-trackRevRegularFont text-stone-100">
             <Navbar />
             <ContentSection>
               <main>{children ?? <></>}</main>
