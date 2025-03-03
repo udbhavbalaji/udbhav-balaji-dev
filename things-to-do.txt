@@ -1,0 +1,253 @@
+
+Process flow for the front-end of Spent
+
+1. User enters the app -> Prompted to login
+2. Login page -> Option to register if not registered => Logs the user in and redirects to the home page of the app | Register page -> Option to login if already registered => Registers the user and redirects to login page
+NOTE: Pages 3, 4, 5 & 6 have tab-base navigation
+3. Home page -> Greeting to the user & some options to quick actions & the most basic and essential stats
+4. Expenses page -> Will allow the user to view past expenses (leads to expense page -> allows user to view details of the selected expense)
+5. Statistics page -> allows the user to view charts about their spending habits, with fully configurable options
+6. User Page -> Will include user's profile & settings
+7. Expense page -> only accessible from the expenses page -> allows the user to view details of the selected expense
+8. Settings page -> allows the user to configure their preferences when it comes to currency, default user-chosen time frame for expense summary
+9. Manage categories and merchants page -> allows the user to view their current mappings of sub-categories to merchants & sub-categories to categories
+
+Page: Welcome
+  Styled UI: Button to navigate to login page 
+
+Page: Login
+  Styled UI: Login form with email and password fields
+  Styled UI: Text link allowing navigation to register page
+  Styled UI: Button to submit user credentials to back end to get authenticated
+
+  Back End: {
+      endpoint: POST /api/spent/auth/login
+      headers: { secret-app-key: string }
+      body: {
+          email: string
+          password: string
+        }
+      front-end response: navigate to home page if successful | display error in form if unsuccessful
+    }
+
+
+Page: Register
+  Styled UI: Register form with first name, last name, email and password fields
+  Styled UI: Include a confirm password field as well (won't be sent to back-end)
+  Styled UI: Text link allowing navigation to login page
+  Styled UI: Button to submit user info to back end to register
+
+  Back End: {
+      endpoint: POST /api/spent/auth/register
+      headers: { secret-app-key: string }
+      body: {
+          first name: string
+          last name: string
+          email: string
+          password: string
+        }
+      front-end response: navigate to login page if successful | display error in form if unsuccessful
+    }
+
+
+
+Page: Home
+  Styled UI: Tab-based navigation
+  Styled UI: Greeting to the user (e.g. Good morning, John Doe)
+  Styled UI: Buttons to navigate to some quick actions (e.g. Add expense, view last added expense, etc.)
+  Styled UI: Card displaying the total amount spent by the user in chosen time frame
+
+  Front-end state: User's details [to be retrieved once (on login) from the back-end and stored in state?]
+  Front-end state: User's merchant;category;sub-category mapping [to be retrieved once (on login) from the back-end and stored in state? & re-fetched when changes?]
+
+  Back End: {
+      endpoint: GET /api/spent/auth/me -> to persist in state
+      endpoint: GET /api/spent/expenses/spending-summary -> takes in user-configured time-frame
+      endpoint: GET /api/spent/expenses/merchants -> to persist in state
+      endpoint: GET /api/spent/expenses/categories -> to persist in state
+      endpoint: GET /api/spent/expenses/sub-categories -> to persist in state
+      headers: { secret-app-key: string, authorization: string }
+      body (/api/spent/expenses/spending-summary) : { time-frame: number, units: TimeFrameUnits } -> TimeFrameUnits to be created
+    }
+
+  Front-end response: Display all fetched data in the UI
+
+
+Page: Expenses
+  Styled UI: Tab-based navigation
+  Styled UI: Drop down selecting time frame || Date pickers to select date range
+  Styled UI: Drop down selection of merchant, category, sub-category (multiple) (Radio button allows the user to choose which one they want to filter by)
+  Styled UI: Table displaying the expenses in the user chosen time frame
+  Styled UI: Button retrieving the data with the user-chosen options
+  Styled UI: Button allowing user to download the data in a csv file
+
+  Front-end state: User-selected time frame -> should not persist if user switches to another page
+  Front-end state: variable indicating whether the user has selected a date range or entered their own dates
+  Front-end state: variable indicating if the user is filtering by merchant, category, sub-category or none
+  Front-end state: user-selected merchants/categories/sub-categories
+
+  Back End: {
+      endpoint: GET /api/spent/expenses/filtered-by-date -> takes in user-entered start and end dates & user-chosen filters
+      endpoint: GET /api/spent/expenses/filtered-by-range -> takes in user-chosen time frame & user-chosen filters
+      headers: { secret-app-key: string, authorization: string }
+      body (/api/spent/expenses/filtered-by-date): {
+          start date: string,
+          end date: string,
+          merchants?: string[],
+          categories?: string[],
+          sub-categories?: string[]
+        }
+      body (/api/spent/expenses/filtered-by-range): {
+          time range: string (or likely something like an enum),
+          merchants?: string[],
+          categories?: string[],
+          sub-categories?: string[]
+        }
+
+  }
+
+  Front-end response: Table should not be shown until the user presses the button to filter and retrieve the data  
+  Front-end response: Display the fetched data in the table 
+  Front-end-response: User-chosen options to be available above
+  Front-end-response: Export button to be disabled until the user retrieves the data; enabled after that
+
+
+
+Page: Statistics
+  Styled UI: Tab-based navigation
+  Styled UI: Drop down selecting time frame || Date pickers to select date range
+  Styled UI: Drop down selection of merchant, category, sub-category (only one) (Radio button allows the user to choose which one they want to filter by)
+  Styled UI: Charts displaying useful information about the user's spending habits (like spend by necessity, spend by frequency, spend by category, etc.) <can be multiple charts>
+
+  Front-end state: User-selected time frame -> should persist if user switches to another page
+  Front-end state: variable indicating whether the user has selected a date range or entered their own dates
+  Front-end state: variable indicating if the user is filtering by merchant, category, sub-category or none
+  Front-end state: user-selected merchants/categories/sub-categories
+
+  Back End: {
+      endpoint: GET /api/spent/expenses/charts-by-dates -> takes in user-entered start and end dates & user-chosen filters [might have to define an endpoint for each chart, depending on API ref]
+      endpoint: GET /api/spent/expenses/charts-by-range -> takes in user-chosen time frame & user-chosen filters [might have to define an endpoint for each chart, depending on API ref]
+      headers: { secret-app-key: string, authorization: string }
+      body (.../charts-by-dates): {
+          start date: string,
+          end date: string,
+          merchant?: string,
+          category?: string,
+          sub-category?: string
+        }
+      body (.../charts-by-range): {
+          time range: string (or likely something like an enum),
+          merchant?: string,
+          category?: string,
+          sub-category?: string
+        }
+
+  }
+
+  Front-end response: On load, the user sees the charts for default selected options (default user-selected time frame, with no other filters)
+  Front-end response: Charts refresh when the user changes the filters
+  Front-end-response: Should try to be as interactive as possible
+
+
+
+Page: User
+  Styled UI: Tab-based navigation
+  Styled UI: Menu allowing user to navigate to different user-related pages (profile, settings, categories, merchants, sub-categories)
+  Styled UI: Button allowing user to log out of the app
+  Styled UI: Button allowing the user to delete their account
+
+  Front-end state: User's details [in state from home page]
+
+  Back End: {
+      endpoint: PUT /api/spent/auth/logout -> logs the user out
+      endpoint: DELETE /api/spent/auth/delete -> deletes the user's account
+      headers: { secret-app-key: string, authorization: string }
+  }
+
+  Front-end response: Each menu item that can be accessed should be pushed onto the stack (if possible)
+  Front-end response: If the user logs out, the user is redirected to the login page
+  Front-end-response: If the user deletes their account, they should be redirected to the welcome page
+
+
+
+Page: Settings
+  Styled UI: Stack pushed onto the User page in the tab-navigation
+  Styled UI: Drop down to allow the user to select their default time frame
+  Styled UI: Drop down to allow the user to allow the user to select their default currency
+  Styled UI: Button to save the changes
+  Styled UI: Back button to go back to the user page
+
+  Front-end state: User's details [in state from home page]
+  Front-end state: Updated choices
+
+  Back End: {
+      endpoint: PUT /api/spent/user/settings
+      headers: { secret-app-key: string, authorization: string }
+      body: {
+          time-frame: string,
+          currency: string
+        }
+
+  }
+
+  Front-end response: On load, the user sees their current settings
+  Front-end response: Once the user changes the settings, a message pops up saying confirmed and then they're redirected back to the user page (basically the stack is popped)
+  Front-end-response: If user tries to leave without saving, display a warn message, confirming the action
+
+
+
+Page: Manage merchants/categories/sub-categories
+  Styled UI: Stack pushed onto the User page in the tab-navigation
+  Styled UI: The top allows the user to 
+  Styled UI: Drop down to allow the user to allow the user to select their default currency
+  Styled UI: Button to save the changes
+  Styled UI: Back button to go back to the user page
+
+  Front-end state: User's details [in state from home page]
+  Front-end state: Updated choices
+
+  Back End: {
+      endpoint: PUT /api/spent/user/merchants
+      endpoint: PUT /api/spent/user/categories
+      endpoint: PUT /api/spent/user/sub-categories
+
+      endpoint: POST /api/spent/user/merchants
+      endpoint: POST /api/spent/user/categories
+      endpoint: POST /api/spent/user/sub-categories
+
+      endpoint: DELETE /api/spent/user/merchants
+      endpoint: DELETE /api/spent/user/categories
+      endpoint: DELETE /api/spent/user/sub-categories
+
+      - Just returns all merchants, categories, sub-categories,
+      endpoint: GET /api/spent/user/merchants
+      endpoint: GET /api/spent/user/categories
+      endpoint: GET /api/spent/user/sub-categories
+      headers: { secret-app-key: string, authorization: string }
+      body: {
+          time-frame: string,
+          currency: string
+        }
+
+  }
+
+  Front-end response: On load, the user sees their current settings
+  Front-end response: Once the user changes the settings, a message pops up saying confirmed and then they're redirected back to the user page (basically the stack is popped)
+  Front-end-response: If user tries to leave without saving, display a warn message, confirming the action
+
+
+
+testing playground:
+
+api/spent/receipts/get/:receiptId 
+api/spent/receipts/get/ajhsbdkSDHf-kashjebfajhsdfbajkSHdvf
+
+
+
+
+
+
+
+
+
+

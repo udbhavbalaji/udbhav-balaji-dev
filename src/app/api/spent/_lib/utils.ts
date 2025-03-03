@@ -64,6 +64,36 @@ export const verify = {
 };
 
 export const extract = {
+  routeFixed: (pathname: string, config: UBDevAPIConfig) => {
+    let appBaseUrl: keyof UBDevAPIConfig["appUrlMapping"] | undefined =
+      undefined;
+    let route: string | undefined = undefined;
+    let appName: RegisteredApp | undefined = undefined;
+
+    const registeredAppUrls = Object.keys(config.appUrlMapping);
+
+    // looping through each of the registered app urls
+    for (const url of registeredAppUrls) {
+      // if the request belongs to a particular app, then it would start with the app base url
+      if (pathname.startsWith(url)) {
+        // on confirming the app, we destrcuture the request pathname and assign it simpler processing
+        appBaseUrl = url;
+        route = pathname.split(url)[1] ?? "";
+        appName = config.appUrlMapping[url];
+        break;
+      }
+    }
+
+    // if appname wasnt found then the request isn't allowed to proceed
+    if (!appBaseUrl || !route || !appName)
+      throw InvalidRouteError("Invalid route | App not registered");
+
+    // compare the route to check if it starts with a route for a paramName?
+    const appRoutesWithParams = config.configs[appName].inputValidationSchemas;
+
+    return { appBaseUrl, route, appName };
+  },
+
   route: (
     pathname: string,
     config: UBDevAPIConfig,
@@ -71,10 +101,13 @@ export const extract = {
     appBaseUrl: keyof UBDevAPIConfig["appUrlMapping"];
     route: string;
     appName: RegisteredApp;
+    paramName?: string;
   } => {
     let appBaseUrl: keyof UBDevAPIConfig["appUrlMapping"] | undefined;
     let route: string | undefined;
     let appName: RegisteredApp | undefined;
+    let paramName: string | undefined;
+    let updatedPathname = pathname;
 
     const registeredAppUrls = Object.keys(config.appUrlMapping);
 
@@ -83,6 +116,23 @@ export const extract = {
         appBaseUrl = url;
         route = pathname.split(url)[1] ?? "";
         appName = config.appUrlMapping[url];
+
+        // if (!appBaseUrl || !appName) {
+        //   throw InvalidRouteError("Invalid route | App not registered");
+        // }
+
+        // const queryRoutes = config.configs[appName].routesWithQueryParams ?? [];
+        // if (queryRoutes.length > 0) {
+        //   for (const rt of queryRoutes) {
+        //     const endpoint = rt.split(":")[0]!;
+        //     if (route.startsWith(endpoint)) {
+        //       paramName = rt.split(":")[1];
+        //       route = rt;
+        //       break;
+        //     }
+        //   }
+        // }
+
         break;
       }
     }
@@ -94,6 +144,7 @@ export const extract = {
     route ??= "";
 
     return { appBaseUrl, route, appName };
+    // return { appBaseUrl, route, appName, paramName };
   },
 };
 

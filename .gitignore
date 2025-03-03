@@ -50,4 +50,10 @@ yarn-error.log*
 dev.db
 .vscode/
 
+# User defined Ignores
+f1LoadingComponent.tsx
+f1-animations.css
 old/
+
+# Example app dir
+app.example/
