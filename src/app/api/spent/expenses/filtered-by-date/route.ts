@@ -12,7 +12,7 @@ import {
   filterCategories,
   filterSubCategories,
 } from "../_lib/utils";
-import { withSpentRouteErrorsHandled } from "@spent-api/_lib/middleware";
+import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
 
 // todo: need to add support for filtering merchants, categories and sub-catergories (all or only one?)
 const FilterDateRouteHandler = async (
@@ -61,4 +61,4 @@ const FilterDateRouteHandler = async (
   return NextResponse.json({ ...response }, { status: response.status });
 };
 
-export const GET = withSpentRouteErrorsHandled(FilterDateRouteHandler);
+export const GET = WithSpentErrorsHandled(FilterDateRouteHandler);

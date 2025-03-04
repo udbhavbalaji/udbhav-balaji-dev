@@ -10,12 +10,16 @@ import {
 } from "@/types/track-rev";
 import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async (
+// export const GET = async (
+//   request: NextRequest,
+//   { params }: { params: { year: string } },
+// ): Promise<
+//   NextResponse<{ [year: string]: DriverStandingsItem[] } | { error: string }>
+// > => {
+export async function GET(
   request: NextRequest,
-  { params }: { params: { year: string } },
-): Promise<
-  NextResponse<{ [year: string]: DriverStandingsItem[] } | { error: string }>
-> => {
+  { params }: { params: Promise<{ year: string }> },
+) {
   try {
     const year = (await params).year;
 
@@ -71,4 +75,4 @@ export const GET = async (
       { status: 500 },
     );
   }
-};
+}

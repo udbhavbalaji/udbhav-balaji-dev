@@ -4,7 +4,7 @@ import {
   SpentExceptionCodes,
 } from "@/types/spent";
 import { ForbiddenError } from "@spent-api/_lib/errors";
-import { withSpentRouteErrorsHandled } from "@spent-api/_lib/middleware";
+import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
 import { NextRequest, NextResponse } from "next/server";
 import { expense as prisma } from "@/app/api/spent/_lib/db";
 
@@ -29,4 +29,4 @@ const GetExpensesRouteHandler = async (
   return NextResponse.json({ ...response }, { status: response.status });
 };
 
-export const GET = withSpentRouteErrorsHandled(GetExpensesRouteHandler);
+export const GET = WithSpentErrorsHandled(GetExpensesRouteHandler);

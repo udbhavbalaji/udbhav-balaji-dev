@@ -1,4 +1,4 @@
-import { withSpentRouteErrorsHandled } from "@spent-api/_lib/middleware";
+import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
 import {
   AddSubCategoriesHandler,
   DeleteSubCategoriesHandler,
@@ -6,7 +6,7 @@ import {
   UpdateSubCategoriesHandler,
 } from "./handlers";
 
-export const GET = withSpentRouteErrorsHandled(GetSubCategoriesHandler);
-export const POST = withSpentRouteErrorsHandled(AddSubCategoriesHandler);
-export const PUT = withSpentRouteErrorsHandled(UpdateSubCategoriesHandler);
-export const DELETE = withSpentRouteErrorsHandled(DeleteSubCategoriesHandler);
+export const GET = WithSpentErrorsHandled(GetSubCategoriesHandler);
+export const POST = WithSpentErrorsHandled(AddSubCategoriesHandler);
+export const PUT = WithSpentErrorsHandled(UpdateSubCategoriesHandler);
+export const DELETE = WithSpentErrorsHandled(DeleteSubCategoriesHandler);

@@ -1,215 +1,215 @@
-import { ZodError, ZodSchema } from "zod";
-import { NextRequest } from "next/server";
-
-import { ApiRoutesErrorHandler } from "@api-lib/middleware";
-import { user as prisma } from "@spent-api-lib/db";
-import { verify } from "@spent-api-lib/utils";
-import { AppConfig } from "@/types";
-import { env } from "@/env";
-import {
-  ForbiddenError,
-  InputValidationError,
-  UnauthorizedActionError,
-  UnregisteredSchemaError,
-} from "@spent-api-lib/errors";
-import {
-  AppVerificationMiddleware,
-  AuthMiddleware,
-  InputValidationMiddleware,
-  LoginStatus,
-  SpentErrorWrapper,
-  SpentExceptionCodes,
-  SpentRouteHandler,
-} from "@/types/spent";
-
-const appVerificationMiddleware: AppVerificationMiddleware = (
-  headers: Headers,
-): Headers => {
-  const clonedHeaders = new Headers(headers);
-  const secretAppKey = headers.get("secret-app-key");
-
-  if (!secretAppKey)
-    throw ForbiddenError("Unverified app", SpentExceptionCodes.UNVERIFIED_APP);
-
-  if (secretAppKey !== env.SECRET_APP_KEY)
-    throw ForbiddenError(
-      "Invalid app key",
-      SpentExceptionCodes.INVALID_APP_KEY,
-    );
-
-  clonedHeaders.delete("secret-app-key");
-  clonedHeaders.set("app-validated", "Y");
-
-  return clonedHeaders;
-};
-
-export const inputValidationMiddleware: InputValidationMiddleware = async (
-  request: NextRequest,
-  schema: ZodSchema,
-): Promise<void> => {
-  try {
-    const reqBody = await request.json();
-    schema.parse(reqBody);
-
-    return;
-  } catch (err) {
-    if (err instanceof ZodError) {
-      console.log("coming in correctly");
-      throw InputValidationError(
-        "Request body could not be validated",
-        SpentExceptionCodes.VALIDATION_ERROR,
-        422,
-        err,
-        err.issues,
-      );
-    } else throw err;
-  }
-};
-
-const authMiddleware: AuthMiddleware = async (
-  headers: Headers,
-  ignoreTokenExpiry: boolean,
-): Promise<Headers> => {
-  const clonedHeaders = new Headers(headers);
-  const token = clonedHeaders.get("authorization");
-
-  if (!token)
-    throw UnauthorizedActionError(
-      "Authorization header missing",
-      SpentExceptionCodes.JWT_MISSING,
-    );
-
-  const payload = await verify.JWToken(token);
-
-  if (!payload) {
-    throw UnauthorizedActionError(
-      "Unable to verify authorization",
-      SpentExceptionCodes.JWT_ERROR,
-      401,
-    );
-  }
-
-  const user = await prisma.authCheck(payload.userId);
-
-  if (user.loggedIn === LoginStatus.LOGGED_OUT) {
-    throw UnauthorizedActionError(
-      "User is logged out",
-      SpentExceptionCodes.USER_LOGGED_OUT,
-    );
-  }
-
-  if (token !== user.lastGeneratedToken && !ignoreTokenExpiry) {
-    throw UnauthorizedActionError(
-      "Updated token found",
-      SpentExceptionCodes.UPDATED_JWT_FOUND,
-    );
-  }
-
-  if (payload.expired && !ignoreTokenExpiry) {
-    clonedHeaders.set("logout-required", "Y");
-  }
-
-  clonedHeaders.set("user-id", user.userId);
-  clonedHeaders.delete("authorization");
-
-  return clonedHeaders;
-};
-
-export const withSpentRouteErrorsHandled: SpentErrorWrapper = (
-  handler: SpentRouteHandler,
-) => {
-  return async (request: NextRequest) => {
-    // console.log("actual request", request);
-    try {
-      const userId = request.headers.get("user-id");
-
-      if (request.headers.get("logout-required") === "Y" && userId !== null) {
-        await prisma.logout(userId);
-        throw UnauthorizedActionError(
-          "User has been logged out",
-          SpentExceptionCodes.USER_LOGGED_OUT,
-        );
-      }
-
-      if (request.headers.get("app-validated") !== "Y") {
-        throw ForbiddenError(
-          "App validation could not be confirmed",
-          SpentExceptionCodes.APP_VALIDATION_FAILED,
-        );
-      }
-
-      return await handler(request);
-    } catch (err) {
-      return ApiRoutesErrorHandler(err as Error);
-    }
-  };
-};
-
-// export const SpentMiddleware = async (
+// import { ZodError, ZodSchema } from "zod";
+// import { NextRequest } from "next/server";
+//
+// import { ApiRoutesErrorHandler } from "@api-lib/middleware";
+// import { user as prisma } from "@spent-api-lib/db";
+// import { verify } from "@spent-api-lib/utils";
+// import { AppConfig } from "@/types";
+// import { env } from "@/env";
+// import {
+//   ForbiddenError,
+//   InputValidationError,
+//   UnauthorizedActionError,
+//   UnregisteredSchemaError,
+// } from "@spent-api-lib/errors";
+// import {
+//   AppVerificationMiddleware,
+//   AuthMiddleware,
+//   InputValidationMiddleware,
+//   LoginStatus,
+//   SpentErrorWrapper,
+//   SpentExceptionCodes,
+//   SpentRouteHandler,
+// } from "@/types/spent";
+//
+// const appVerificationMiddleware: AppVerificationMiddleware = (
+//   headers: Headers,
+// ): Headers => {
+//   const clonedHeaders = new Headers(headers);
+//   const secretAppKey = headers.get("secret-app-key");
+//
+//   if (!secretAppKey)
+//     throw ForbiddenError("Unverified app", SpentExceptionCodes.UNVERIFIED_APP);
+//
+//   if (secretAppKey !== env.SECRET_APP_KEY)
+//     throw ForbiddenError(
+//       "Invalid app key",
+//       SpentExceptionCodes.INVALID_APP_KEY,
+//     );
+//
+//   clonedHeaders.delete("secret-app-key");
+//   clonedHeaders.set("app-validated", "Y");
+//
+//   return clonedHeaders;
+// };
+//
+// export const inputValidationMiddleware: InputValidationMiddleware = async (
 //   request: NextRequest,
+//   schema: ZodSchema,
+// ): Promise<void> => {
+//   try {
+//     const reqBody = await request.json();
+//     schema.parse(reqBody);
+//
+//     return;
+//   } catch (err) {
+//     if (err instanceof ZodError) {
+//       console.log("coming in correctly");
+//       throw InputValidationError(
+//         "Request body could not be validated",
+//         SpentExceptionCodes.VALIDATION_ERROR,
+//         422,
+//         err,
+//         err.issues,
+//       );
+//     } else throw err;
+//   }
+// };
+//
+// const authMiddleware: AuthMiddleware = async (
+//   headers: Headers,
+//   ignoreTokenExpiry: boolean,
+// ): Promise<Headers> => {
+//   const clonedHeaders = new Headers(headers);
+//   const token = clonedHeaders.get("authorization");
+//
+//   if (!token)
+//     throw UnauthorizedActionError(
+//       "Authorization header missing",
+//       SpentExceptionCodes.JWT_MISSING,
+//     );
+//
+//   const payload = await verify.JWToken(token);
+//
+//   if (!payload) {
+//     throw UnauthorizedActionError(
+//       "Unable to verify authorization",
+//       SpentExceptionCodes.JWT_ERROR,
+//       401,
+//     );
+//   }
+//
+//   const user = await prisma.authCheck(payload.userId);
+//
+//   if (user.loggedIn === LoginStatus.LOGGED_OUT) {
+//     throw UnauthorizedActionError(
+//       "User is logged out",
+//       SpentExceptionCodes.USER_LOGGED_OUT,
+//     );
+//   }
+//
+//   if (token !== user.lastGeneratedToken && !ignoreTokenExpiry) {
+//     throw UnauthorizedActionError(
+//       "Updated token found",
+//       SpentExceptionCodes.UPDATED_JWT_FOUND,
+//     );
+//   }
+//
+//   if (payload.expired && !ignoreTokenExpiry) {
+//     clonedHeaders.set("logout-required", "Y");
+//   }
+//
+//   clonedHeaders.set("user-id", user.userId);
+//   clonedHeaders.delete("authorization");
+//
+//   return clonedHeaders;
+// };
+//
+// export const withSpentRouteErrorsHandled: SpentErrorWrapper = (
+//   handler: SpentRouteHandler,
+// ) => {
+//   return async (request: NextRequest) => {
+//     // console.log("actual request", request);
+//     try {
+//       const userId = request.headers.get("user-id");
+//
+//       if (request.headers.get("logout-required") === "Y" && userId !== null) {
+//         await prisma.logout(userId);
+//         throw UnauthorizedActionError(
+//           "User has been logged out",
+//           SpentExceptionCodes.USER_LOGGED_OUT,
+//         );
+//       }
+//
+//       if (request.headers.get("app-validated") !== "Y") {
+//         throw ForbiddenError(
+//           "App validation could not be confirmed",
+//           SpentExceptionCodes.APP_VALIDATION_FAILED,
+//         );
+//       }
+//
+//       return await handler(request);
+//     } catch (err) {
+//       return ApiRoutesErrorHandler(err as Error);
+//     }
+//   };
+// };
+//
+// // export const SpentMiddleware = async (
+// //   request: NextRequest,
+// //   config: AppConfig,
+// //   route: string,
+// // ): Promise<Headers> => {
+// //   let headers: Headers = request.headers;
+// //
+// //   // 1. App Verification middleware
+// //   headers = appVerificationMiddleware(headers);
+// //
+// //   // 2. Input Validation middleware (if required)
+// //   if (config.routesWithInputValidation.includes(route)) {
+// //     const schema = config.inputValidationSchemaMapping[route];
+// //
+// //     if (schema) {
+// //       await inputValidationMiddleware(request, schema);
+// //     } else {
+// //       throw UnregisteredSchemaError(
+// //         "Route expecting schema not found/registered",
+// //         SpentExceptionCodes.UNREGISTERED_SCHEMA,
+// //         500,
+// //         undefined,
+// //         { route },
+// //       );
+// //     }
+// //   }
+// //
+// //   // 3. Auth middleware (if required)
+// //   if (config.routesWithAuthProtection.includes(route)) {
+// //     let ignoreTokenExpiry = false;
+// //     if (config.routesWithExpiredTokensAllowed.includes(route)) {
+// //       ignoreTokenExpiry = true;
+// //     }
+// //
+// //     headers = await authMiddleware(headers, ignoreTokenExpiry);
+// //   }
+// //
+// //   return headers;
+// // };
+// //
+// //
+//
+// const SpentMiddleware = async (
+//   request: NextRequest,
+//   // headers: Headers,
 //   config: AppConfig,
 //   route: string,
 // ): Promise<Headers> => {
-//   let headers: Headers = request.headers;
+//   console.log("coming into spent middleware");
+//   // let processedHeaders: Headers = new Headers(headers);
+//   let headers = request.headers;
 //
-//   // 1. App Verification middleware
+//   // 1. App Verification
 //   headers = appVerificationMiddleware(headers);
 //
-//   // 2. Input Validation middleware (if required)
-//   if (config.routesWithInputValidation.includes(route)) {
-//     const schema = config.inputValidationSchemaMapping[route];
+//   // 2. Auth middleware
+//   const protectedRoutes = config.authProtectedRoutesWithIgnoreExpiryFlag!;
 //
-//     if (schema) {
-//       await inputValidationMiddleware(request, schema);
-//     } else {
-//       throw UnregisteredSchemaError(
-//         "Route expecting schema not found/registered",
-//         SpentExceptionCodes.UNREGISTERED_SCHEMA,
-//         500,
-//         undefined,
-//         { route },
-//       );
+//   for (const rt of Object.keys(protectedRoutes)) {
+//     if (route.startsWith(rt)) {
+//       headers = await authMiddleware(headers, protectedRoutes[rt] ?? false);
+//       break;
 //     }
 //   }
-//
-//   // 3. Auth middleware (if required)
-//   if (config.routesWithAuthProtection.includes(route)) {
-//     let ignoreTokenExpiry = false;
-//     if (config.routesWithExpiredTokensAllowed.includes(route)) {
-//       ignoreTokenExpiry = true;
-//     }
-//
-//     headers = await authMiddleware(headers, ignoreTokenExpiry);
-//   }
-//
 //   return headers;
 // };
 //
-//
-
-const SpentMiddleware = async (
-  request: NextRequest,
-  // headers: Headers,
-  config: AppConfig,
-  route: string,
-): Promise<Headers> => {
-  console.log("coming into spent middleware");
-  // let processedHeaders: Headers = new Headers(headers);
-  let headers = request.headers;
-
-  // 1. App Verification
-  headers = appVerificationMiddleware(headers);
-
-  // 2. Auth middleware
-  const protectedRoutes = config.authProtectedRoutesWithIgnoreExpiryFlag!;
-
-  for (const rt of Object.keys(protectedRoutes)) {
-    if (route.startsWith(rt)) {
-      headers = await authMiddleware(headers, protectedRoutes[rt] ?? false);
-      break;
-    }
-  }
-  return headers;
-};
-
-export default SpentMiddleware;
+// export default SpentMiddleware;

@@ -7,7 +7,7 @@ import {
 import { NextRequest, NextResponse } from "next/server";
 import { BadRequestError } from "../../_lib/errors";
 import { generate } from "../../_lib/utils";
-import { withSpentRouteErrorsHandled } from "../../_lib/middleware";
+import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
 import { user as prisma, createUserTrx } from "../../_lib/db";
 
 const RegisterRouteHandler: SpentRouteHandler = async (
@@ -52,4 +52,4 @@ const RegisterRouteHandler: SpentRouteHandler = async (
   return NextResponse.json({ ...response }, { status: 201 });
 };
 
-export const POST = withSpentRouteErrorsHandled(RegisterRouteHandler);
+export const POST = WithSpentErrorsHandled(RegisterRouteHandler);

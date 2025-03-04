@@ -6,7 +6,7 @@ import {
 import { NextRequest, NextResponse } from "next/server";
 import { receipt as prisma } from "@spent-api-lib/db";
 import { BadRequestError, ForbiddenError } from "@spent-api-lib/errors";
-import { withSpentRouteErrorsHandled } from "@spent-api-lib/middleware";
+import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
 
 const GetReceiptRouteHandler = async (
   request: NextRequest,
@@ -36,4 +36,4 @@ const GetReceiptRouteHandler = async (
   return NextResponse.json({ ...response }, { status: response.status });
 };
 
-export const GET = withSpentRouteErrorsHandled(GetReceiptRouteHandler);
+export const GET = WithSpentErrorsHandled(GetReceiptRouteHandler);

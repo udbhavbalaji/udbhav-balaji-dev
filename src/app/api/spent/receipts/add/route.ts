@@ -4,7 +4,7 @@ import {
   SpentAPISuccessResponse,
   SpentExceptionCodes,
 } from "@/types/spent";
-import { withSpentRouteErrorsHandled } from "@spent-api-lib/middleware";
+import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
 import { generate } from "@spent-api-lib/utils";
 import { ForbiddenError, UnauthorizedActionError } from "@spent-api-lib/errors";
 import { itemSchema, ReceiptSchema } from "@spent-api-lib/schema";
@@ -55,4 +55,4 @@ const AddReceiptRouteHandler = async (request: Request) => {
   return NextResponse.json({ ...response }, { status: response.status });
 };
 
-export const POST = withSpentRouteErrorsHandled(AddReceiptRouteHandler);
+export const POST = WithSpentErrorsHandled(AddReceiptRouteHandler);

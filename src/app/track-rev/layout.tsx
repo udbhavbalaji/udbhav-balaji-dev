@@ -7,7 +7,6 @@ import TitleProvider from "@/app/track-rev/_providers/TitleProvider";
 import YearProvider from "@/app/track-rev/_providers/YearProvider";
 import { TrackRevLayoutProps } from "@/types/track-rev";
 import TrackRevQueryProvider from "./_providers/TrackRevQueryProvider";
-import "../../styles/f1-animations.css";
 
 export default function TrackRevLayout({ children }: TrackRevLayoutProps) {
   return (

@@ -2,10 +2,21 @@ import { type NextRequest, NextResponse } from "next/server";
 import { RaceTable, RawRaceEntry, SeasonScheduleItem } from "@/types/track-rev";
 import sendIt from "@/server/clients/track-rev/api-client";
 
-export const GET = async (
+interface RouteContext {
+  params: {
+    year: string;
+  };
+}
+
+// export const GET = async (
+//   request: NextRequest,
+//   // { params }: { params: { year: string } },
+//   { params }: { params: Promise<{ year: string }> },
+// ) => {
+export async function GET(
   request: NextRequest,
-  { params }: { params: { year: string } },
-) => {
+  { params }: { params: Promise<{ year: string }> },
+) {
   try {
     const year = (await params).year;
 
@@ -57,4 +68,4 @@ export const GET = async (
       { status: 500 },
     );
   }
-};
+}

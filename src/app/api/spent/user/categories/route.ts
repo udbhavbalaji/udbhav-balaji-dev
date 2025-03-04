@@ -1,4 +1,4 @@
-import { withSpentRouteErrorsHandled } from "@spent-api/_lib/middleware";
+import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
 import {
   GetCategoriesRouteHandler,
   AddCategoriesRouteHandler,
@@ -7,13 +7,13 @@ import {
 } from "./handlers";
 
 //@ts-ignore
-export const GET = withSpentRouteErrorsHandled(GetCategoriesRouteHandler);
+export const GET = WithSpentErrorsHandled(GetCategoriesRouteHandler);
 
 //@ts-ignore
-export const POST = withSpentRouteErrorsHandled(AddCategoriesRouteHandler);
+export const POST = WithSpentErrorsHandled(AddCategoriesRouteHandler);
 
 //@ts-ignore
-export const PUT = withSpentRouteErrorsHandled(UpdateCategoriesRouteHandler);
+export const PUT = WithSpentErrorsHandled(UpdateCategoriesRouteHandler);
 
 //@ts-ignore
-export const DELETE = withSpentRouteErrorsHandled(DeleteCategoriesRouteHandler);
+export const DELETE = WithSpentErrorsHandled(DeleteCategoriesRouteHandler);

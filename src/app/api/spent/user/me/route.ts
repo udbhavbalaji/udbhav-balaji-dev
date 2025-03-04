@@ -6,7 +6,7 @@ import {
 } from "@/types/spent";
 import { NextRequest, NextResponse } from "next/server";
 import { ForbiddenError } from "@/app/api/spent/_lib/errors";
-import { withSpentRouteErrorsHandled } from "@/app/api/spent/_lib/middleware";
+import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
 import { user as prisma } from "@/app/api/spent/_lib/db";
 
 const MeRouteHandler: SpentRouteHandler = async (request: NextRequest) => {
@@ -28,4 +28,4 @@ const MeRouteHandler: SpentRouteHandler = async (request: NextRequest) => {
   return NextResponse.json({ ...response }, { status: response.status });
 };
 
-export const GET = withSpentRouteErrorsHandled(MeRouteHandler);
+export const GET = WithSpentErrorsHandled(MeRouteHandler);

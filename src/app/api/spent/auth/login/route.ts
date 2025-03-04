@@ -6,7 +6,8 @@ import {
 import { NextRequest, NextResponse } from "next/server";
 import { generate, verify } from "../../_lib/utils";
 import { BadRequestError, ForbiddenError } from "../../_lib/errors";
-import { withSpentRouteErrorsHandled } from "../../_lib/middleware";
+// import { withSpentRouteErrorsHandled } from "../../_lib/middleware";
+import { WithSpentErrorsHandled } from "@api/_middleware/spent";
 import { user as prisma } from "../../_lib/db";
 
 const LoginRouteHandler: SpentRouteHandler = async (request: NextRequest) => {
@@ -46,4 +47,4 @@ const LoginRouteHandler: SpentRouteHandler = async (request: NextRequest) => {
   return NextResponse.json({ ...response }, { status: response.status });
 };
 
-export const PUT = withSpentRouteErrorsHandled(LoginRouteHandler);
+export const PUT = WithSpentErrorsHandled(LoginRouteHandler);

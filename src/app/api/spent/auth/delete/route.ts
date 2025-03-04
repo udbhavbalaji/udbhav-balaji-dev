@@ -5,8 +5,10 @@ import {
 } from "@/types/spent";
 import { NextRequest, NextResponse } from "next/server";
 import { ForbiddenError } from "../../_lib/errors";
-import { withSpentRouteErrorsHandled } from "../../_lib/middleware";
+// import { withSpentRouteErrorsHandled } from "../../_lib/middleware";
+// import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
 import { user as prisma } from "../../_lib/db";
+import { WithSpentErrorsHandled } from "@api/_middleware/spent";
 
 const DeleteRouteHandler: SpentRouteHandler = async (request: NextRequest) => {
   const userId = request.headers.get("user-id");
@@ -27,4 +29,4 @@ const DeleteRouteHandler: SpentRouteHandler = async (request: NextRequest) => {
   return NextResponse.json({ ...response }, { status: response.status });
 };
 
-export const DELETE = withSpentRouteErrorsHandled(DeleteRouteHandler);
+export const DELETE = WithSpentErrorsHandled(DeleteRouteHandler);

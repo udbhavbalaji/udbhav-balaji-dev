@@ -1,7 +1,7 @@
 import { SpentExceptionCodes, SpentRouteHandler } from "@/types/spent";
 import { NextRequest, NextResponse } from "next/server";
 import { ForbiddenError } from "../../_lib/errors";
-import { withSpentRouteErrorsHandled } from "../../_lib/middleware";
+import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
 import { user as prisma } from "../../_lib/db";
 
 const LogoutRouteHandler: SpentRouteHandler = async (request: NextRequest) => {
@@ -22,4 +22,4 @@ const LogoutRouteHandler: SpentRouteHandler = async (request: NextRequest) => {
   return NextResponse.json({ ...response }, { status: response.status });
 };
 
-export const PUT = withSpentRouteErrorsHandled(LogoutRouteHandler);
+export const PUT = WithSpentErrorsHandled(LogoutRouteHandler);

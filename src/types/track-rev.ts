@@ -18,7 +18,7 @@ export type YearStateType = Omit<YearContextType, "updateYear">;
 
 export interface TrackRevLayoutProps {
   children: ReactNode;
-  title?: string;
+  // title?: string;
 }
 
 export type ProviderPropsType = React.PropsWithChildren;
@@ -79,9 +79,8 @@ export interface SeasonScheduleItem {
     SprintQualifying?: SessionTiming;
     SprintRace?: SessionTiming;
     Race: SessionTiming;
-  }
+  };
 }
-
 
 export interface RawDriverStanding {
   position: string;
@@ -136,7 +135,7 @@ interface Circuit {
     long: string;
     locality: string;
     country: string;
-  }
+  };
 }
 
 interface SessionTiming {

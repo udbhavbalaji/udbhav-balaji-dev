@@ -1,13 +1,15 @@
-import { withSpentRouteErrorsHandled } from "@spent-api/_lib/middleware";
-import { AddMerchantRouteHandler, DeleteMerchantRouteHandler, GetMerchantRouteHandler, UpdateMerchantRouteHandler } from "./handlers";
+import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
+import {
+  AddMerchantRouteHandler,
+  DeleteMerchantRouteHandler,
+  GetMerchantRouteHandler,
+  UpdateMerchantRouteHandler,
+} from "./handlers";
 
+export const GET = WithSpentErrorsHandled(GetMerchantRouteHandler);
 
-export const GET = withSpentRouteErrorsHandled(GetMerchantRouteHandler);
+export const POST = WithSpentErrorsHandled(AddMerchantRouteHandler);
 
-export const POST = withSpentRouteErrorsHandled(AddMerchantRouteHandler);
+export const PUT = WithSpentErrorsHandled(UpdateMerchantRouteHandler);
 
-export const PUT = withSpentRouteErrorsHandled(UpdateMerchantRouteHandler);
-
-export const DELETE = withSpentRouteErrorsHandled(DeleteMerchantRouteHandler);
-
-
+export const DELETE = WithSpentErrorsHandled(DeleteMerchantRouteHandler);

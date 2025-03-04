@@ -12,7 +12,7 @@ import {
   filterMerchants,
 } from "../_lib/utils";
 import { expense as prisma } from "@/app/api/spent/_lib/db";
-import { withSpentRouteErrorsHandled } from "@spent-api/_lib/middleware";
+import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
 
 // todo: need to add support for filtering merchants, categories and sub-catergories (all or only one?)
 const FilterRangeRouteHandler = async (
@@ -96,4 +96,4 @@ const FilterRangeRouteHandler = async (
   return NextResponse.json({ ...response }, { status: response.status });
 };
 
-export const GET = withSpentRouteErrorsHandled(FilterRangeRouteHandler);
+export const GET = WithSpentErrorsHandled(FilterRangeRouteHandler);

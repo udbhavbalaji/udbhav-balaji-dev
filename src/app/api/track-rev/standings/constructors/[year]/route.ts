@@ -41,14 +41,22 @@ import { NextRequest, NextResponse } from "next/server";
 //   return NextResponse.json({ [year]: processedStandings }, { status: 200 });
 // };
 
-export const GET = async (
+// export const GET = async (
+//   request: NextRequest,
+//   { params }: { params: { year: string } },
+// ): Promise<
+//   NextResponse<
+//     { [year: string]: ConstructorStandingsItem[] } | { error: string }
+//   >
+// > => {
+export async function GET(
   request: NextRequest,
-  { params }: { params: { year: string } },
+  { params }: { params: Promise<{ year: string }> },
 ): Promise<
   NextResponse<
     { [year: string]: ConstructorStandingsItem[] } | { error: string }
   >
-> => {
+> {
   try {
     const year = (await params).year;
     // const year = request.nextUrl.searchParams.get("year");
@@ -103,4 +111,4 @@ export const GET = async (
       { status: 500 },
     );
   }
-};
+}
