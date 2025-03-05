@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
-import { UBDevErrorResponse } from "@/types";
-import { SpentAPIErrorResponse, SpentExceptionCodes } from "@/types/spent";
+import type { UBDevErrorResponse } from "@/types";
+import type { SpentAPIErrorResponse, SpentExceptionCodes } from "@/types/spent";
 
 export class UBDevException extends Error {
   name: string;

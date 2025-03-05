@@ -1,4 +1,4 @@
-import { SpentExceptionCodes } from "@/types/spent";
+import type { SpentExceptionCodes } from "@/types/spent";
 import { SpentException } from "@api-lib/errors";
 
 export const BadRequestError = (

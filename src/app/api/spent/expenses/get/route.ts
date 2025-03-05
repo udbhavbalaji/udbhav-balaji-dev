@@ -1,12 +1,13 @@
-import {
-  PrismaExpense,
-  SpentAPISuccessResponse,
-  SpentExceptionCodes,
-} from "@/types/spent";
+import { type NextRequest, NextResponse } from "next/server";
+
 import { ForbiddenError } from "@spent-api/_lib/errors";
 import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
-import { NextRequest, NextResponse } from "next/server";
 import { expense as prisma } from "@/app/api/spent/_lib/db";
+import {
+  type PrismaExpense,
+  type SpentAPISuccessResponse,
+  SpentExceptionCodes,
+} from "@/types/spent";
 
 const GetExpensesRouteHandler = async (
   request: NextRequest,

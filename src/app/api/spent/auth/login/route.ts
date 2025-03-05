@@ -1,17 +1,14 @@
-import {
-  LoginStatus,
-  SpentExceptionCodes,
-  SpentRouteHandler,
-} from "@/types/spent";
-import { NextRequest, NextResponse } from "next/server";
-import { generate, verify } from "../../_lib/utils";
-import { BadRequestError, ForbiddenError } from "../../_lib/errors";
-// import { withSpentRouteErrorsHandled } from "../../_lib/middleware";
+import { type NextRequest, NextResponse } from "next/server";
+
+import { type SpentRouteHandler, LoginRouteInput } from "@/types/spent";
+import { LoginStatus, SpentExceptionCodes } from "@/types/spent";
+import { generate, verify } from "@spent-api-lib/utils";
+import { BadRequestError, ForbiddenError } from "@spent-api-lib/errors";
 import { WithSpentErrorsHandled } from "@api/_middleware/spent";
-import { user as prisma } from "../../_lib/db";
+import { user as prisma } from "@spent-api-lib/db";
 
 const LoginRouteHandler: SpentRouteHandler = async (request: NextRequest) => {
-  const { email, password } = await request.json();
+  const { email, password }: LoginRouteInput = await request.json();
 
   const user = await prisma.loginCheck(email);
 

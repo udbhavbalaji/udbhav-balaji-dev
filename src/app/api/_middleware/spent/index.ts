@@ -1,10 +1,8 @@
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 
+import type { AppConfig } from "@/types";
 import AppVerificationMiddleware from "@/app/api/_middleware/spent/app-verification";
 import AuthMiddleware from "@/app/api/_middleware/spent/auth-verification";
-import { AppConfig } from "@/types";
-
-export * from "./error-wrapper";
 
 const SpentMiddleware = async (
   request: NextRequest,
@@ -29,3 +27,4 @@ const SpentMiddleware = async (
 };
 
 export default SpentMiddleware;
+export * from "./error-wrapper";

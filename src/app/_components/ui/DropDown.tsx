@@ -1,4 +1,4 @@
-import { DropDownProps } from "@/types/track-rev";
+import type { DropDownProps } from "@/types/track-rev";
 
 const DropDown: React.FC<DropDownProps> = ({
   field,
@@ -11,7 +11,7 @@ const DropDown: React.FC<DropDownProps> = ({
   };
 
   if (!options.includes(currentValue)) {
-    return <div>Error: Selected value isn't included in the options.</div>;
+    return <div>Error: Selected value isn&apos;t included in the options.</div>;
   }
 
   return (
@@ -19,7 +19,7 @@ const DropDown: React.FC<DropDownProps> = ({
       <select
         value={currentValue}
         onChange={handleYearChange}
-        className="border-2 border-stone-400 rounded-xl border-stone-100 bg-inherit text-inherit p-1 w-1/6 text-center"
+        className="w-1/6 rounded-xl border-2 border-stone-100 border-stone-400 bg-inherit p-1 text-center text-inherit"
       >
         {options.map((option) => (
           <option key={option} value={option}>

@@ -1,6 +1,6 @@
 import { portfolioItems } from "@/app/_lib/resources";
 import Link from "next/link";
-import { ProjectItemProps } from "@/types";
+import type { ProjectItemProps } from "@/types";
 
 function Projects() {
   return (

@@ -1,13 +1,9 @@
-import {
-  SpentAPISuccessResponse,
-  SpentExceptionCodes,
-  SpentRouteHandler,
-} from "@/types/spent";
-import { NextRequest, NextResponse } from "next/server";
-import { ForbiddenError } from "../../_lib/errors";
-// import { withSpentRouteErrorsHandled } from "../../_lib/middleware";
-// import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
-import { user as prisma } from "../../_lib/db";
+import { type NextRequest, NextResponse } from "next/server";
+
+import type { SpentAPISuccessResponse, SpentRouteHandler } from "@/types/spent";
+import { SpentExceptionCodes } from "@/types/spent";
+import { ForbiddenError } from "@/app/api/spent/_lib/errors";
+import { user as prisma } from "@/app/api/spent/_lib/db";
 import { WithSpentErrorsHandled } from "@api/_middleware/spent";
 
 const DeleteRouteHandler: SpentRouteHandler = async (request: NextRequest) => {

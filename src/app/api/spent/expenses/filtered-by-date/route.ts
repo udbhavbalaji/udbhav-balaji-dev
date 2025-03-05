@@ -1,26 +1,32 @@
 import {
-  PrismaExpense,
+  ExpenseDateRouteInput,
+  type PrismaExpense,
   SpentAPISuccessResponse,
   SpentExceptionCodes,
 } from "@/types/spent";
 import { ForbiddenError } from "@spent-api/_lib/errors";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { expense as prisma } from "@spent-api/_lib/db";
 import {
   filterMerchants,
   getExpensesBetween,
   filterCategories,
   filterSubCategories,
-} from "../_lib/utils";
-import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
+} from "@spent-api/expenses/_lib/utils";
+import { WithSpentErrorsHandled } from "@api/_middleware/spent";
 
 // todo: need to add support for filtering merchants, categories and sub-catergories (all or only one?)
 const FilterDateRouteHandler = async (
   request: NextRequest,
 ): Promise<NextResponse<SpentAPISuccessResponse<Array<PrismaExpense>>>> => {
   // warn: need to double check the logic for this route handler
-  const { startDate, endDate, merchants, categories, subCategories } =
-    await request.json();
+  const {
+    startDate,
+    endDate,
+    merchants,
+    categories,
+    subCategories,
+  }: ExpenseDateRouteInput = await request.json();
   const userId = request.headers.get("user-id");
 
   if (!userId)

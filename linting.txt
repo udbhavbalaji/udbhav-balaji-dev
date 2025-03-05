@@ -1,0 +1,267 @@
+ESlint rules to be disabled
+
+1. No unsafe argument
+
+./src/app/api/_lib/utils.ts
+16:33  Error: Invalid type "never" of template literal expression.  @typescript-eslint/restrict-template-expressions
+
+./src/app/api/_middleware/spent/error-wrapper.ts
+1:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+
+./src/app/api/_middleware/spent/index.ts
+1:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+
+./src/app/api/spent/_lib/utils.ts
+54:9  Error: Unsafe argument of type `any` assigned to a parameter of type `Error | undefined`.  @typescript-eslint/no-unsafe-argument
+55:13  Error: Unsafe member access .message on an `any` value.  @typescript-eslint/no-unsafe-member-access
+167:9  Error: Type string trivially inferred from a string literal, remove type annotation.  @typescript-eslint/no-inferrable-types
+181:9  Error: Type string trivially inferred from a string literal, remove type annotation.  @typescript-eslint/no-inferrable-types
+
+./src/app/api/spent/auth/login/route.ts
+15:40  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+17:50  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+
+./src/app/api/spent/auth/logout/route.ts
+1:1  Warning: Imports "SpentRouteHandler" are only used as type.  @typescript-eslint/consistent-type-imports
+2:1  Warning: Imports "NextRequest" are only used as type.  @typescript-eslint/consistent-type-imports
+
+./src/app/api/spent/auth/register/route.ts
+1:1  Warning: Imports "CreatePrismaUser", "SpentAPISuccessResponse" and "SpentRouteHandler" are only used as type.  @typescript-eslint/consistent-type-imports
+7:1  Warning: Imports "NextRequest" are only used as type.  @typescript-eslint/consistent-type-imports
+18:48  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+18:69  Error: Unsafe member access .email on an `any` value.  @typescript-eslint/no-unsafe-member-access
+27:23  Error: Unsafe call of a(n) `any` typed value.  @typescript-eslint/no-unsafe-call
+27:44  Error: Unsafe member access .firstName on an `any` value.  @typescript-eslint/no-unsafe-member-access
+27:73  Error: Unsafe call of a(n) `any` typed value.  @typescript-eslint/no-unsafe-call
+27:94  Error: Unsafe member access .lastName on an `any` value.  @typescript-eslint/no-unsafe-member-access
+32:5  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+32:26  Error: Unsafe member access .password on an `any` value.  @typescript-eslint/no-unsafe-member-access
+
+./src/app/api/spent/expenses/_lib/utils.ts
+51:23  Error: Unsafe member access .model on an `any` value.  @typescript-eslint/no-unsafe-member-access
+72:23  Error: Unsafe member access .model on an `any` value.  @typescript-eslint/no-unsafe-member-access
+
+./src/app/api/spent/expenses/filtered-by-date/route.ts
+1:1  Warning: Imports "PrismaExpense" and "SpentAPISuccessResponse" are only used as type.  @typescript-eslint/consistent-type-imports
+7:1  Warning: Imports "NextRequest" are only used as type.  @typescript-eslint/consistent-type-imports
+38:41  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+38:52  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+42:41  Error: Unsafe argument of type `any` assigned to a parameter of type `string[]`.  @typescript-eslint/no-unsafe-argument
+46:40  Error: Unsafe argument of type `any` assigned to a parameter of type `string[]`.  @typescript-eslint/no-unsafe-argument
+50:44  Error: Unsafe argument of type `any` assigned to a parameter of type `string[]`.  @typescript-eslint/no-unsafe-argument
+
+./src/app/api/spent/expenses/filtered-by-range/route.ts
+1:1  Warning: Imports "PrismaExpense" and "SpentAPISuccessResponse" are only used as type.  @typescript-eslint/consistent-type-imports
+7:1  Warning: Imports "NextRequest" are only used as type.  @typescript-eslint/consistent-type-imports
+80:41  Error: Unsafe argument of type `any` assigned to a parameter of type `string[]`.  @typescript-eslint/no-unsafe-argument
+84:40  Error: Unsafe argument of type `any` assigned to a parameter of type `string[]`.  @typescript-eslint/no-unsafe-argument
+88:44  Error: Unsafe argument of type `any` assigned to a parameter of type `string[]`.  @typescript-eslint/no-unsafe-argument
+
+./src/app/api/spent/expenses/get/route.ts
+1:1  Warning: Imports "PrismaExpense" and "SpentAPISuccessResponse" are only used as type.  @typescript-eslint/consistent-type-imports
+8:1  Warning: Imports "NextRequest" are only used as type.  @typescript-eslint/consistent-type-imports
+
+./src/app/api/spent/receipts/add/route.ts
+1:1  Warning: Imports "PrismaItem", "PrismaReceipt" and "SpentAPISuccessResponse" are only used as type.  @typescript-eslint/consistent-type-imports
+9:26  Warning: 'UnauthorizedActionError' is defined but never used.  @typescript-eslint/no-unused-vars
+10:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+12:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+
+./src/app/api/spent/receipts/get/[receiptId]/route.ts
+1:1  Warning: Imports "PrismaReceipt" and "SpentAPISuccessResponse" are only used as type.  @typescript-eslint/consistent-type-imports
+6:1  Warning: Imports "NextRequest" are only used as type.  @typescript-eslint/consistent-type-imports
+
+./src/app/api/spent/user/categories/handlers.ts
+1:1  Warning: Imports "Category" and "SpentAPISuccessResponse" are only used as type.  @typescript-eslint/consistent-type-imports
+7:1  Warning: Imports "NextRequest" are only used as type.  @typescript-eslint/consistent-type-imports
+43:43  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+74:20  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+105:20  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+107:23  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+
+./src/app/api/spent/user/categories/route.ts
+9:1  Error: Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free.  @typescript-eslint/ban-ts-comment
+12:1  Error: Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free.  @typescript-eslint/ban-ts-comment
+15:1  Error: Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free.  @typescript-eslint/ban-ts-comment
+18:1  Error: Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free.  @typescript-eslint/ban-ts-comment
+
+./src/app/api/spent/user/me/route.ts
+1:1  Warning: Imports "PublicSafeUser", "SpentAPISuccessResponse" and "SpentRouteHandler" are only used as type.  @typescript-eslint/consistent-type-imports
+7:1  Warning: Imports "NextRequest" are only used as type.  @typescript-eslint/consistent-type-imports
+
+./src/app/api/spent/user/merchants/handlers.ts
+1:1  Warning: Imports "Merchant" and "SpentAPISuccessResponse" are only used as type.  @typescript-eslint/consistent-type-imports
+3:1  Warning: Imports "NextRequest" are only used as type.  @typescript-eslint/consistent-type-imports
+35:37  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+64:43  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+98:20  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+100:23  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+
+./src/app/api/spent/user/sub-categories/handlers.ts
+1:1  Warning: Imports "SpentAPISuccessResponse" and "SubCategory" are only used as type.  @typescript-eslint/consistent-type-imports
+7:1  Warning: Imports "NextRequest" are only used as type.  @typescript-eslint/consistent-type-imports
+43:46  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+75:20  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+105:20  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+107:23  Error: Unsafe argument of type `any` assigned to a parameter of type `string`.  @typescript-eslint/no-unsafe-argument
+
+./src/app/api/track-rev/schedule/[year]/route.ts
+2:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+5:11  Warning: 'RouteContext' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/track-rev/standings/constructors/[year]/route.ts
+2:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+8:1  Warning: Imports "NextRequest" are only used as type.  @typescript-eslint/consistent-type-imports
+57:5  Error: A record is preferred over an index signature.  @typescript-eslint/consistent-indexed-object-style
+
+./src/app/api/track-rev/standings/constructors/route.ts
+2:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+7:1  Warning: Imports "NextRequest" are only used as type.  @typescript-eslint/consistent-type-imports
+14:5  Error: A record is preferred over an index signature.  @typescript-eslint/consistent-indexed-object-style
+
+./src/app/api/track-rev/standings/drivers/[year]/route.ts
+2:1  Warning: Imports "Constructor", "DriverStandingsItem", "RawDriverStanding", "StandingsList" and "StandingsTable" are only used as type.  @typescript-eslint/consistent-type-imports
+4:3  Warning: 'ConstructorStandingsItem' is defined but never used.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'RawConstructorStanding' is defined but never used.  @typescript-eslint/no-unused-vars
+11:1  Warning: Imports "NextRequest" are only used as type.  @typescript-eslint/consistent-type-imports
+
+./src/app/track-rev/_components/ConstructorStandingsCardItem.tsx
+5:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+
+./src/app/track-rev/_components/DriverStandingsCardItem.tsx
+1:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+
+./src/app/track-rev/_components/SeasonScheduleCardItem.tsx
+3:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+
+./src/app/track-rev/_hooks/useConstructorStandings.ts
+1:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+9:3  Error: Unsafe return of a value of type `any`.  @typescript-eslint/no-unsafe-return
+15:26  Error: Unsafe return of a value of type `Promise<any>`.  @typescript-eslint/no-unsafe-return
+
+./src/app/track-rev/_hooks/useDriverStandings.ts
+1:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+7:3  Error: Unsafe return of a value of type `any`.  @typescript-eslint/no-unsafe-return
+13:26  Error: Unsafe return of a value of type `Promise<any>`.  @typescript-eslint/no-unsafe-return
+
+./src/app/track-rev/_hooks/useErgast.ts
+10:3  Error: Unsafe return of a value of type error.  @typescript-eslint/no-unsafe-return
+
+./src/app/track-rev/_hooks/useSeasonSchedule.ts
+2:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+7:3  Error: Unsafe return of a value of type `any`.  @typescript-eslint/no-unsafe-return
+13:26  Error: Unsafe return of a value of type `Promise<any>`.  @typescript-eslint/no-unsafe-return
+
+./src/app/track-rev/_lib/utils.ts
+1:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+
+./src/app/track-rev/_providers/ErgastProvider.tsx
+4:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+13:44  Error: 'ErgastContextType' is an 'error' type that acts as 'any' and overrides all other types in this union type.  @typescript-eslint/no-redundant-type-constituents
+36:27  Warning: 'setDriverStandings' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+79:39  Warning: 'year' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+110:5  Error: Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.  @typescript-eslint/no-floating-promises
+111:6  Warning: React Hook useEffect has a missing dependency: 'constructorStandings'. Either include it or remove the dependency array. You can also do a functional update 'setConstructorStandings(c => ...)' if you only need 'constructorStandings' in the 'setConstructorStandings' call.  react-hooks/exhaustive-deps
+
+./src/app/track-rev/_providers/TitleProvider.tsx
+3:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+4:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+5:25  Warning: 'ReactNode' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/track-rev/_providers/TrackRevQueryProvider.tsx
+3:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+
+./src/app/track-rev/_providers/YearProvider.tsx
+3:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+
+./src/app/track-rev/_resources.ts
+1:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+
+./src/app/track-rev/layout.tsx
+8:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+
+./src/app/track-rev/page.tsx
+5:8  Warning: 'useErgast' is defined but never used.  @typescript-eslint/no-unused-vars
+13:17  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+13:28  Warning: 'error' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+20:6  Warning: React Hook useEffect has a missing dependency: 'updateTitle'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/track-rev/race/[round]/details/page.tsx
+4:8  Warning: 'DropDown' is defined but never used.  @typescript-eslint/no-unused-vars
+5:8  Warning: 'useSeasonSchedule' is defined but never used.  @typescript-eslint/no-unused-vars
+7:8  Warning: 'useYear' is defined but never used.  @typescript-eslint/no-unused-vars
+8:10  Warning: 'Seasons' is defined but never used.  @typescript-eslint/no-unused-vars
+9:21  Warning: 'use' is defined but never used.  @typescript-eslint/no-unused-vars
+10:10  Warning: 'useParams' is defined but never used.  @typescript-eslint/no-unused-vars
+11:8  Warning: 'LoadingAnimation' is defined but never used.  @typescript-eslint/no-unused-vars
+63:6  Warning: React Hook useEffect has a missing dependency: 'updateTitle'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+68:11  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/track-rev/race/[round]/results/page.tsx
+10:6  Warning: React Hook useEffect has a missing dependency: 'updateTitle'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+15:11  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/track-rev/schedule/page.tsx
+18:6  Warning: React Hook useEffect has a missing dependency: 'updateTitle'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+24:7  Error: Prefer using an optional chain expression instead, as it's more concise and easier to read.  @typescript-eslint/prefer-optional-chain
+
+./src/app/track-rev/standings/constructors/page.tsx
+10:10  Warning: 'ConstructorStandingsItem' is defined but never used.  @typescript-eslint/no-unused-vars
+19:6  Warning: React Hook useEffect has a missing dependency: 'updateTitle'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+25:7  Error: Prefer using an optional chain expression instead, as it's more concise and easier to read.  @typescript-eslint/prefer-optional-chain
+
+./src/app/track-rev/standings/drivers/page.tsx
+19:6  Warning: React Hook useEffect has a missing dependency: 'updateTitle'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+25:7  Error: Prefer using an optional chain expression instead, as it's more concise and easier to read.  @typescript-eslint/prefer-optional-chain
+
+./src/config.ts
+11:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+
+./src/middleware-system/config.ts
+1:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+2:10  Warning: 'NextRequest' is defined but never used.  @typescript-eslint/no-unused-vars
+13:7  Warning: 'registeredApps' is assigned a value but only used as a type.  @typescript-eslint/no-unused-vars
+
+./src/middleware-system/middleware.ts
+1:1  Warning: Imports "RegisteredApp" are only used as type.  @typescript-eslint/consistent-type-imports
+4:1  Warning: Imports "NextRequest" are only used as type.  @typescript-eslint/consistent-type-imports
+13:13  Warning: 'baseUrl' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+45:15  Error: Unsafe call of a(n) `error` type typed value.  @typescript-eslint/no-unsafe-call
+59:5  Error: Unsafe call of a(n) `error` type typed value.  @typescript-eslint/no-unsafe-call
+
+./src/middleware-system/spent/middleware.ts
+1:10  Warning: 'NextRequest' is defined but never used.  @typescript-eslint/no-unused-vars
+2:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+9:7  Warning: 'processedHeaders' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+9:7  Error: 'processedHeaders' is never reassigned. Use 'const' instead.  prefer-const
+12:13  Error: Unsafe call of a(n) `error` type typed value.  @typescript-eslint/no-unsafe-call
+21:23  Error: Unsafe call of a(n) `error` type typed value.  @typescript-eslint/no-unsafe-call
+
+./src/middleware.ts
+1:1  Warning: Imports "NextRequest" are only used as type.  @typescript-eslint/consistent-type-imports
+
+./src/server/api/routers/track-rev.ts
+5:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+
+./src/types/index.ts
+1:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+2:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+5:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+
+./src/types/spent.ts
+2:15  Warning: 'z' is defined but never used.  @typescript-eslint/no-unused-vars
+10:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+72:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+
+./src/types/test.ts
+1:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+2:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+39:7  Warning: 'testRegisteredApps' is assigned a value but only used as a type.  @typescript-eslint/no-unused-vars
+42:7  Warning: 'authTypes' is assigned a value but only used as a type.  @typescript-eslint/no-unused-vars
+49:7  Warning: 'config' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/types/track-rev.ts
+1:10  Warning: 'StringNullableChain' is defined but never used.  @typescript-eslint/no-unused-vars
+2:1  Warning: All imports in the declaration are only used as types. Use `import type`.  @typescript-eslint/consistent-type-imports
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules

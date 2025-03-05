@@ -1,8 +1,9 @@
-import { SpentExceptionCodes, SpentRouteHandler } from "@/types/spent";
-import { NextRequest, NextResponse } from "next/server";
-import { ForbiddenError } from "../../_lib/errors";
-import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
-import { user as prisma } from "../../_lib/db";
+import { type NextRequest, NextResponse } from "next/server";
+
+import { SpentExceptionCodes, type SpentRouteHandler } from "@/types/spent";
+import { ForbiddenError } from "@spent-api-lib/errors";
+import { WithSpentErrorsHandled } from "@api/_middleware/spent";
+import { user as prisma } from "@spent-api-lib/db";
 
 const LogoutRouteHandler: SpentRouteHandler = async (request: NextRequest) => {
   const userId = request.headers.get("user-id");

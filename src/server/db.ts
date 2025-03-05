@@ -1,6 +1,6 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 
-export type { User, Receipt, Item } from "@prisma/client";
+export type { User, Receipt, Item, Expense } from "@prisma/client";
 
 import { adapter } from "@/server/libsql";
 import { env } from "@/env";

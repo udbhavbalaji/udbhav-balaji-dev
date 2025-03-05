@@ -1,16 +1,17 @@
 import {
+  ExpenseRangeRouteInput,
   PrismaExpense,
   SpentAPISuccessResponse,
-  SpentExceptionCodes,
 } from "@/types/spent";
+import { SpentExceptionCodes } from "@/types/spent";
 import { ForbiddenError } from "@spent-api/_lib/errors";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import {
   getExpensesBetween,
   filterCategories,
   filterSubCategories,
   filterMerchants,
-} from "../_lib/utils";
+} from "@spent-api/expenses/_lib/utils";
 import { expense as prisma } from "@/app/api/spent/_lib/db";
 import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
 
@@ -18,8 +19,12 @@ import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
 const FilterRangeRouteHandler = async (
   request: NextRequest,
 ): Promise<NextResponse<SpentAPISuccessResponse<Array<PrismaExpense>>>> => {
-  const { timeRange, categories, merchants, subCategories } =
-    await request.json();
+  const {
+    timeRange,
+    categories,
+    merchants,
+    subCategories,
+  }: ExpenseRangeRouteInput = await request.json();
   const userId = request.headers.get("user-id");
 
   if (!userId)
@@ -39,22 +44,22 @@ const FilterRangeRouteHandler = async (
 
   // bug: definitely need to triple check this, ill be surpised if this works as is
   switch (timeRange) {
-    case "1 week":
+    case "7d":
       startDate = new Date(currDate.setDate(currDate.getDate() - 7));
       break;
-    case "2 weeks":
+    case "14d":
       startDate = new Date(currDate.setDate(currDate.getDate() - 14));
       break;
-    case "1 month":
+    case "30d":
       startDate = new Date(currDate.setDate(currDate.getDate() - 30));
       break;
-    case "3 months":
+    case "3m":
       startDate = new Date(currDate.setDate(currDate.getMonth() - 3));
       break;
-    case "6 months":
+    case "6m":
       startDate = new Date(currDate.setDate(currDate.getMonth() - 6));
       break;
-    case "1 year":
+    case "1y":
       startDate = new Date(currDate.setDate(currDate.getFullYear() - 1));
       break;
     default:

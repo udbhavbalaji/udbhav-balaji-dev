@@ -1,12 +1,14 @@
-import { UBDevErrorResponse } from "@/types";
-import { SpentAPIErrorResponse } from "@/types/spent";
+import type { NextRequest, NextResponse } from "next/server";
+import { type ZodSchema, ZodError } from "zod";
+
+import type { UBDevErrorResponse } from "@/types";
+import type { SpentAPIErrorResponse } from "@/types/spent";
+
 import {
   InputValidationError,
   SpentException,
   UBDevException,
 } from "@api/_lib/errors";
-import { NextRequest, NextResponse } from "next/server";
-import { ZodSchema, ZodError } from "zod";
 
 const ApiRoutesErrorHandler = (
   err: Error,

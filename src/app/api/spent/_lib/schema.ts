@@ -1,6 +1,5 @@
 import { timeRanges } from "@/types/spent";
 import z from "zod";
-import { subCategory } from "./db";
 
 export const RegisterSchema = z
   .object({

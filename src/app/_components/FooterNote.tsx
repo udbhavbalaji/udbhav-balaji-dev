@@ -1,4 +1,4 @@
-import { FooterNoteProps } from "@/types/portfolio";
+import type { FooterNoteProps } from "@/types/portfolio";
 
 export default function FooterNote({ className }: FooterNoteProps) {
   return (

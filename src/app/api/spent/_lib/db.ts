@@ -1,20 +1,19 @@
 import { db } from "@/server/db";
-import {
+import { LoginStatus, SpentExceptionCodes } from "@/types/spent";
+import { UBDevException } from "@api-lib/errors";
+import { BadRequestError } from "@spent-api-lib/errors";
+import type {
   Category,
   CreatePrismaUser,
-  LoginStatus,
   Merchant,
   PrismaExpense,
   PrismaItem,
   PrismaReceipt,
   PublicSafeUser,
-  SpentExceptionCodes,
   SubCategory,
   UserFromAuthCheck,
   UserFromLoginCheck,
 } from "@/types/spent";
-import { UBDevException } from "@api-lib/errors";
-import { BadRequestError } from "@spent-api-lib/errors";
 
 export const user = {
   create: async (user: CreatePrismaUser) => {

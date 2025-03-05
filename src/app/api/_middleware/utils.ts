@@ -1,4 +1,4 @@
-import { RegisteredApp, UBDevAPIConfig } from "@/types";
+import type { RegisteredApp, UBDevAPIConfig } from "@/types";
 import { InvalidRouteError } from "@api/_lib/errors";
 
 const extractRoute = (

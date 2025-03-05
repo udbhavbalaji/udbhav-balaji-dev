@@ -1,6 +1,7 @@
-import { SpentExceptionCodes, SpentRouteHandler } from "@/types/spent";
+import type { NextRequest } from "next/server";
+
+import { SpentExceptionCodes, type SpentRouteHandler } from "@/types/spent";
 import { ApiRoutesErrorHandler } from "@/app/api/_middleware";
-import { NextRequest } from "next/server";
 import { user as prisma } from "@/app/api/spent/_lib/db";
 import {
   ForbiddenError,

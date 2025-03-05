@@ -1,4 +1,4 @@
-import { ProjectItemProps } from "@/types";
+import type { ProjectItemProps } from "@/types";
 
 export const portfolioItems: ProjectItemProps[] = [
   {

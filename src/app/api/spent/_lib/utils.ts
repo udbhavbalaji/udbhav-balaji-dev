@@ -1,23 +1,18 @@
 import { jwtVerify, SignJWT } from "jose";
+import bcrypt from "bcryptjs";
 import {
   JWTExpired,
   JWSInvalid,
   JWSSignatureVerificationFailed,
 } from "jose/errors";
-import bcrypt from "bcryptjs";
 
+import type { ItemInputType, ReceiptInputType } from "@/types/spent";
+import { SpentExceptionCodes } from "@/types/spent";
+import { env } from "@/env";
 import {
   BadRequestError,
   UnauthorizedActionError,
 } from "@spent-api-lib/errors";
-import { RegisteredApp, UBDevAPIConfig } from "@/types";
-import {
-  ItemInputType,
-  ReceiptInputType,
-  SpentExceptionCodes,
-} from "@/types/spent";
-import { InvalidRouteError } from "@api-lib/errors";
-import { env } from "@/env";
 
 export const verify = {
   JWToken: async (
@@ -56,97 +51,97 @@ export const verify = {
         "Invalid credentials",
         SpentExceptionCodes.CORRUPTED_HASHED_PASSWORD,
         undefined,
-        err,
-        err.message,
+        err as Error,
+        (err as Error).message,
       );
     });
   },
 };
 
-export const extract = {
-  routeFixed: (pathname: string, config: UBDevAPIConfig) => {
-    let appBaseUrl: keyof UBDevAPIConfig["appUrlMapping"] | undefined =
-      undefined;
-    let route: string | undefined = undefined;
-    let appName: RegisteredApp | undefined = undefined;
-
-    const registeredAppUrls = Object.keys(config.appUrlMapping);
-
-    // looping through each of the registered app urls
-    for (const url of registeredAppUrls) {
-      // if the request belongs to a particular app, then it would start with the app base url
-      if (pathname.startsWith(url)) {
-        // on confirming the app, we destrcuture the request pathname and assign it simpler processing
-        appBaseUrl = url;
-        route = pathname.split(url)[1] ?? "";
-        appName = config.appUrlMapping[url];
-        break;
-      }
-    }
-
-    // if appname wasnt found then the request isn't allowed to proceed
-    if (!appBaseUrl || !route || !appName)
-      throw InvalidRouteError("Invalid route | App not registered");
-
-    // compare the route to check if it starts with a route for a paramName?
-    const appRoutesWithParams = config.configs[appName].inputValidationSchemas;
-
-    return { appBaseUrl, route, appName };
-  },
-
-  route: (
-    pathname: string,
-    config: UBDevAPIConfig,
-  ): {
-    appBaseUrl: keyof UBDevAPIConfig["appUrlMapping"];
-    route: string;
-    appName: RegisteredApp;
-    paramName?: string;
-  } => {
-    let appBaseUrl: keyof UBDevAPIConfig["appUrlMapping"] | undefined;
-    let route: string | undefined;
-    let appName: RegisteredApp | undefined;
-    let paramName: string | undefined;
-    let updatedPathname = pathname;
-
-    const registeredAppUrls = Object.keys(config.appUrlMapping);
-
-    for (const url of registeredAppUrls) {
-      if (pathname.startsWith(url)) {
-        appBaseUrl = url;
-        route = pathname.split(url)[1] ?? "";
-        appName = config.appUrlMapping[url];
-
-        // if (!appBaseUrl || !appName) {
-        //   throw InvalidRouteError("Invalid route | App not registered");
-        // }
-
-        // const queryRoutes = config.configs[appName].routesWithQueryParams ?? [];
-        // if (queryRoutes.length > 0) {
-        //   for (const rt of queryRoutes) {
-        //     const endpoint = rt.split(":")[0]!;
-        //     if (route.startsWith(endpoint)) {
-        //       paramName = rt.split(":")[1];
-        //       route = rt;
-        //       break;
-        //     }
-        //   }
-        // }
-
-        break;
-      }
-    }
-
-    if (!appBaseUrl || !appName) {
-      throw InvalidRouteError("Invalid route | App not registered");
-    }
-
-    route ??= "";
-
-    return { appBaseUrl, route, appName };
-    // return { appBaseUrl, route, appName, paramName };
-  },
-};
+// export const extract = {
+//   routeFixed: (pathname: string, config: UBDevAPIConfig) => {
+//     let appBaseUrl: keyof UBDevAPIConfig["appUrlMapping"] | undefined =
+//       undefined;
+//     let route: string | undefined = undefined;
+//     let appName: RegisteredApp | undefined = undefined;
+//
+//     const registeredAppUrls = Object.keys(config.appUrlMapping);
+//
+//     // looping through each of the registered app urls
+//     for (const url of registeredAppUrls) {
+//       // if the request belongs to a particular app, then it would start with the app base url
+//       if (pathname.startsWith(url)) {
+//         // on confirming the app, we destrcuture the request pathname and assign it simpler processing
+//         appBaseUrl = url;
+//         route = pathname.split(url)[1] ?? "";
+//         appName = config.appUrlMapping[url];
+//         break;
+//       }
+//     }
+//
+//     // if appname wasnt found then the request isn't allowed to proceed
+//     if (!appBaseUrl || !route || !appName)
+//       throw InvalidRouteError("Invalid route | App not registered");
+//
+//     // compare the route to check if it starts with a route for a paramName?
+//     const appRoutesWithParams = config.configs[appName].validationSchemaMapping;
+//
+//     return { appBaseUrl, route, appName };
+//   },
+//
+//   route: (
+//     pathname: string,
+//     config: UBDevAPIConfig,
+//   ): {
+//     appBaseUrl: keyof UBDevAPIConfig["appUrlMapping"];
+//     route: string;
+//     appName: RegisteredApp;
+//     paramName?: string;
+//   } => {
+//     let appBaseUrl: keyof UBDevAPIConfig["appUrlMapping"] | undefined;
+//     let route: string | undefined;
+//     let appName: RegisteredApp | undefined;
+//     let paramName: string | undefined;
+//     let updatedPathname = pathname;
+//
+//     const registeredAppUrls = Object.keys(config.appUrlMapping);
+//
+//     for (const url of registeredAppUrls) {
+//       if (pathname.startsWith(url)) {
+//         appBaseUrl = url;
+//         route = pathname.split(url)[1] ?? "";
+//         appName = config.appUrlMapping[url];
+//
+//         // if (!appBaseUrl || !appName) {
+//         //   throw InvalidRouteError("Invalid route | App not registered");
+//         // }
+//
+//         // const queryRoutes = config.configs[appName].routesWithQueryParams ?? [];
+//         // if (queryRoutes.length > 0) {
+//         //   for (const rt of queryRoutes) {
+//         //     const endpoint = rt.split(":")[0]!;
+//         //     if (route.startsWith(endpoint)) {
+//         //       paramName = rt.split(":")[1];
+//         //       route = rt;
+//         //       break;
+//         //     }
+//         //   }
+//         // }
+//
+//         break;
+//       }
+//     }
+//
+//     if (!appBaseUrl || !appName) {
+//       throw InvalidRouteError("Invalid route | App not registered");
+//     }
+//
+//     route ??= "";
+//
+//     return { appBaseUrl, route, appName };
+//     // return { appBaseUrl, route, appName, paramName };
+//   },
+// };
 
 export const generate = {
   userID: (initials: string): string => {
@@ -169,7 +164,7 @@ export const generate = {
   },
 
   receiptID: (receipt: ReceiptInputType): string => {
-    let receiptId: string = "";
+    let receiptId = "";
 
     receiptId += receipt.merchantName
       .split(" ")
@@ -183,7 +178,7 @@ export const generate = {
   },
 
   itemID: (item: ItemInputType, date: string, idx: number) => {
-    let itemId: string = `IT${idx + 1}`;
+    let itemId = `IT${idx + 1}`;
 
     itemId +=
       item.description ??

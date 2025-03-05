@@ -1,19 +1,20 @@
-import {
+import type {
   CreatePrismaUser,
+  RegisterRouteInput,
   SpentAPISuccessResponse,
-  SpentExceptionCodes,
   SpentRouteHandler,
 } from "@/types/spent";
-import { NextRequest, NextResponse } from "next/server";
-import { BadRequestError } from "../../_lib/errors";
-import { generate } from "../../_lib/utils";
-import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
-import { user as prisma, createUserTrx } from "../../_lib/db";
+import { SpentExceptionCodes } from "@/types/spent";
+import { type NextRequest, NextResponse } from "next/server";
+import { BadRequestError } from "@spent-api-lib/errors";
+import { generate } from "@spent-api-lib/utils";
+import { WithSpentErrorsHandled } from "@api/_middleware/spent";
+import { user as prisma, createUserTrx } from "@spent-api-lib/db";
 
 const RegisterRouteHandler: SpentRouteHandler = async (
   request: NextRequest,
 ) => {
-  const validatedUserDetails = await request.json();
+  const validatedUserDetails: RegisterRouteInput = await request.json();
 
   const userCheck = await prisma.registerCheck(validatedUserDetails.email);
 
@@ -24,7 +25,7 @@ const RegisterRouteHandler: SpentRouteHandler = async (
     );
   }
 
-  const initials = `${validatedUserDetails.firstName[0].toUpperCase()}${validatedUserDetails.lastName[0].toUpperCase()}`;
+  const initials = `${validatedUserDetails.firstName[0]?.toUpperCase()}${validatedUserDetails.lastName[0]?.toUpperCase()}`;
 
   const userId = generate.userID(initials);
 

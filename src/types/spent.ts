@@ -6,8 +6,18 @@ import type {
   UBDevSuccessResponse,
   ResponseTypes,
 } from "@/types";
-import type { User, Receipt, Item } from "@/server/db";
-import { Expense } from "@prisma/client";
+import type { User, Receipt, Item, Expense } from "@/server/db";
+
+import {
+  RegisterSchema,
+  LoginSchema,
+  ReceiptSchema,
+  ExpenseDateFilterSchema,
+  ExpenseRangeFilterSchema,
+  MerchantSchema,
+  CategorySchema,
+  SubCategorySchema,
+} from "@spent-api-lib/schema";
 
 // Enum declarations
 
@@ -47,7 +57,7 @@ export type PrismaUser = Omit<User, "id">;
 export type PrismaReceipt = Omit<Receipt, "id">;
 export type PrismaItem = Omit<Item, "id">;
 export type PrismaExpense = Omit<Expense, "id">;
-export type { Merchant, Category, SubCategory } from '@prisma/client';
+export type { Merchant, Category, SubCategory } from "@prisma/client";
 
 export type CreatePrismaUser = Omit<
   PrismaUser,
@@ -111,31 +121,17 @@ export type ReceiptInputType = Omit<PrismaReceipt, "userId" | "receiptId"> & {
   items: ItemInputType[];
 };
 
-// export interface ReceiptRequest {
-//   merchantName: string;
-//   merchantAddress: string | null;
-//   merchantPhone: string | null;
-//   merchantWebsite: string | null;
-//   receiptNo: string;
-//   date: string;
-//   time: string | null;
-//   items: ItemRequest[];
-//   currency: string;
-//   total: number;
-//   subtotal: number;
-//   tax: number | null;
-//   serviceCharge: string | null;
-//   tip: number | null;
-// }
-//
-//
-//
-
 export const timeRanges = ["7d", "14d", "30d", "3m", "6m", "1y"] as const;
 
 export type TimeRange = (typeof timeRanges)[number];
 
+// Inferred Zod types
 
-// export type TimeRange = "1 week" | "2 weeks" | "1 month" | "3 months" | "6 months" | "1 year";
-
-
+export type RegisterRouteInput = z.infer<typeof RegisterSchema>;
+export type LoginRouteInput = z.infer<typeof LoginSchema>;
+export type ReceiptRouteInput = z.infer<typeof ReceiptSchema>;
+export type ExpenseDateRouteInput = z.infer<typeof ExpenseDateFilterSchema>;
+export type ExpenseRangeRouteInput = z.infer<typeof ExpenseRangeFilterSchema>;
+export type MerchantRouteInput = z.infer<typeof MerchantSchema>;
+export type CategroryRouteInput = z.infer<typeof CategorySchema>;
+export type SubCategoryRouteInput = z.infer<typeof SubCategorySchema>;
