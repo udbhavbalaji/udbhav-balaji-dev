@@ -1,14 +1,11 @@
 "use client";
 
+// External Imports
 import { IoHammerOutline } from "react-icons/io5";
-import DropDown from "@/app/_components/ui/DropDown";
-import useSeasonSchedule from "@/app/track-rev/_hooks/useSeasonSchedule";
+import { useEffect } from "react";
+
+// Internal Imports
 import useTitle from "@/app/track-rev/_hooks/useTitle";
-import useYear from "@/app/track-rev/_hooks/useYear";
-import { Seasons } from "@/app/track-rev/_resources";
-import { useEffect, use } from "react";
-import { useParams } from "next/navigation";
-import LoadingAnimation from "@/app/track-rev/_components/f1LoadingComponent";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Actual Implementation Code
@@ -65,7 +62,7 @@ const RaceDetails = () => {
   return (
     <div className="container mx-auto mt-10 flex w-full flex-wrap items-center justify-center rounded-lg">
       <h2 className="mx-auto w-full text-center text-3xl font-bold">
-        We're working on it!{" "}
+        We&apos;re working on it!{" "}
         <span className="mx-4 mt-4 inline-flex">
           <IoHammerOutline />
         </span>

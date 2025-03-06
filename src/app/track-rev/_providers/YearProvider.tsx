@@ -1,11 +1,14 @@
 "use client";
 
-import {
+// External Imports
+import { createContext, useState } from "react";
+
+// Internal Imports
+import type {
   ProviderPropsType,
   YearContextType,
   YearStateType,
 } from "@/types/track-rev";
-import { createContext, useState } from "react";
 
 export const YearContext = createContext<YearContextType | null>(null);
 

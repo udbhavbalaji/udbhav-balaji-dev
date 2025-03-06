@@ -1,9 +1,14 @@
+// External Imports
+
+// Internal Imports
 import type { PrismaExpense, PrismaReceipt } from "@/types/spent";
 import { UBDevException } from "@api/_lib/errors";
 import {
   merchant as prismaMerchant,
   subCategory as prismaSubcategory,
 } from "@spent-api/_lib/db";
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const getExpenseFromReeceipt = async (
   receipt: PrismaReceipt,

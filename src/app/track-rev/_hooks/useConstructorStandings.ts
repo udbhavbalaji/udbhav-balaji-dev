@@ -1,9 +1,15 @@
-import { ConstructorStandingsContextType } from "@/types/track-rev";
-import { useQuery } from "@tanstack/react-query";
+// External Imports
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+
+// Internal Imports
+import type {
+  ConstructorStandingsContextType,
+  ConstructorStandingsItem,
+} from "@/types/track-rev";
 
 const fetchData = async (year: string) => {
-  const response = await axios.get(
+  const response = await axios.get<Record<string, ConstructorStandingsItem[]>>(
     `/api/track-rev/standings/constructors/${year}`,
   );
   return response.data;

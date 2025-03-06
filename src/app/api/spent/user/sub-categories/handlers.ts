@@ -1,11 +1,15 @@
-import {
-  SpentAPISuccessResponse,
-  SpentExceptionCodes,
-  SubCategory,
-} from "@/types/spent";
+// External Imports
+import { type NextRequest, NextResponse } from "next/server";
+
+// Internal Imports
 import { ForbiddenError } from "@spent-api/_lib/errors";
-import { NextRequest, NextResponse } from "next/server";
 import { subCategory as prisma } from "@/app/api/spent/_lib/db";
+import {
+  type SpentAPISuccessResponse,
+  type SubCategory,
+  SpentExceptionCodes,
+  type SubCategoryRouteInput,
+} from "@/types/spent";
 
 export const GetSubCategoriesHandler = async (
   request: NextRequest,
@@ -32,7 +36,8 @@ export const AddSubCategoriesHandler = async (
   request: NextRequest,
 ): Promise<NextResponse<SpentAPISuccessResponse<string>>> => {
   const userId = request.headers.get("user-id");
-  const { subCategoryName, category } = await request.json();
+  const { subCategoryName, category }: SubCategoryRouteInput =
+    await request.json();
 
   if (!userId)
     throw ForbiddenError(
@@ -64,7 +69,8 @@ export const UpdateSubCategoriesHandler = async (
   request: NextRequest,
 ): Promise<NextResponse<SpentAPISuccessResponse<string>>> => {
   const userId = request.headers.get("user-id");
-  const { subCategoryName, category } = await request.json();
+  const { subCategoryName, category }: SubCategoryRouteInput =
+    await request.json();
 
   if (!userId)
     throw ForbiddenError(
@@ -94,7 +100,7 @@ export const DeleteSubCategoriesHandler = async (
   request: NextRequest,
 ): Promise<NextResponse<SpentAPISuccessResponse<string>>> => {
   const userId = request.headers.get("user-id");
-  const { subCategoryName } = await request.json();
+  const { subCategoryName }: SubCategoryRouteInput = await request.json();
 
   if (!userId)
     throw ForbiddenError(

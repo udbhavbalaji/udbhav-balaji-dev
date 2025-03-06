@@ -1,8 +1,8 @@
-import { NextRequest } from "next/server";
-import { ZodSchema } from "zod";
+import type { NextRequest } from "next/server";
+import type { ZodSchema } from "zod";
 
 import type { UBDevException } from "@api-lib/errors";
-import { apps } from "@/config";
+import type { apps } from "@/config";
 
 // UBDev API Config types
 
@@ -44,29 +44,11 @@ export interface AppConfig {
   validationSchemaMapping: Record<string, ZodSchema>;
   authProtectedRoutesWithIgnoreExpiryFlag?: Record<string, boolean>;
   middlewareFn?: (
-    // headers: Headers,
     request: NextRequest,
     config: AppConfig,
     route: string,
   ) => Promise<Headers>;
 }
-
-// export interface AppConfig {
-//   // appBaseUrl: string;
-//   appBaseUrl: keyof UBDevAPIConfig["appUrlMapping"];
-//   middlewareFn?: (
-//     request: NextRequest,
-//     config: AppConfig,
-//     route: string,
-//   ) => Promise<Headers>;
-//   // registeredRoutes: string[] | "*";
-//   registeredRoutes: string[];
-//   bypassMiddleware?: boolean;
-//   routesWithInputValidation?: string[];
-//   routesWithAuthProtection?: string[];
-//   routesWithExpiredTokensAllowed?: string[];
-//   inputValidationSchemaMapping?: Record<string, ZodSchema>;
-// }
 
 export interface UBDevSuccessResponse<T extends ResponseTypes> {
   status: number;

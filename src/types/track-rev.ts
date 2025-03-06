@@ -1,5 +1,7 @@
-import { StringNullableChain } from "lodash";
-import { ReactNode } from "react";
+// External Imports
+import type { ReactNode } from "react";
+
+// Internal Imports
 
 export interface NavbarItem {
   title: string;
@@ -18,19 +20,9 @@ export type YearStateType = Omit<YearContextType, "updateYear">;
 
 export interface TrackRevLayoutProps {
   children: ReactNode;
-  // title?: string;
 }
 
 export type ProviderPropsType = React.PropsWithChildren;
-
-// export interface ErgastContextType {
-//   error: string | null;
-//   loading: boolean;
-//   toggleLoading: () => void;
-//   handleError: (error: string) => void;
-//   constructorStandings?: ConstructorStandingsContextType;
-//   driverStandings?: DriverStandingsContextType;
-// }
 
 export interface ConstructorStandingsContextType {
   fetchData: (year: string) => Promise<ConstructorStandingsItem[]>;

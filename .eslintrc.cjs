@@ -4,6 +4,7 @@ const config = {
   "parserOptions": {
     "project": true
   },
+  "ignorePatterns": ["src/middleware-system/", "src/types/test.ts"],
   "plugins": [
     "@typescript-eslint"
   ],
@@ -13,9 +14,11 @@ const config = {
     "plugin:@typescript-eslint/stylistic-type-checked"
   ],
   "rules": {
+    "react-hooks/exhaustive-deps": "off",
     "@typescript-eslint/array-type": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
     "@typescript-eslint/no-unsafe-enum-comparison": "off",
     "@typescript-eslint/non-nullable-type-assertion-style": "off",
     "@typescript-eslint/consistent-type-definitions": "off",

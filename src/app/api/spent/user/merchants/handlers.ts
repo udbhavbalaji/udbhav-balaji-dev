@@ -1,10 +1,20 @@
-import { Merchant, SpentAPISuccessResponse, SpentExceptionCodes } from "@/types/spent";
-import { ForbiddenError } from "@spent-api/_lib/errors";
-import { NextRequest, NextResponse } from "next/server";
-import { merchant as prisma } from "@/app/api/spent/_lib/db";
+// External Imports
+import { type NextRequest, NextResponse } from "next/server";
 
-export const GetMerchantRouteHandler = async (request: NextRequest): Promise<NextResponse<SpentAPISuccessResponse<Merchant[]>>> => {
-  const userId = request.headers.get("user-id")
+// Internal Imports
+import { ForbiddenError } from "@spent-api/_lib/errors";
+import { merchant as prisma } from "@/app/api/spent/_lib/db";
+import {
+  type Merchant,
+  type MerchantRouteInput,
+  type SpentAPISuccessResponse,
+  SpentExceptionCodes,
+} from "@/types/spent";
+
+export const GetMerchantRouteHandler = async (
+  request: NextRequest,
+): Promise<NextResponse<SpentAPISuccessResponse<Merchant[]>>> => {
+  const userId = request.headers.get("user-id");
 
   if (!userId)
     throw ForbiddenError(
@@ -22,9 +32,15 @@ export const GetMerchantRouteHandler = async (request: NextRequest): Promise<Nex
   return NextResponse.json({ ...response }, { status: response.status });
 };
 
-export const UpdateMerchantRouteHandler = async (request: NextRequest): Promise<NextResponse<SpentAPISuccessResponse<string>>> => {
-  const userId = request.headers.get("user-id")
-  const { merchantName, category, subCategory } = await request.json();
+export const UpdateMerchantRouteHandler = async (
+  request: NextRequest,
+): Promise<NextResponse<SpentAPISuccessResponse<string>>> => {
+  const userId = request.headers.get("user-id");
+  const {
+    merchantName,
+    categoryName: category,
+    subCategoryName: subCategory,
+  }: MerchantRouteInput = await request.json();
 
   if (!userId)
     throw ForbiddenError(
@@ -45,15 +61,20 @@ export const UpdateMerchantRouteHandler = async (request: NextRequest): Promise<
   const response: SpentAPISuccessResponse<string> = {
     status: 200,
     body: "Merchant updated",
-  }
+  };
 
   return NextResponse.json({ ...response }, { status: response.status });
 };
 
-
-export const AddMerchantRouteHandler = async (request: NextRequest): Promise<NextResponse<SpentAPISuccessResponse<string>>> => {
-  const userId = request.headers.get("user-id")
-  const { merchantName, category, subCategory } = await request.json();
+export const AddMerchantRouteHandler = async (
+  request: NextRequest,
+): Promise<NextResponse<SpentAPISuccessResponse<string>>> => {
+  const userId = request.headers.get("user-id");
+  const {
+    merchantName,
+    categoryName: category,
+    subCategoryName: subCategory,
+  }: MerchantRouteInput = await request.json();
 
   if (!userId)
     throw ForbiddenError(
@@ -77,17 +98,18 @@ export const AddMerchantRouteHandler = async (request: NextRequest): Promise<Nex
   const response: SpentAPISuccessResponse<string> = {
     status: 201,
     body: "Merchant added",
-  }
+  };
 
   return NextResponse.json({ ...response }, { status: response.status });
 };
 
-
-
-export const DeleteMerchantRouteHandler = async (request: NextRequest): Promise<NextResponse<SpentAPISuccessResponse<string>>> => {
-  const userId = request.headers.get("user-id")
+export const DeleteMerchantRouteHandler = async (
+  request: NextRequest,
+): Promise<NextResponse<SpentAPISuccessResponse<string>>> => {
+  const userId = request.headers.get("user-id");
   // note: could have used params (and might be more suitable here, but I don't want to create too many routes. Also, config process for routes with params hasn't been finalized yet)
-  const { merchantName } = await request.json();
+  const { merchantName }: Pick<MerchantRouteInput, "merchantName"> =
+    await request.json();
 
   if (!userId)
     throw ForbiddenError(
@@ -102,9 +124,7 @@ export const DeleteMerchantRouteHandler = async (request: NextRequest): Promise<
   const response: SpentAPISuccessResponse<string> = {
     status: 200,
     body: "Merchant deleted",
-  }
+  };
 
   return NextResponse.json({ ...response }, { status: response.status });
-
 };
-

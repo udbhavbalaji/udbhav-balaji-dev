@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 
-import { type SpentRouteHandler, LoginRouteInput } from "@/types/spent";
+import type { SpentRouteHandler, LoginRouteInput } from "@/types/spent";
 import { LoginStatus, SpentExceptionCodes } from "@/types/spent";
 import { generate, verify } from "@spent-api-lib/utils";
 import { BadRequestError, ForbiddenError } from "@spent-api-lib/errors";

@@ -1,19 +1,24 @@
 "use client";
 
+/* eslint-disable */
+
+// External Imports
 import { useEffect } from "react";
+
+// Internal Imports
 import useTitle from "@/app/track-rev/_hooks/useTitle";
-import useErgast from "@/app/track-rev/_hooks/useErgast";
-import useYear from "./_hooks/useYear";
-import useConstructorStandings from "./_hooks/useConstructorStandings";
+// import useYear from "@/app/track-rev/_hooks/useYear";
+// import useConstructorStandings from "@/app/track-rev/_hooks/useConstructorStandings";
 
 export default function TrackRevApp() {
   const { updateTitle } = useTitle();
   // const { constructorStandings, error } = useErgast();
-  const { constructorStandings } = useYear();
-  const { data, isLoading, error } =
-    useConstructorStandings(constructorStandings);
-
-  console.log("data", data);
+  // const { constructorStandings } = useYear();
+  //@eslint-ignore
+  // const { data, isLoading, error } =
+  //   useConstructorStandings(constructorStandings);
+  //
+  // console.log("data", data);
 
   useEffect(() => {
     updateTitle("Track Rev Home");

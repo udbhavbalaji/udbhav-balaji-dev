@@ -1,6 +1,11 @@
-import { SeasonScheduleItem } from "@/types/track-rev";
+// External Imports
 
-export const getWeeekendMonths = (sessions: SeasonScheduleItem["Sessions"]): { startMonth: string; endMonth: string } => {
+// Internal Imports
+import type { SeasonScheduleItem } from "@/types/track-rev";
+
+const getWeeekendMonths = (
+  sessions: SeasonScheduleItem["Sessions"],
+): { startMonth: string; endMonth: string } => {
   const startMonth = sessions.FirstPractice.date.split("-")[1];
   const endMonth = sessions.Race.date.split("-")[1];
 
@@ -9,7 +14,13 @@ export const getWeeekendMonths = (sessions: SeasonScheduleItem["Sessions"]): { s
   return { startMonth, endMonth };
 };
 
-export const getMonthName = ({ startMonth, endMonth }: { startMonth: string; endMonth: string }): { startMonth: string; endMonth: string } => {
+const getMonthName = ({
+  startMonth,
+  endMonth,
+}: {
+  startMonth: string;
+  endMonth: string;
+}): { startMonth: string; endMonth: string } => {
   const monthNames = [
     "January",
     "February",
@@ -27,5 +38,7 @@ export const getMonthName = ({ startMonth, endMonth }: { startMonth: string; end
   return {
     startMonth: monthNames[parseInt(startMonth) - 1]!,
     endMonth: monthNames[parseInt(endMonth) - 1]!,
-  }
+  };
 };
+
+export { getWeeekendMonths, getMonthName };

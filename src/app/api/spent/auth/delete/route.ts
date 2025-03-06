@@ -18,8 +18,9 @@ const DeleteRouteHandler: SpentRouteHandler = async (request: NextRequest) => {
 
   await prisma.delete(userId);
 
-  const response: SpentAPISuccessResponse = {
+  const response: SpentAPISuccessResponse<string> = {
     status: 200,
+    body: "User Deleted",
   };
 
   return NextResponse.json({ ...response }, { status: response.status });

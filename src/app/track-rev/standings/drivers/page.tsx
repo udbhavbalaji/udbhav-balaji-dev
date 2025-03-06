@@ -1,13 +1,15 @@
 "use client";
 
-import useTitle from "@/app/track-rev/_hooks/useTitle";
+// External Imports
 import React, { useEffect } from "react";
+
+// Internal Imports
+import useTitle from "@/app/track-rev/_hooks/useTitle";
 import useYear from "../../_hooks/useYear";
 import useDriverStandings from "../../_hooks/useDriverStandings";
 import DropDown from "@/app/_components/ui/DropDown";
-import { Seasons } from "../../_resources";
 import DriverStandingCardItem from "../../_components/DriverStandingsCardItem";
-
+import { Seasons } from "../../_resources";
 
 export default function DriverStandings() {
   const { updateTitle } = useTitle();
@@ -22,7 +24,7 @@ export default function DriverStandings() {
 
   if (error) return <div>Error: {error.message}</div>;
 
-  if (!data || !data[year]) return <div>No data</div>;
+  if (!data?.[year]) return <div>No data</div>;
 
   return (
     <div className="container mx-auto flex w-full flex-wrap items-center justify-center rounded-lg">
@@ -42,4 +44,3 @@ export default function DriverStandings() {
     </div>
   );
 }
-

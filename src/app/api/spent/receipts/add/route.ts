@@ -1,18 +1,22 @@
-import {
-  PrismaItem,
-  PrismaReceipt,
-  SpentAPISuccessResponse,
-  SpentExceptionCodes,
-} from "@/types/spent";
+// External Imports
+import { NextResponse } from "next/server";
+import type z from "zod";
+
+// Internal Imports
 import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
 import { generate } from "@spent-api-lib/utils";
-import { ForbiddenError, UnauthorizedActionError } from "@spent-api-lib/errors";
-import { itemSchema, ReceiptSchema } from "@spent-api-lib/schema";
-import { NextResponse } from "next/server";
-import { z } from "zod";
+import { ForbiddenError } from "@spent-api-lib/errors";
 import { createTrx } from "@spent-api-lib/db";
 import { getExpenseFromReeceipt } from "@spent-api/expenses/_lib/utils";
+import type { itemSchema, ReceiptSchema } from "@spent-api-lib/schema";
+import {
+  type PrismaItem,
+  type PrismaReceipt,
+  type SpentAPISuccessResponse,
+  SpentExceptionCodes,
+} from "@/types/spent";
 
+// todo: need to check if this is needed at all
 export type ItemInputType = z.infer<typeof itemSchema>;
 export type ReceiptInputType = z.infer<typeof ReceiptSchema>;
 

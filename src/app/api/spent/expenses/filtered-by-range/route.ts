@@ -1,19 +1,22 @@
-import {
-  ExpenseRangeRouteInput,
-  PrismaExpense,
-  SpentAPISuccessResponse,
-} from "@/types/spent";
-import { SpentExceptionCodes } from "@/types/spent";
-import { ForbiddenError } from "@spent-api/_lib/errors";
+// External Imports
 import { type NextRequest, NextResponse } from "next/server";
+
+// Internal Imports
+import { ForbiddenError } from "@spent-api/_lib/errors";
+import { expense as prisma } from "@/app/api/spent/_lib/db";
+import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
 import {
   getExpensesBetween,
   filterCategories,
   filterSubCategories,
   filterMerchants,
 } from "@spent-api/expenses/_lib/utils";
-import { expense as prisma } from "@/app/api/spent/_lib/db";
-import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
+import {
+  type ExpenseRangeRouteInput,
+  type PrismaExpense,
+  type SpentAPISuccessResponse,
+  SpentExceptionCodes,
+} from "@/types/spent";
 
 // todo: need to add support for filtering merchants, categories and sub-catergories (all or only one?)
 const FilterRangeRouteHandler = async (

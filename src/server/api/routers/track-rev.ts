@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import sendIt from "@/server/clients/track-rev/api-client";
-import {
+import type {
   ConstructorStandingsItem,
   RawConstructorStanding,
   StandingsTable,

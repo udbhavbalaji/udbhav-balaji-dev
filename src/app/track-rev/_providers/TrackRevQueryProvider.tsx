@@ -1,8 +1,11 @@
 "use client";
 
-import { ProviderPropsType } from "@/types/track-rev";
+// External Imports
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
+
+// Internal Imports
+import type { ProviderPropsType } from "@/types/track-rev";
 
 const TrackRevQueryProvider: React.FC<ProviderPropsType> = ({ children }) => {
   const [queryClient] = useState(() => new QueryClient());

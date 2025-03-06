@@ -1,9 +1,17 @@
-import { DriverStandingsContextType } from "@/types/track-rev";
+// External Imports
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
+// Internal Imports
+import type {
+  DriverStandingsContextType,
+  DriverStandingsItem,
+} from "@/types/track-rev";
+
 const fetchData = async (year: string) => {
-  const response = await axios.get(`/api/track-rev/standings/drivers/${year}`);
+  const response = await axios.get<Record<string, DriverStandingsItem[]>>(
+    `/api/track-rev/standings/drivers/${year}`,
+  );
   return response.data;
 };
 

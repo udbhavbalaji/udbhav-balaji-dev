@@ -21,7 +21,7 @@ const ScheduleCard = () => {
 
   if (error) return <div>Error: {error.message}</div>;
 
-  if (!data || !data[year]) return <div>No data</div>;
+  if (!data?.[year]) return <div>No data</div>;
 
   return (
     <div className="container mx-auto flex w-full flex-wrap items-center justify-center rounded-lg">

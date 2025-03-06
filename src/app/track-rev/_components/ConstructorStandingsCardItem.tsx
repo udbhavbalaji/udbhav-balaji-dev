@@ -1,8 +1,8 @@
-// import { ConstructorStandingsCardItemType } from "@app-types/trackRevClient/standings/constructors";
-// import { useNavigate } from "react-router-dom";
+// External Imports
 import { useRouter } from "next/navigation";
 
-import { ConstructorStandingCardItemProps } from "@/types/track-rev";
+// External Imports
+import type { ConstructorStandingCardItemProps } from "@/types/track-rev";
 
 const ConstructorStandingCardItem = ({
   index,
@@ -23,9 +23,8 @@ const ConstructorStandingCardItem = ({
       className="mx-auto flex w-8/12 items-center justify-center rounded-xl py-4"
     >
       <div
-        className={`gap flex w-full cursor-pointer flex-col rounded-md p-4 shadow-lg ${
-          index % 2 === 0 ? "bg-gray-800" : "bg-gray-700"
-        }`}
+        className={`gap flex w-full cursor-pointer flex-col rounded-md p-4 shadow-lg ${index % 2 === 0 ? "bg-gray-800" : "bg-gray-700"
+          }`}
         onClick={() => handleCardClick()}
       >
         <p className="text-sm font-semibold text-red-600">

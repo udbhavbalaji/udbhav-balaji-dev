@@ -1,15 +1,20 @@
-import {
-  Category,
-  SpentAPISuccessResponse,
-  SpentExceptionCodes,
-} from "@/types/spent";
-import { ForbiddenError } from "@spent-api/_lib/errors";
-import { NextRequest, NextResponse } from "next/server";
-import { category as prisma } from "@/app/api/spent/_lib/db";
+// External Imports
+import { type NextRequest, NextResponse } from "next/server";
 
-export const GetCategoriesRouteHandler = async (
+// Internal Imports
+import { ForbiddenError } from "@spent-api/_lib/errors";
+import { category as prisma } from "@/app/api/spent/_lib/db";
+import {
+  type Category,
+  type CategroryRouteInput,
+  type SpentAPISuccessResponse,
+  SpentExceptionCodes,
+  type SpentRouteHandler,
+} from "@/types/spent";
+
+export const GetCategoriesRouteHandler: SpentRouteHandler = async (
   request: NextRequest,
-): Promise<NextResponse> => {
+): Promise<NextResponse<SpentAPISuccessResponse<Category[]>>> => {
   const userId = request.headers.get("user-id");
 
   if (!userId)
@@ -30,9 +35,9 @@ export const GetCategoriesRouteHandler = async (
 
 export const AddCategoriesRouteHandler = async (
   request: NextRequest,
-): Promise<NextResponse> => {
+): Promise<NextResponse<SpentAPISuccessResponse<string>>> => {
   const userId = request.headers.get("user-id");
-  const { categoryName } = await request.json();
+  const { categoryName }: CategroryRouteInput = await request.json();
 
   if (!userId)
     throw ForbiddenError(
@@ -63,7 +68,7 @@ export const UpdateCategoriesRouteHandler = async (
   request: NextRequest,
 ): Promise<NextResponse<SpentAPISuccessResponse<string>>> => {
   const userId = request.headers.get("user-id");
-  const { categoryName } = await request.json();
+  const { categoryName }: CategroryRouteInput = await request.json();
 
   if (!userId)
     throw ForbiddenError(
@@ -94,7 +99,7 @@ export const DeleteCategoriesRouteHandler = async (
   request: NextRequest,
 ): Promise<NextResponse<SpentAPISuccessResponse<string>>> => {
   const userId = request.headers.get("user-id");
-  const { categoryName } = await request.json();
+  const { categoryName }: CategroryRouteInput = await request.json();
 
   if (!userId)
     throw ForbiddenError(

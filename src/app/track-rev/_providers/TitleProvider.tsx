@@ -1,8 +1,11 @@
 "use client";
 
-import { TitleContextType } from "@/types";
-import { ProviderPropsType } from "@/types/track-rev";
-import { createContext, ReactNode, useState } from "react";
+// External Imports
+import { createContext, useState } from "react";
+
+// External Imports
+import type { TitleContextType } from "@/types";
+import type { ProviderPropsType } from "@/types/track-rev";
 
 export const TitleContext = createContext<TitleContextType | null>(null);
 

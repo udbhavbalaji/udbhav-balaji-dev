@@ -1,13 +1,16 @@
-import {
-  PublicSafeUser,
-  SpentAPISuccessResponse,
-  SpentExceptionCodes,
-  SpentRouteHandler,
-} from "@/types/spent";
-import { NextRequest, NextResponse } from "next/server";
+// External Imports
+import { type NextRequest, NextResponse } from "next/server";
+
+// Internal Imports
 import { ForbiddenError } from "@/app/api/spent/_lib/errors";
 import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
 import { user as prisma } from "@/app/api/spent/_lib/db";
+import {
+  type PublicSafeUser,
+  type SpentAPISuccessResponse,
+  type SpentRouteHandler,
+  SpentExceptionCodes,
+} from "@/types/spent";
 
 const MeRouteHandler: SpentRouteHandler = async (request: NextRequest) => {
   const userId = request.headers.get("user-id");

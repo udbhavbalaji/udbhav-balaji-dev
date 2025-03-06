@@ -1,18 +1,14 @@
+// External Imports
 import { type NextRequest, NextResponse } from "next/server";
-import { RaceTable, RawRaceEntry, SeasonScheduleItem } from "@/types/track-rev";
+
+// Internal Imports
 import sendIt from "@/server/clients/track-rev/api-client";
+import type {
+  RaceTable,
+  RawRaceEntry,
+  SeasonScheduleItem,
+} from "@/types/track-rev";
 
-interface RouteContext {
-  params: {
-    year: string;
-  };
-}
-
-// export const GET = async (
-//   request: NextRequest,
-//   // { params }: { params: { year: string } },
-//   { params }: { params: Promise<{ year: string }> },
-// ) => {
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ year: string }> },

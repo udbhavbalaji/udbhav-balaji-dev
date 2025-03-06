@@ -1,13 +1,15 @@
 "use client";
 
-import useTitle from "@/app/track-rev/_hooks/useTitle";
+// External Imports
 import React, { useEffect } from "react";
-import useYear from "../../_hooks/useYear";
-import useConstructorStandings from "../../_hooks/useConstructorStandings";
+
+// Internal Imports
+import useTitle from "@/app/track-rev/_hooks/useTitle";
+import useYear from "@/app/track-rev/_hooks/useYear";
+import useConstructorStandings from "@/app/track-rev/_hooks/useConstructorStandings";
 import DropDown from "@/app/_components/ui/DropDown";
-import { Seasons } from "../../_resources";
-import ConstructorStandingCardItem from "../../_components/ConstructorStandingsCardItem";
-import { ConstructorStandingsItem } from "@/types/track-rev";
+import ConstructorStandingCardItem from "@/app/track-rev/_components/ConstructorStandingsCardItem";
+import { Seasons } from "@/app/track-rev/_resources";
 
 export default function ConstructorStandings() {
   const { updateTitle } = useTitle();
@@ -22,7 +24,7 @@ export default function ConstructorStandings() {
 
   if (error) return <div>Error: {error.message}</div>;
 
-  if (!data || !data[year]) return <div>No data</div>;
+  if (!data?.[year]) return <div>No data</div>;
 
   return (
     <div className="container mx-auto flex w-full flex-wrap items-center justify-center rounded-lg">

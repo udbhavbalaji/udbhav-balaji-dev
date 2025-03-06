@@ -1,12 +1,14 @@
-import {
-  PrismaReceipt,
-  SpentAPISuccessResponse,
-  SpentExceptionCodes,
-} from "@/types/spent";
-import { NextRequest, NextResponse } from "next/server";
+// External Imports
+import { type NextRequest, NextResponse } from "next/server";
+// Internal Imports
 import { receipt as prisma } from "@spent-api-lib/db";
 import { BadRequestError, ForbiddenError } from "@spent-api-lib/errors";
 import { WithSpentErrorsHandled } from "@/app/api/_middleware/spent";
+import {
+  type PrismaReceipt,
+  type SpentAPISuccessResponse,
+  SpentExceptionCodes,
+} from "@/types/spent";
 
 const GetReceiptRouteHandler = async (
   request: NextRequest,

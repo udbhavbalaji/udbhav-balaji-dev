@@ -1,3 +1,8 @@
+// External Imports
+
+// Internal Imports
+import type { UBDevAPIConfig } from "@/types";
+import SpentMiddleware from "@/app/api/_middleware/spent";
 import {
   CategorySchema,
   ExpenseDateFilterSchema,
@@ -8,8 +13,6 @@ import {
   RegisterSchema,
   SubCategorySchema,
 } from "@spent-api/_lib/schema";
-import { UBDevAPIConfig } from "@/types";
-import SpentMiddleware from "@/app/api/_middleware/spent";
 
 // NOTE: Register app names here; only apps that are registered will pass through the middleware
 export const apps = ["Spent", "TrackRev"] as const;

@@ -1,18 +1,18 @@
+// External Imports
+import { type NextRequest, NextResponse } from "next/server";
+
+// Internal Imports
 import sendIt from "@/server/clients/track-rev/api-client";
-import {
+import type {
   ConstructorStandingsItem,
   RawConstructorStanding,
   StandingsTable,
 } from "@/types/track-rev";
-import { NextRequest, NextResponse } from "next/server";
-
 
 export const GET = async (
   request: NextRequest,
 ): Promise<
-  NextResponse<
-    { [year: string]: ConstructorStandingsItem[] } | { error: string }
-  >
+  NextResponse<Record<string, ConstructorStandingsItem[]> | { error: string }>
 > => {
   try {
     // const year = request.nextUrl.searchParams.get("year");
@@ -47,7 +47,6 @@ export const GET = async (
       return item;
     });
 
-    // return processedStandings;
     return NextResponse.json({ [year]: processedStandings }, { status: 200 });
   } catch (err) {
     console.log("error", err);

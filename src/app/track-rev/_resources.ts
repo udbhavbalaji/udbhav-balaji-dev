@@ -1,4 +1,7 @@
-import { NavbarItem } from "@/types/track-rev";
+// External Imports
+
+// Internal Imports
+import type { NavbarItem } from "@/types/track-rev";
 
 export const navbarItems: NavbarItem[] = [
   {

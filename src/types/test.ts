@@ -1,16 +1,14 @@
-import { NextRequest } from "next/server";
-import { ZodSchema } from "zod";
+import type { NextRequest } from "next/server";
+import type { ZodSchema } from "zod";
 import {
   ExpenseDateFilterSchema,
   ExpenseRangeFilterSchema,
   LoginSchema,
-  AddMerchantSchema,
-  UpdateMerchantSchema,
+  MerchantSchema,
   ReceiptSchema,
   RegisterSchema,
-  AddCategorySchema,
-  AddSubCategorySchema,
-  UpdateSubCategorySchema,
+  CategorySchema,
+  SubCategorySchema,
 } from "@spent-api/_lib/schema";
 
 export interface TestUBDevAPIConfig {
@@ -46,6 +44,7 @@ const authTypes = [
 ] as const;
 type AuthTypes = (typeof authTypes)[number];
 
+//@ts-ignore
 const config: TestUBDevAPIConfig = {
   appUrlMapping: {
     "/api/spent": "Spent",
@@ -130,12 +129,12 @@ const config: TestUBDevAPIConfig = {
           },
           {
             method: "POST",
-            inputSchema: AddMerchantSchema,
+            inputSchema: MerchantSchema,
             auth: "Protected",
           },
           {
             method: "PUT",
-            inputSchema: UpdateMerchantSchema,
+            inputSchema: MerchantSchema,
             auth: "Protected",
             paramName: "merchant",
           },
@@ -152,7 +151,7 @@ const config: TestUBDevAPIConfig = {
           },
           {
             method: "POST",
-            inputSchema: AddCategorySchema,
+            inputSchema: CategorySchema,
             auth: "Protected",
           },
           {
@@ -173,12 +172,12 @@ const config: TestUBDevAPIConfig = {
           },
           {
             method: "POST",
-            inputSchema: AddSubCategorySchema,
+            inputSchema: SubCategorySchema,
             auth: "Protected",
           },
           {
             method: "PUT",
-            inputSchema: UpdateSubCategorySchema,
+            inputSchema: SubCategorySchema,
             auth: "Protected",
             paramName: "subCategoryName",
           },

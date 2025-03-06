@@ -1,5 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+// External Imports
+import { type NextRequest, NextResponse } from "next/server";
 
+// Internal Imports
 import globalConfig from "@/config";
 import { InputValidator, ApiRoutesErrorHandler } from "@/app/api/_middleware";
 import { InvalidRouteError } from "@api/_lib/errors";
@@ -8,7 +10,6 @@ import { extractRoute } from "@/app/api/_middleware/utils";
 const middleware = async (request: NextRequest) => {
   console.log("coming into middleware");
   let headers: Headers = new Headers(request.headers);
-  // let headers: Headers = request.headers;
   let isRouteValid = false;
 
   console.log("headers", JSON.stringify(headers));

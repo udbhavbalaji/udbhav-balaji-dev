@@ -1,19 +1,22 @@
-import {
-  ExpenseDateRouteInput,
-  type PrismaExpense,
-  SpentAPISuccessResponse,
-  SpentExceptionCodes,
-} from "@/types/spent";
-import { ForbiddenError } from "@spent-api/_lib/errors";
+// External Imports
 import { type NextRequest, NextResponse } from "next/server";
+
+// Internal Imports
+import { ForbiddenError } from "@spent-api/_lib/errors";
 import { expense as prisma } from "@spent-api/_lib/db";
+import { WithSpentErrorsHandled } from "@api/_middleware/spent";
 import {
   filterMerchants,
   getExpensesBetween,
   filterCategories,
   filterSubCategories,
 } from "@spent-api/expenses/_lib/utils";
-import { WithSpentErrorsHandled } from "@api/_middleware/spent";
+import {
+  type ExpenseDateRouteInput,
+  type PrismaExpense,
+  type SpentAPISuccessResponse,
+  SpentExceptionCodes,
+} from "@/types/spent";
 
 // todo: need to add support for filtering merchants, categories and sub-catergories (all or only one?)
 const FilterDateRouteHandler = async (
@@ -56,9 +59,7 @@ const FilterDateRouteHandler = async (
     filteredExpenses = filterSubCategories(subCategories, filteredExpenses);
   }
 
-  //
   // return the filtered expenses
-  //
   const response: SpentAPISuccessResponse<Array<PrismaExpense>> = {
     status: 200,
     body: filteredExpenses,

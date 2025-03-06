@@ -1,9 +1,17 @@
+// External Imports
 import axios from "axios";
-import { SeasonScheduleContextType } from "@/types/track-rev";
 import { useQuery } from "@tanstack/react-query";
 
+// Internal Imports
+import {
+  type SeasonScheduleContextType,
+  type SeasonScheduleItem,
+} from "@/types/track-rev";
+
 const fetchData = async (year: string) => {
-  const response = await axios.get(`/api/track-rev/schedule/${year}`);
+  const response = await axios.get<Record<string, SeasonScheduleItem[]>>(
+    `/api/track-rev/schedule/${year}`,
+  );
   return response.data;
 };
 

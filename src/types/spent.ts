@@ -8,7 +8,7 @@ import type {
 } from "@/types";
 import type { User, Receipt, Item, Expense } from "@/server/db";
 
-import {
+import type {
   RegisterSchema,
   LoginSchema,
   ReceiptSchema,
@@ -79,8 +79,12 @@ export type PublicSafeUser = Omit<
 
 // Spent API Response type declarations
 
-export interface SpentAPISuccessResponse<T extends ResponseTypes = never>
-  extends UBDevSuccessResponse<T> { }
+// export interface SpentAPISuccessResponse<T extends ResponseTypes = never>
+//   extends UBDevSuccessResponse<T> { }
+//
+
+export type SpentAPISuccessResponse<T extends ResponseTypes> =
+  UBDevSuccessResponse<T>;
 
 export interface SpentAPIErrorResponse extends UBDevErrorResponse {
   errorCode: SpentExceptionCodes;
