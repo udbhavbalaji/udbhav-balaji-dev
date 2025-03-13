@@ -5,6 +5,7 @@ import { useEffect } from "react";
 
 // Internal Imports
 import useTitle from "@/app/track-rev/_hooks/useTitle";
+import NotImplementedComponent from "@/app/track-rev/_components/NotImplemented";
 
 const RaceResults = () => {
   const { updateTitle } = useTitle();
@@ -14,13 +15,8 @@ const RaceResults = () => {
   }, []);
 
   return (
-    <div className="container mx-auto mt-10 flex w-full flex-wrap items-center justify-center rounded-lg">
-      <h2 className="mx-auto w-full text-center text-5xl font-bold">
-        We&apos;re working on it!
-      </h2>
-      <h3 className="mx-auto my-5 w-full text-center text-xl">
-        Check Back Soon!
-      </h3>
+    <div className="container mx-auto flex w-full flex-wrap items-center justify-center rounded-lg">
+      <NotImplementedComponent />
     </div>
   );
 };

@@ -13,7 +13,7 @@ const DriverStandingCardItem = ({
   const driverNameStyling = `text-xl font-bold ${cardData.constructorId}`;
   // fix: Need to implement this function after deciding routes and stuff
   const handleCardClick = () => {
-    router.push(`track-rev/standings/drivers/${cardData.driverNumber}`);
+    router.push(`/track-rev/driver`);
   };
 
   return (

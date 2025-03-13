@@ -6,6 +6,7 @@ import { useEffect } from "react";
 
 // Internal Imports
 import useTitle from "@/app/track-rev/_hooks/useTitle";
+import NotImplementedComponent from "@/app/track-rev/_components/NotImplemented";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Actual Implementation Code
@@ -56,20 +57,12 @@ const RaceDetails = () => {
   const { updateTitle } = useTitle();
 
   useEffect(() => {
-    updateTitle("Race Details");
+    updateTitle("Coming Soon...");
   }, []);
 
   return (
-    <div className="container mx-auto mt-10 flex w-full flex-wrap items-center justify-center rounded-lg">
-      <h2 className="mx-auto w-full text-center text-3xl font-bold">
-        We&apos;re working on it!{" "}
-        <span className="mx-4 mt-4 inline-flex">
-          <IoHammerOutline />
-        </span>
-      </h2>
-      <h3 className="mx-auto my-5 w-full text-center text-xl">
-        Check Back Soon!
-      </h3>
+    <div className="container mx-auto flex w-full flex-wrap items-center justify-center rounded-lg">
+      <NotImplementedComponent />
     </div>
   );
 };

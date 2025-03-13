@@ -1,15 +1,10 @@
 "use client";
-
-/* eslint-disable */
-
-// External Imports
 import { useEffect } from "react";
 
-// Internal Imports
 import useTitle from "@/app/track-rev/_hooks/useTitle";
-import NotImplementedComponent from "./_components/NotImplemented";
+import NotImplementedComponent from "@/app/track-rev/_components/NotImplemented";
 
-export default function TrackRevApp() {
+const Constructor = () => {
   const { updateTitle } = useTitle();
 
   useEffect(() => {
@@ -21,4 +16,6 @@ export default function TrackRevApp() {
       <NotImplementedComponent />
     </div>
   );
-}
+};
+
+export default Constructor;

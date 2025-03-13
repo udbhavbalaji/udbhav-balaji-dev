@@ -8,13 +8,12 @@ const ConstructorStandingCardItem = ({
   index,
   cardData,
 }: ConstructorStandingCardItemProps) => {
-  // const navigate = useNavigate();
   const router = useRouter();
 
   const constructorNameStyling = `text-xl font-bold ${cardData.constructorId}`;
 
   const handleCardClick = () => {
-    router.push(`track-rev/standings/constructors/${cardData.constructorId}`);
+    router.push(`/track-rev/constructor`);
   };
 
   return (
