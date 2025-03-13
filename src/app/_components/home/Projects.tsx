@@ -52,9 +52,16 @@ function ProjectItem({ project }: { project: ProjectItemProps }) {
           ))}
         </p>
 
-        <p className="mb-2 flex flex-wrap items-center justify-start text-sm">
-          {project.description}
-        </p>
+        <div className="my-3">
+          {project.descriptions.map((point, idx) => (
+            <p
+              key={idx}
+              className="mb-2 flex flex-wrap items-center justify-start text-sm"
+            >
+              {`• ${point}\n`}
+            </p>
+          ))}
+        </div>
       </Link>
     </>
   );

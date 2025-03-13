@@ -81,7 +81,8 @@ export interface ProjectItemProps {
   imgUrl: string;
   stack: string[];
   techSkills: string[];
-  description: string;
+  // description: string;
+  descriptions: string[];
   link: string;
 }
 
