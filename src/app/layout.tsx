@@ -7,7 +7,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 
 export const metadata: Metadata = {
   title: "Udbhav Balaji",
-  description: "Dev Website for Udbhav Balaji",
+  description: "Developer Website for Udbhav Balaji",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
