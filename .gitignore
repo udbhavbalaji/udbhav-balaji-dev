@@ -54,6 +54,9 @@ dev.db
 f1LoadingComponent.tsx
 f1-animations.css
 old/
+linting.txt
+things-to-do.txt
+test.js
 
 # Example app dir
 app.example/
