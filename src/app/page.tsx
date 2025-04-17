@@ -2,7 +2,7 @@ import Navbar from "@/app/_components/home/Navbar";
 import Profile from "@/app/_components/home/Profile";
 import Projects from "@/app/_components/home/Projects";
 import FooterNote from "@/app/_components/FooterNote";
-import { NavbarItem } from "@/types";
+import type { NavbarItem } from "@/types";
 
 const navItems: NavbarItem[] = [
   {

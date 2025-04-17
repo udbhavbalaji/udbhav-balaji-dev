@@ -3,7 +3,7 @@
 import { portfolioItems } from "@/app/_lib/resources";
 import Link from "next/link";
 import type { ProjectItemProps } from "@/types";
-import { MouseEvent, MouseEventHandler } from "react";
+import type { MouseEvent, MouseEventHandler } from "react";
 
 function Projects() {
   return (

@@ -1,7 +1,6 @@
 "use client";
 
 // External Imports
-import { IoHammerOutline } from "react-icons/io5";
 import { useEffect } from "react";
 
 // Internal Imports
