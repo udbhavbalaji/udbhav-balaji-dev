@@ -107,13 +107,13 @@ export type NavbarItem = {
 type TextStyling = {
   text: string;
   hover: string;
+  font?: string;
 };
 
 export type UpdatedNavbarProps = {
   title: {
     label: string;
     href: string;
-    // textStyling: string;
   };
   styling: {
     title: TextStyling;
@@ -121,9 +121,7 @@ export type UpdatedNavbarProps = {
     item: TextStyling;
     icon: TextStyling;
   };
-  // bgStyling: string;
   navItems: NavbarItem[];
-  // itemTextStyling: string;
   includeSocials: boolean;
 };
 
