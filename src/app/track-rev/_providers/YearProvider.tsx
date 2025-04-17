@@ -14,8 +14,8 @@ export const YearContext = createContext<YearContextType | null>(null);
 
 const YearProvider: React.FC<ProviderPropsType> = ({ children }) => {
   const [years, setYears] = useState<YearStateType>({
-    constructorStandings: "2024",
-    driverStandings: "2024",
+    constructorStandings: "2025",
+    driverStandings: "2025",
     seasonSchedule: "2025",
   });
 
