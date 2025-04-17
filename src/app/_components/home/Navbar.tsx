@@ -6,7 +6,7 @@ import { FaRegEnvelope } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa6";
 
-import { UpdatedNavbarProps } from "@/types";
+import type { UpdatedNavbarProps } from "@/types";
 
 function Navbar(props: UpdatedNavbarProps) {
   // function Navbar(props: NavbarProps) {
@@ -27,7 +27,7 @@ function Navbar(props: UpdatedNavbarProps) {
             {/* Logo */}
             <Link
               href={props.title.href}
-              className={`text-2xl font-bold transition-colors duration-200 text-${props.styling.title.text} hover:text-${props.styling.title.hover}`}
+              className={`font-${props.styling.title.font ?? "inherit"} text-2xl font-bold transition-colors duration-200 text-${props.styling.title.text} hover:text-${props.styling.title.hover}`}
             // className={`text-2xl font-bold text-spotifyGreen`}
             >
               {props.title.label}
@@ -40,8 +40,8 @@ function Navbar(props: UpdatedNavbarProps) {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`mt-2 transition-colors duration-200 text-${props.styling.item.text} hover:text-${props.styling.item.hover}`}
-                // className="mt-2 transition-colors duration-200 text-white hover:text-green-400"
+                  className={`font-${props.styling.item.font ?? "inherit"} mt-2 transition-colors duration-200 text-${props.styling.item.text} hover:text-${props.styling.item.hover}`}
+                // className="mt-2 text-white transition-colors duration-200 hover:text-stone-100"
                 >
                   {item.label}
                 </Link>
