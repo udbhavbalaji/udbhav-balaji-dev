@@ -1,6 +1,9 @@
+"use client";
+
 import { portfolioItems } from "@/app/_lib/resources";
 import Link from "next/link";
 import type { ProjectItemProps } from "@/types";
+import type { MouseEvent, MouseEventHandler } from "react";
 
 function Projects() {
   return (
@@ -22,10 +25,19 @@ function Projects() {
 }
 
 function ProjectItem({ project }: { project: ProjectItemProps }) {
+  const handleResourceClick: MouseEventHandler<HTMLDivElement> = (
+    e: MouseEvent<HTMLDivElement>,
+  ) => {
+    window.open(project.resource?.link, "_blank", "noopener, noreferrer");
+    e.stopPropagation();
+  };
+
   return (
     <>
       <Link
         href={project.link}
+        target="_blank"
+        rel="noopener noreferrer"
         className="flex max-w-lg flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
       >
         <h3 className="text-3xl">{project.title}</h3>
@@ -34,7 +46,7 @@ function ProjectItem({ project }: { project: ProjectItemProps }) {
           {project.stack.map((item) => (
             <span
               key={item}
-              className="mx-1 inline-flex rounded-md border-2 border-green-400 p-1"
+              className="mx-1 my-1 inline-flex rounded-md border-2 border-green-400 p-1"
             >
               {item}
             </span>
@@ -45,7 +57,7 @@ function ProjectItem({ project }: { project: ProjectItemProps }) {
           {project.techSkills.map((skill) => (
             <span
               key={skill}
-              className="mx-1 inline-flex rounded-md border-2 border-green-400 p-1"
+              className="mx-1 my-1 inline-flex rounded-md border-2 border-green-400 p-1"
             >
               {skill}
             </span>
@@ -56,12 +68,23 @@ function ProjectItem({ project }: { project: ProjectItemProps }) {
           {project.descriptions.map((point, idx) => (
             <p
               key={idx}
-              className="mb-2 flex flex-wrap items-center justify-start text-sm"
+              className="lg:text-md mb-2 flex flex-wrap items-center justify-start text-sm"
             >
               {`• ${point}\n`}
             </p>
           ))}
         </div>
+
+        {project.resource ? (
+          <div
+            onClick={handleResourceClick}
+            className="text-lg font-semibold text-green-400 decoration-green-400 decoration-2 underline-offset-4 hover:underline"
+          >
+            {project.resource.title}
+          </div>
+        ) : (
+          <></>
+        )}
       </Link>
     </>
   );

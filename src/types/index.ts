@@ -78,12 +78,14 @@ export type UBDevExceptionInvocator = (
 
 export interface ProjectItemProps {
   title: string;
-  imgUrl: string;
   stack: string[];
   techSkills: string[];
-  // description: string;
   descriptions: string[];
   link: string;
+  resource?: {
+    title: string;
+    link: string;
+  };
 }
 
 // Track Rev
@@ -92,3 +94,40 @@ export interface TitleContextType {
   title: string;
   updateTitle: (title: string) => void;
 }
+
+// Portfolio Types
+
+export type NavbarItem = {
+  label: string;
+  href: string;
+  download?: boolean;
+  downloadName?: string;
+};
+
+type TextStyling = {
+  text: string;
+  hover: string;
+  font?: string;
+};
+
+export type UpdatedNavbarProps = {
+  title: {
+    label: string;
+    href: string;
+  };
+  styling: {
+    title: TextStyling;
+    bg: string;
+    item: TextStyling;
+    icon: TextStyling;
+  };
+  navItems: NavbarItem[];
+  includeSocials: boolean;
+};
+
+export type NavbarProps = {
+  title: string;
+  titleHref: string;
+  navItems: NavbarItem[];
+  includeSocials: boolean;
+};

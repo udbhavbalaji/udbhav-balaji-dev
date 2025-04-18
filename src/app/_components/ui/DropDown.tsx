@@ -19,7 +19,7 @@ const DropDown: React.FC<DropDownProps> = ({
       <select
         value={currentValue}
         onChange={handleYearChange}
-        className="w-1/6 rounded-xl border-2 border-stone-100 border-stone-400 bg-inherit p-1 text-center text-inherit"
+        className="w-1/2 rounded-xl border-2 border-stone-100 border-stone-400 bg-inherit p-1 text-center text-inherit md:w-1/6"
       >
         {options.map((option) => (
           <option key={option} value={option}>

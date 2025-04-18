@@ -1,5 +1,4 @@
 // External Imports
-import type { ReactNode } from "react";
 
 // Internal Imports
 
@@ -18,9 +17,7 @@ export interface YearContextType {
 
 export type YearStateType = Omit<YearContextType, "updateYear">;
 
-export interface TrackRevLayoutProps {
-  children: ReactNode;
-}
+export type TrackRevLayoutProps = React.PropsWithChildren;
 
 export type ProviderPropsType = React.PropsWithChildren;
 
