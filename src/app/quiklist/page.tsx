@@ -1,0 +1,530 @@
+"use client";
+
+import React, { useState } from "react";
+import {
+  CheckSquare,
+  Clipboard,
+  ClipboardCheck,
+  ExternalLink,
+  Mail,
+  Shield,
+  Terminal,
+  Zap,
+} from "lucide-react";
+import { FaGithub, FaLinkedin } from "react-icons/fa6";
+import { quiklistMonoFont } from "@/styles/fonts";
+
+export default function QuiklistPage() {
+  const [copied, setCopied] = useState(false);
+  const installCommand = "npm install -g quiklist";
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(installCommand);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 4000);
+    } catch (error) {
+      console.error("Failed to copy: ", error);
+    }
+  };
+
+  const features = [
+    {
+      icon: <CheckSquare className="h-6 w-6" />,
+      title: "Interactive Checklists",
+      description:
+        "Create and manage dynamic checklists directly from your terminal with intuitive commands.",
+    },
+    {
+      icon: <Terminal className="h-6 w-6" />,
+      title: "Terminal Native",
+      description:
+        "Built for developers who live in the terminal. No GUI needed, just pure command-line efficiency.",
+    },
+    {
+      icon: <Zap className="h-6 w-6" />,
+      title: "Lightning Fast",
+      description:
+        "Instant startup and execution. Your tasks are accessible in milliseconds, not seconds.",
+    },
+    {
+      icon: <Shield className="h-6 w-6" />,
+      title: "Persistent Storage",
+      description:
+        "Your checklists are saved locally and sync across terminal sessions seamlessly.",
+    },
+  ];
+
+  return (
+    <main>
+      <div className="relative z-10">
+        {/* Header with GitHub link */}
+        <header className="container mx-auto px-4 pt-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              {/* <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600"> */}
+              {/* <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-orange-500 to-amber-500"> */}
+              {/* <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-orange-600 to-amber-600"> */}
+              {/* <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-slate-600 to-gray-600"> */}
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600">
+                <svg
+                  className="h-6 w-6 text-white"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <rect
+                    x="3"
+                    y="4"
+                    width="5"
+                    height="5"
+                    rx="1"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    fill="none"
+                  />
+                  <path
+                    d="M4.5 6.5L6 8 7.5 6.5"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+
+                  <rect
+                    x="3"
+                    y="10.5"
+                    width="5"
+                    height="5"
+                    rx="1"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    fill="none"
+                  />
+
+                  <rect
+                    x="3"
+                    y="17"
+                    width="5"
+                    height="5"
+                    rx="1"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    fill="none"
+                  />
+                  <path
+                    d="M4.5 19.5L6 21 7.5 19.5"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+
+                  <line
+                    x1="10"
+                    y1="6.5"
+                    x2="20"
+                    y2="6.5"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                  <line
+                    x1="10"
+                    y1="13"
+                    x2="18"
+                    y2="13"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                  <line
+                    x1="10"
+                    y1="19.5"
+                    x2="17"
+                    y2="19.5"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
+              <span
+                // className={`text-xl font-bold text-gray-200 ${quiklistMonoFont.className}`}
+                // className={`text-xl font-bold text-gray-800 ${quiklistMonoFont.className}`}
+                className={`text-xl font-bold text-blue-200 ${quiklistMonoFont.className}`}
+              >
+                {/* q<span className="text-purple-400">l</span> */}q
+                {/* <span className="text-orange-500">l</span> */}
+                {/* <span className="text-orange-400">l</span> */}
+                {/* <span className="text-slate-400">l</span> */}
+                <span className="text-blue-400">l</span>
+              </span>
+            </div>
+            <a
+              href="https://github.com/udbhavbalaji/quiklist"
+              target="_blank"
+              rel="noopener noreferrer"
+              // className="group flex items-center gap-2 rounded-lg border border-gray-700/50 bg-gray-800/50 px-4 py-2 text-gray-300 backdrop-blur-sm transition-all duration-200 hover:border-gray-600/50 hover:bg-gray-700/50 hover:text-white"
+              // className="group flex items-center gap-2 rounded-lg border border-orange-200/50 bg-orange-50/50 px-4 py-2 text-orange-700 backdrop-blur-sm transition-all duration-200 hover:border-orange-300/50 hover:bg-orange-100/50 hover:text-orange-900"
+              // className="group flex items-center gap-2 rounded-lg border border-orange-700/50 bg-orange-900/50 px-4 py-2 text-orange-300 backdrop-blur-sm transition-all duration-200 hover:border-orange-600/50 hover:bg-orange-800/50 hover:text-orange-100"
+              // className="group flex items-center gap-2 rounded-lg border border-slate-700/50 bg-slate-900/50 px-4 py-2 text-slate-300 backdrop-blur-sm transition-all duration-200 hover:border-slate-600/50 hover:bg-slate-800/50 hover:text-slate-100"
+              // className="group flex items-center gap-2 rounded-lg border border-blue-700/50 bg-blue-900/50 px-4 py-2 text-blue-300 backdrop-blur-sm transition-all duration-200 hover:border-blue-600/50 hover:bg-blue-800/50 hover:text-blue-100"
+              className="group flex items-center gap-2 rounded-lg border border-gray-700/50 bg-gray-800/50 px-4 py-2 text-gray-300 backdrop-blur-sm transition-all duration-200 hover:border-gray-600/50 hover:bg-gray-700/50 hover:text-white"
+            >
+              <FaGithub className="h-4 w-4 transition-transform duration-200 group-hover:scale-110" />
+              <span
+                className={`mt-1 text-xs font-bold ${quiklistMonoFont.className}`}
+              >
+                GitHub
+              </span>
+              <ExternalLink className="h-3 w-3 opacity-50" />
+            </a>
+          </div>
+        </header>
+
+        {/* Hero Section */}
+        <div className="container mx-auto px-4 pb-16 pt-16">
+          <div className="mx-auto max-w-4xl text-center">
+            {/* Logo/Icon */}
+            {/* <div className="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 shadow-2xl"> */}
+            {/* <div className="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 shadow-2xl"> */}
+            {/* <div className="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-600 to-amber-600 shadow-2xl"> */}
+            {/* <div className="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-slate-600 to-gray-600 shadow-2xl"> */}
+            <div className="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-600 shadow-2xl">
+              <svg
+                className="h-14 w-14 text-white"
+                viewBox="0 0 48 48"
+                fill="none"
+              >
+                {/* Checklist items arranged vertically like a real list */}
+
+                {/* First item - checked */}
+                <rect
+                  x="8"
+                  y="10"
+                  width="7"
+                  height="7"
+                  rx="1.5"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  fill="none"
+                />
+                <path
+                  d="M10 13.5l2 2 3-3"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <line
+                  x1="18"
+                  y1="13.5"
+                  x2="38"
+                  y2="13.5"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                />
+
+                {/* Second item - unchecked */}
+                <rect
+                  x="8"
+                  y="20"
+                  width="7"
+                  height="7"
+                  rx="1.5"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  fill="none"
+                />
+                <line
+                  x1="18"
+                  y1="23.5"
+                  x2="35"
+                  y2="23.5"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                />
+
+                {/* Third item - checked */}
+                <rect
+                  x="8"
+                  y="30"
+                  width="7"
+                  height="7"
+                  rx="1.5"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  fill="none"
+                />
+                <path
+                  d="M10 33.5l2 2 3-3"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <line
+                  x1="18"
+                  y1="33.5"
+                  x2="32"
+                  y2="33.5"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
+
+            {/* Headline */}
+            {/* <h1 className="mb-6 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300 bg-clip-text text-6xl font-bold leading-tight text-transparent md:text-7xl"> */}
+            {/* <h1 className="mb-6 bg-gradient-to-r from-orange-700 via-amber-600 to-orange-800 bg-clip-text text-6xl font-bold leading-tight text-transparent md:text-7xl"> */}
+            {/* <h1 className="mb-6 bg-gradient-to-r from-orange-200 via-amber-300 to-orange-100 bg-clip-text text-6xl font-bold leading-tight text-transparent md:text-7xl"> */}
+            {/* <h1 className="mb-6 bg-gradient-to-r from-slate-200 via-gray-300 to-slate-100 bg-clip-text text-6xl font-bold leading-tight text-transparent md:text-7xl"> */}
+            <h1 className="mb-6 bg-gradient-to-r from-blue-200 via-cyan-300 to-blue-100 bg-clip-text text-6xl font-bold leading-tight text-transparent md:text-7xl">
+              {/* Quik<span className="text-purple-400">List</span> */}
+              {/* Quik<span className="text-orange-500">List</span> */}
+              {/* Quik<span className="text-orange-400">List</span> */}
+              {/* Quik<span className="text-slate-400">List</span> */}
+              Quik<span className="text-blue-400">List</span>
+            </h1>
+
+            {/* <p className="mb-4 text-xl leading-relaxed text-gray-400 md:text-2xl">
+              The modern terminal-native checklist app
+            </p>
+
+            <p className="mx-auto mb-12 max-w-2xl text-lg text-gray-500"> */}
+            {/* <p className="mb-4 text-xl leading-relaxed text-gray-600 md:text-2xl">
+              The modern terminal-native checklist app
+            </p>
+
+            <p className="mx-auto mb-12 max-w-2xl text-lg text-gray-700"> */}
+            {/* <p className="mb-4 text-xl leading-relaxed text-gray-300 md:text-2xl">
+              The modern terminal-native checklist app
+            </p>
+
+            <p className="mx-auto mb-12 max-w-2xl text-lg text-gray-400"> */}
+            {/* <p className="mb-4 text-xl leading-relaxed text-slate-300 md:text-2xl">
+              The modern terminal-native checklist app
+            </p>
+
+            <p className="mx-auto mb-12 max-w-2xl text-lg text-slate-400"> */}
+            <p className="mb-4 text-xl leading-relaxed text-blue-300 md:text-2xl">
+              The modern terminal-native checklist app
+            </p>
+
+            <p className="mx-auto mb-12 max-w-2xl text-lg text-blue-400">
+              Manage your tasks and workflows directly from the command line.
+              Built for developers who want speed, simplicity, and power.
+            </p>
+
+            {/* Install Command */}
+            <div className="mx-auto mb-32 max-w-2xl">
+              {/* <div className="rounded-2xl border border-gray-800/50 bg-gray-900/50 p-6 shadow-2xl backdrop-blur-sm"> */}
+              {/* <div className="rounded-2xl border border-orange-200/50 bg-orange-50/50 p-6 shadow-2xl backdrop-blur-sm"> */}
+              {/* <div className="rounded-2xl border border-orange-700/50 bg-orange-900/50 p-6 shadow-2xl backdrop-blur-sm"> */}
+              {/* <div className="rounded-2xl border border-blue-700/50 bg-blue-900/50 p-6 shadow-2xl backdrop-blur-sm"> */}
+              <div className="rounded-2xl border border-gray-700/50 bg-gray-900/50 p-6 shadow-2xl backdrop-blur-sm">
+                <div className="flex items-center gap-4">
+                  <div className="flex-1">
+                    <input
+                      type="text"
+                      value={installCommand}
+                      disabled
+                      // className={`w-full cursor-default rounded-xl border border-gray-700/50 bg-gray-950/80 px-4 py-3 text-lg text-green-400 focus:outline-none ${quiklistMonoFont.className}`}
+                      // className={`w-full cursor-default rounded-xl border border-orange-200/50 bg-orange-50/80 px-4 py-3 text-lg text-orange-600 focus:outline-none ${quiklistMonoFont.className}`}
+                      // className={`w-full cursor-default rounded-xl border border-orange-700/50 bg-orange-950/80 px-4 py-3 text-lg text-orange-400 focus:outline-none ${quiklistMonoFont.className}`}
+                      // className={`w-full cursor-default rounded-xl border border-slate-700/50 bg-slate-950/80 px-4 py-3 text-lg text-slate-400 focus:outline-none ${quiklistMonoFont.className}`}
+                      // className={`w-full cursor-default rounded-xl border border-blue-700/50 bg-blue-950/80 px-4 py-3 text-lg text-blue-400 focus:outline-none ${quiklistMonoFont.className}`}
+                      className={`w-full cursor-default rounded-xl border border-gray-700/50 bg-gray-950/80 px-4 py-3 text-lg text-cyan-400 focus:outline-none ${quiklistMonoFont.className}`}
+                    />
+                  </div>
+                  <div className="relative">
+                    <button
+                      onClick={copyToClipboard}
+                      // className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-purple-500 hover:to-indigo-500 hover:shadow-xl"
+                      // className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-orange-400 hover:to-amber-400 hover:shadow-xl"
+                      // className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-lg transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-orange-500 hover:to-amber-500 hover:shadow-xl"
+                      className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-blue-500 hover:to-cyan-500 hover:shadow-xl"
+                    >
+                      <div className="relative">
+                        {copied ? (
+                          <ClipboardCheck className="h-5 w-5 scale-110 text-white transition-all duration-200" />
+                        ) : (
+                          <Clipboard className="h-5 w-5 transition-all duration-200" />
+                        )}
+                      </div>
+                    </button>
+
+                    {/* Success Message */}
+                    {copied && (
+                      <div
+                        // className={`absolute -top-10 left-1/2 z-10 -translate-x-1/2 transform rounded bg-purple-600 px-2 py-1 text-xs text-white shadow-lg transition-all duration-500 ${quiklistMonoFont.className}`}
+                        // className={`absolute -top-10 left-1/2 z-10 -translate-x-1/2 transform rounded bg-orange-500 px-2 py-1 text-xs text-white shadow-lg transition-all duration-500 ${quiklistMonoFont.className}`}
+                        // className={`absolute -top-10 left-1/2 z-10 -translate-x-1/2 transform rounded bg-orange-600 px-2 py-1 text-xs text-white shadow-lg transition-all duration-500 ${quiklistMonoFont.className}`}
+                        className={`absolute -top-10 left-1/2 z-10 -translate-x-1/2 transform rounded bg-blue-600 px-2 py-1 text-xs text-white shadow-lg transition-all duration-500 ${quiklistMonoFont.className}`}
+                      >
+                        Copied!
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* GitHub CTA */}
+            {/*<div className="mb-20">
+              <a
+                href="https://github.com/udbhavbalaji/quiklist"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 bg-gray-900/30 hover:bg-gray-800/50 backdrop-blur-sm border border-gray-700/30 hover:border-gray-600/50 px-8 py-4 rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-xl group"
+              >
+                <GithubIcon className="w-6 h-6 text-gray-400 group-hover:text-white transition-colors duration-200" />
+                <div className="text-left">
+                  <div className="text-lg font-semibold text-gray-200 group-hover:text-white transition-colors duration-200">
+                    Star on GitHub
+                  </div>
+                  <div className="text-sm text-gray-500 group-hover:text-gray-300 transition-colors duration-200">
+                    Check out the source code
+                  </div>
+                </div>
+                <ExternalLink className="w-4 h-4 text-gray-500 group-hover:text-gray-300 transition-colors duration-200" />
+              </a>
+            </div>*/}
+
+            {/* Features */}
+            <div className="mx-auto max-w-6xl">
+              {/* <h2 className="mb-16 bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-center text-4xl font-bold text-transparent"> */}
+              {/* <h2 className="mb-16 bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-center text-4xl font-bold text-transparent"> */}
+              {/* <h2 className="mb-16 bg-gradient-to-r from-orange-300 to-amber-300 bg-clip-text text-center text-4xl font-bold text-transparent"> */}
+              <h2 className="mb-16 bg-gradient-to-r from-blue-300 to-cyan-300 bg-clip-text text-center text-4xl font-bold text-transparent">
+                Why Choose QuikList?
+              </h2>
+
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+                {features.map((feature, index) => (
+                  <div
+                    key={index}
+                    // className="group rounded-2xl border border-gray-800/30 bg-gray-900/20 p-8 backdrop-blur-sm"
+                    // className="group rounded-2xl border border-orange-200/30 bg-orange-50/20 p-8 backdrop-blur-sm"
+                    // className="group rounded-2xl border border-orange-700/30 bg-orange-900/20 p-8 backdrop-blur-sm"
+                    // className="group rounded-2xl border border-blue-700/30 bg-blue-900/20 p-8 backdrop-blur-sm"
+                    className="group rounded-2xl border border-gray-700/30 bg-gray-900/20 p-8 backdrop-blur-sm"
+                  // className="group bg-gray-900/20 backdrop-blur-sm border border-gray-800/30 rounded-2xl p-8 hover:bg-gray-900/40 hover:border-gray-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+                  >
+                    <div className="mb-4 flex items-center">
+                      {/* <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600"> */}
+                      {/* <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-amber-500"> */}
+                      {/* <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-orange-600 to-amber-600"> */}
+                      <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600">
+                        {/*<div className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl mr-4 group-hover:scale-110 transition-transform duration-300">*/}
+
+                        {React.cloneElement(feature.icon, {
+                          className: "w-6 h-6 text-white",
+                        })}
+                      </div>
+                      {/* <h3 className="text-xl font-bold text-gray-200">
+                         {feature.title}
+                       </h3>
+                     </div>
+                     <p className="leading-relaxed text-gray-400"> */}
+                      {/* <h3 className="text-xl font-bold text-gray-800">
+                         {feature.title}
+                       </h3>
+                     </div>
+                     <p className="leading-relaxed text-gray-600"> */}
+                      <h3 className="text-xl font-bold text-gray-200">
+                        {feature.title}
+                      </h3>
+                    </div>
+                    <p className="leading-relaxed text-gray-300">
+                      {feature.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Bottom CTA */}
+            <div className="mt-20 text-center">
+              {/* <p className="text-lg text-gray-500"> */}
+              {/* <p className="text-lg text-gray-700"> */}
+              <p className="text-lg text-gray-400">
+                Ready to supercharge your workflow?
+              </p>
+              <div
+                // className={`mt-4 text-lg text-green-400 ${quiklistMonoFont.className}`}
+                // className={`mt-4 text-lg text-orange-600 ${quiklistMonoFont.className}`}
+                // className={`mt-4 text-lg text-orange-400 ${quiklistMonoFont.className}`}
+                // className={`mt-4 text-lg text-blue-400 ${quiklistMonoFont.className}`}
+                className={`mt-4 text-lg text-cyan-400 ${quiklistMonoFont.className}`}
+              >
+                $ quiklist --help
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Social Links Footer */}
+        <footer
+          className={`flex items-center justify-center space-x-8 px-6 py-8 ${quiklistMonoFont.className}`}
+        >
+          <a
+            href="https://github.com/udbhavbalaji"
+            target="_blank"
+            rel="noopener noreferrer"
+            // className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-purple-400"
+            // className="group flex flex-col items-center space-y-1 text-gray-500 transition-colors duration-200 hover:text-orange-500"
+            // className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-orange-400"
+            className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-blue-400"
+          >
+            <FaGithub className="h-6 w-6 transition-transform duration-200 group-hover:scale-110" />
+            <span className="text-xs">GitHub</span>
+          </a>
+
+          <a
+            href="https://linkedin.com/in/udbhavbalaji"
+            target="_blank"
+            rel="noopener noreferrer"
+            // className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-purple-400"
+            // className="group flex flex-col items-center space-y-1 text-gray-500 transition-colors duration-200 hover:text-orange-500"
+            // className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-orange-400"
+            className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-blue-400"
+          >
+            <FaLinkedin className="col group flex h-6 w-6 items-center space-y-1 transition-colors duration-200 group-hover:scale-110" />
+            <span className="text-xs">LinkedIn</span>
+          </a>
+
+          <a
+            href="mailto:udbhavbalaji@gmail.com"
+            // className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-purple-400"
+            // className="group flex flex-col items-center space-y-1 text-gray-500 transition-colors duration-200 hover:text-orange-500"
+            // className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-orange-400"
+            className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-blue-400"
+          >
+            <Mail className="h-6 w-6 font-bold transition-transform duration-200 group-hover:scale-110" />
+            <span className="text-xs">Email</span>
+          </a>
+
+          {/*<a
+            href="https://discord.com/users/yourdiscordid"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-400 hover:text-purple-400 transition-colors duration-200 flex flex-col items-center space-y-1 group"
+          >
+            <svg
+              className="w-6 h-6 group-hover:scale-110 transition-transform duration-200"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419-.0188 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1568 2.4189Z" />
+            </svg>
+            <span className="text-xs">Discord</span>
+          </a>*/}
+        </footer>
+      </div>
+    </main>
+  );
+}
