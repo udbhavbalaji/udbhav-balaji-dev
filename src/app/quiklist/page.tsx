@@ -148,7 +148,7 @@ export default function QuiklistPage() {
               <span
                 className={`text-xl font-bold text-blue-200 ${quiklistMonoFont.className}`}
               >
-                <span className="text-blue-400">l</span>
+                q<span className="text-blue-400">l</span>
               </span>
             </div>
             <a
