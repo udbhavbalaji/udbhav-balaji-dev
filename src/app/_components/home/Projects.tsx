@@ -78,7 +78,7 @@ function ProjectItem({ project }: { project: ProjectItemProps }) {
         {project.resource ? (
           <div
             onClick={handleResourceClick}
-            className="text-lg font-semibold text-green-400 decoration-green-400 decoration-2 underline-offset-4 hover:underline"
+            className="text-md font-semibold text-green-400 decoration-green-400 decoration-2 underline-offset-4 hover:underline md:text-lg"
           >
             {project.resource.title}
           </div>

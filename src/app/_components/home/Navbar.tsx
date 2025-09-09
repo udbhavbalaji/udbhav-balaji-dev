@@ -6,6 +6,7 @@ import { FaRegEnvelope } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa6";
 
+import { contactDetails } from "@/app/_lib/resources";
 import type { UpdatedNavbarProps } from "@/types";
 
 function Navbar(props: UpdatedNavbarProps) {
@@ -54,7 +55,7 @@ function Navbar(props: UpdatedNavbarProps) {
                   <li className="my-1 ml-8 w-full justify-between gap-4">
                     <div className="mx-5 inline-flex h-6 w-6 rounded-full">
                       <Link
-                        href="https://github.com/udbhavbalaji"
+                        href={contactDetails.github}
                         // className="rounded-full text-2xl text-stone-100 transition-colors duration-200 hover:text-red-600"
                         className={`rounded-full text-2xl transition-colors duration-200 hover:text-${props.styling.icon.hover}`}
                       >
@@ -64,7 +65,7 @@ function Navbar(props: UpdatedNavbarProps) {
 
                     <div className="mx-5 inline-flex h-6 w-6 rounded-full">
                       <Link
-                        href="https://linkedin.com/in/udbhav-balaji"
+                        href={contactDetails.linkedin}
                         className={`rounded-full text-2xl transition-colors duration-200 hover:text-${props.styling.icon.hover}`}
                       >
                         <FaLinkedin />
@@ -73,7 +74,7 @@ function Navbar(props: UpdatedNavbarProps) {
 
                     <div className="ml-5 inline-flex h-6 w-6 rounded-full">
                       <Link
-                        href="mailto:udbhavbalaji@gmail.com"
+                        href={`mailto:${contactDetails.email}`}
                         className={`rounded-full text-2xl transition-colors duration-200 hover:text-${props.styling.icon.hover}`}
                       >
                         <FaRegEnvelope />

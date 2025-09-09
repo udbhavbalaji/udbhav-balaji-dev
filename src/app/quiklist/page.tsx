@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
 import { quiklistMonoFont } from "@/styles/fonts";
+import { contactDetails } from "../_lib/resources";
 
 export default function QuiklistPage() {
   const [copied, setCopied] = useState(false);
@@ -391,7 +392,7 @@ export default function QuiklistPage() {
           className={`flex items-center justify-center space-x-8 px-6 py-8 ${quiklistMonoFont.className}`}
         >
           <a
-            href="https://github.com/udbhavbalaji"
+            href={contactDetails.github}
             target="_blank"
             rel="noopener noreferrer"
             className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-blue-400"
@@ -401,7 +402,7 @@ export default function QuiklistPage() {
           </a>
 
           <a
-            href="https://linkedin.com/in/udbhav-balaji"
+            href={contactDetails.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-blue-400"
@@ -411,7 +412,7 @@ export default function QuiklistPage() {
           </a>
 
           <a
-            href="mailto:udbhavbalaji@gmail.com"
+            href={`mailto:${contactDetails.email}`}
             className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-blue-400"
           >
             <Mail className="h-6 w-6 font-bold transition-transform duration-200 group-hover:scale-110" />
