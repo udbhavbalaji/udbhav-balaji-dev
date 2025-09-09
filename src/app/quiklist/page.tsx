@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
 import { quiklistMonoFont } from "@/styles/fonts";
+import { contactDetails } from "../_lib/resources";
 
 export default function QuiklistPage() {
   const [copied, setCopied] = useState(false);
@@ -62,10 +63,6 @@ export default function QuiklistPage() {
         <header className="container mx-auto px-4 pt-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              {/* <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600"> */}
-              {/* <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-orange-500 to-amber-500"> */}
-              {/* <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-orange-600 to-amber-600"> */}
-              {/* <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-slate-600 to-gray-600"> */}
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600">
                 <svg
                   className="h-6 w-6 text-white"
@@ -149,14 +146,8 @@ export default function QuiklistPage() {
                 </svg>
               </div>
               <span
-                // className={`text-xl font-bold text-gray-200 ${quiklistMonoFont.className}`}
-                // className={`text-xl font-bold text-gray-800 ${quiklistMonoFont.className}`}
                 className={`text-xl font-bold text-blue-200 ${quiklistMonoFont.className}`}
               >
-                {/* q<span className="text-purple-400">l</span> */}q
-                {/* <span className="text-orange-500">l</span> */}
-                {/* <span className="text-orange-400">l</span> */}
-                {/* <span className="text-slate-400">l</span> */}
                 <span className="text-blue-400">l</span>
               </span>
             </div>
@@ -164,11 +155,6 @@ export default function QuiklistPage() {
               href="https://github.com/udbhavbalaji/quiklist"
               target="_blank"
               rel="noopener noreferrer"
-              // className="group flex items-center gap-2 rounded-lg border border-gray-700/50 bg-gray-800/50 px-4 py-2 text-gray-300 backdrop-blur-sm transition-all duration-200 hover:border-gray-600/50 hover:bg-gray-700/50 hover:text-white"
-              // className="group flex items-center gap-2 rounded-lg border border-orange-200/50 bg-orange-50/50 px-4 py-2 text-orange-700 backdrop-blur-sm transition-all duration-200 hover:border-orange-300/50 hover:bg-orange-100/50 hover:text-orange-900"
-              // className="group flex items-center gap-2 rounded-lg border border-orange-700/50 bg-orange-900/50 px-4 py-2 text-orange-300 backdrop-blur-sm transition-all duration-200 hover:border-orange-600/50 hover:bg-orange-800/50 hover:text-orange-100"
-              // className="group flex items-center gap-2 rounded-lg border border-slate-700/50 bg-slate-900/50 px-4 py-2 text-slate-300 backdrop-blur-sm transition-all duration-200 hover:border-slate-600/50 hover:bg-slate-800/50 hover:text-slate-100"
-              // className="group flex items-center gap-2 rounded-lg border border-blue-700/50 bg-blue-900/50 px-4 py-2 text-blue-300 backdrop-blur-sm transition-all duration-200 hover:border-blue-600/50 hover:bg-blue-800/50 hover:text-blue-100"
               className="group flex items-center gap-2 rounded-lg border border-gray-700/50 bg-gray-800/50 px-4 py-2 text-gray-300 backdrop-blur-sm transition-all duration-200 hover:border-gray-600/50 hover:bg-gray-700/50 hover:text-white"
             >
               <FaGithub className="h-4 w-4 transition-transform duration-200 group-hover:scale-110" />
@@ -186,10 +172,6 @@ export default function QuiklistPage() {
         <div className="container mx-auto px-4 pb-16 pt-16">
           <div className="mx-auto max-w-4xl text-center">
             {/* Logo/Icon */}
-            {/* <div className="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 shadow-2xl"> */}
-            {/* <div className="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 shadow-2xl"> */}
-            {/* <div className="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-600 to-amber-600 shadow-2xl"> */}
-            {/* <div className="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-slate-600 to-gray-600 shadow-2xl"> */}
             <div className="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-600 shadow-2xl">
               <svg
                 className="h-14 w-14 text-white"
@@ -278,38 +260,10 @@ export default function QuiklistPage() {
             </div>
 
             {/* Headline */}
-            {/* <h1 className="mb-6 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300 bg-clip-text text-6xl font-bold leading-tight text-transparent md:text-7xl"> */}
-            {/* <h1 className="mb-6 bg-gradient-to-r from-orange-700 via-amber-600 to-orange-800 bg-clip-text text-6xl font-bold leading-tight text-transparent md:text-7xl"> */}
-            {/* <h1 className="mb-6 bg-gradient-to-r from-orange-200 via-amber-300 to-orange-100 bg-clip-text text-6xl font-bold leading-tight text-transparent md:text-7xl"> */}
-            {/* <h1 className="mb-6 bg-gradient-to-r from-slate-200 via-gray-300 to-slate-100 bg-clip-text text-6xl font-bold leading-tight text-transparent md:text-7xl"> */}
             <h1 className="mb-6 bg-gradient-to-r from-blue-200 via-cyan-300 to-blue-100 bg-clip-text text-6xl font-bold leading-tight text-transparent md:text-7xl">
-              {/* Quik<span className="text-purple-400">List</span> */}
-              {/* Quik<span className="text-orange-500">List</span> */}
-              {/* Quik<span className="text-orange-400">List</span> */}
-              {/* Quik<span className="text-slate-400">List</span> */}
               Quik<span className="text-blue-400">List</span>
             </h1>
 
-            {/* <p className="mb-4 text-xl leading-relaxed text-gray-400 md:text-2xl">
-              The modern terminal-native checklist app
-            </p>
-
-            <p className="mx-auto mb-12 max-w-2xl text-lg text-gray-500"> */}
-            {/* <p className="mb-4 text-xl leading-relaxed text-gray-600 md:text-2xl">
-              The modern terminal-native checklist app
-            </p>
-
-            <p className="mx-auto mb-12 max-w-2xl text-lg text-gray-700"> */}
-            {/* <p className="mb-4 text-xl leading-relaxed text-gray-300 md:text-2xl">
-              The modern terminal-native checklist app
-            </p>
-
-            <p className="mx-auto mb-12 max-w-2xl text-lg text-gray-400"> */}
-            {/* <p className="mb-4 text-xl leading-relaxed text-slate-300 md:text-2xl">
-              The modern terminal-native checklist app
-            </p>
-
-            <p className="mx-auto mb-12 max-w-2xl text-lg text-slate-400"> */}
             <p className="mb-4 text-xl leading-relaxed text-blue-300 md:text-2xl">
               The modern terminal-native checklist app
             </p>
@@ -321,10 +275,6 @@ export default function QuiklistPage() {
 
             {/* Install Command */}
             <div className="mx-auto mb-32 max-w-2xl">
-              {/* <div className="rounded-2xl border border-gray-800/50 bg-gray-900/50 p-6 shadow-2xl backdrop-blur-sm"> */}
-              {/* <div className="rounded-2xl border border-orange-200/50 bg-orange-50/50 p-6 shadow-2xl backdrop-blur-sm"> */}
-              {/* <div className="rounded-2xl border border-orange-700/50 bg-orange-900/50 p-6 shadow-2xl backdrop-blur-sm"> */}
-              {/* <div className="rounded-2xl border border-blue-700/50 bg-blue-900/50 p-6 shadow-2xl backdrop-blur-sm"> */}
               <div className="rounded-2xl border border-gray-700/50 bg-gray-900/50 p-6 shadow-2xl backdrop-blur-sm">
                 <div className="flex items-center gap-4">
                   <div className="flex-1">
@@ -332,20 +282,12 @@ export default function QuiklistPage() {
                       type="text"
                       value={installCommand}
                       disabled
-                      // className={`w-full cursor-default rounded-xl border border-gray-700/50 bg-gray-950/80 px-4 py-3 text-lg text-green-400 focus:outline-none ${quiklistMonoFont.className}`}
-                      // className={`w-full cursor-default rounded-xl border border-orange-200/50 bg-orange-50/80 px-4 py-3 text-lg text-orange-600 focus:outline-none ${quiklistMonoFont.className}`}
-                      // className={`w-full cursor-default rounded-xl border border-orange-700/50 bg-orange-950/80 px-4 py-3 text-lg text-orange-400 focus:outline-none ${quiklistMonoFont.className}`}
-                      // className={`w-full cursor-default rounded-xl border border-slate-700/50 bg-slate-950/80 px-4 py-3 text-lg text-slate-400 focus:outline-none ${quiklistMonoFont.className}`}
-                      // className={`w-full cursor-default rounded-xl border border-blue-700/50 bg-blue-950/80 px-4 py-3 text-lg text-blue-400 focus:outline-none ${quiklistMonoFont.className}`}
                       className={`w-full cursor-default rounded-xl border border-gray-700/50 bg-gray-950/80 px-4 py-3 text-lg text-cyan-400 focus:outline-none ${quiklistMonoFont.className}`}
                     />
                   </div>
                   <div className="relative">
                     <button
                       onClick={copyToClipboard}
-                      // className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-purple-500 hover:to-indigo-500 hover:shadow-xl"
-                      // className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-orange-400 hover:to-amber-400 hover:shadow-xl"
-                      // className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-lg transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-orange-500 hover:to-amber-500 hover:shadow-xl"
                       className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-blue-500 hover:to-cyan-500 hover:shadow-xl"
                     >
                       <div className="relative">
@@ -360,9 +302,6 @@ export default function QuiklistPage() {
                     {/* Success Message */}
                     {copied && (
                       <div
-                        // className={`absolute -top-10 left-1/2 z-10 -translate-x-1/2 transform rounded bg-purple-600 px-2 py-1 text-xs text-white shadow-lg transition-all duration-500 ${quiklistMonoFont.className}`}
-                        // className={`absolute -top-10 left-1/2 z-10 -translate-x-1/2 transform rounded bg-orange-500 px-2 py-1 text-xs text-white shadow-lg transition-all duration-500 ${quiklistMonoFont.className}`}
-                        // className={`absolute -top-10 left-1/2 z-10 -translate-x-1/2 transform rounded bg-orange-600 px-2 py-1 text-xs text-white shadow-lg transition-all duration-500 ${quiklistMonoFont.className}`}
                         className={`absolute -top-10 left-1/2 z-10 -translate-x-1/2 transform rounded bg-blue-600 px-2 py-1 text-xs text-white shadow-lg transition-all duration-500 ${quiklistMonoFont.className}`}
                       >
                         Copied!
@@ -396,9 +335,6 @@ export default function QuiklistPage() {
 
             {/* Features */}
             <div className="mx-auto max-w-6xl">
-              {/* <h2 className="mb-16 bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-center text-4xl font-bold text-transparent"> */}
-              {/* <h2 className="mb-16 bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-center text-4xl font-bold text-transparent"> */}
-              {/* <h2 className="mb-16 bg-gradient-to-r from-orange-300 to-amber-300 bg-clip-text text-center text-4xl font-bold text-transparent"> */}
               <h2 className="mb-16 bg-gradient-to-r from-blue-300 to-cyan-300 bg-clip-text text-center text-4xl font-bold text-transparent">
                 Why Choose QuikList?
               </h2>
@@ -407,20 +343,10 @@ export default function QuiklistPage() {
                 {features.map((feature, index) => (
                   <div
                     key={index}
-                    // className="group rounded-2xl border border-gray-800/30 bg-gray-900/20 p-8 backdrop-blur-sm"
-                    // className="group rounded-2xl border border-orange-200/30 bg-orange-50/20 p-8 backdrop-blur-sm"
-                    // className="group rounded-2xl border border-orange-700/30 bg-orange-900/20 p-8 backdrop-blur-sm"
-                    // className="group rounded-2xl border border-blue-700/30 bg-blue-900/20 p-8 backdrop-blur-sm"
                     className="group rounded-2xl border border-gray-700/30 bg-gray-900/20 p-8 backdrop-blur-sm"
-                  // className="group bg-gray-900/20 backdrop-blur-sm border border-gray-800/30 rounded-2xl p-8 hover:bg-gray-900/40 hover:border-gray-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl"
                   >
                     <div className="mb-4 flex items-center">
-                      {/* <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600"> */}
-                      {/* <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-amber-500"> */}
-                      {/* <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-orange-600 to-amber-600"> */}
                       <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600">
-                        {/*<div className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl mr-4 group-hover:scale-110 transition-transform duration-300">*/}
-
                         {React.cloneElement(feature.icon, {
                           className: "w-6 h-6 text-white",
                         })}
@@ -449,16 +375,10 @@ export default function QuiklistPage() {
 
             {/* Bottom CTA */}
             <div className="mt-20 text-center">
-              {/* <p className="text-lg text-gray-500"> */}
-              {/* <p className="text-lg text-gray-700"> */}
               <p className="text-lg text-gray-400">
                 Ready to supercharge your workflow?
               </p>
               <div
-                // className={`mt-4 text-lg text-green-400 ${quiklistMonoFont.className}`}
-                // className={`mt-4 text-lg text-orange-600 ${quiklistMonoFont.className}`}
-                // className={`mt-4 text-lg text-orange-400 ${quiklistMonoFont.className}`}
-                // className={`mt-4 text-lg text-blue-400 ${quiklistMonoFont.className}`}
                 className={`mt-4 text-lg text-cyan-400 ${quiklistMonoFont.className}`}
               >
                 $ quiklist --help
@@ -472,12 +392,9 @@ export default function QuiklistPage() {
           className={`flex items-center justify-center space-x-8 px-6 py-8 ${quiklistMonoFont.className}`}
         >
           <a
-            href="https://github.com/udbhavbalaji"
+            href={contactDetails.github}
             target="_blank"
             rel="noopener noreferrer"
-            // className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-purple-400"
-            // className="group flex flex-col items-center space-y-1 text-gray-500 transition-colors duration-200 hover:text-orange-500"
-            // className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-orange-400"
             className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-blue-400"
           >
             <FaGithub className="h-6 w-6 transition-transform duration-200 group-hover:scale-110" />
@@ -485,12 +402,9 @@ export default function QuiklistPage() {
           </a>
 
           <a
-            href="https://linkedin.com/in/udbhavbalaji"
+            href={contactDetails.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            // className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-purple-400"
-            // className="group flex flex-col items-center space-y-1 text-gray-500 transition-colors duration-200 hover:text-orange-500"
-            // className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-orange-400"
             className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-blue-400"
           >
             <FaLinkedin className="col group flex h-6 w-6 items-center space-y-1 transition-colors duration-200 group-hover:scale-110" />
@@ -498,10 +412,7 @@ export default function QuiklistPage() {
           </a>
 
           <a
-            href="mailto:udbhavbalaji@gmail.com"
-            // className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-purple-400"
-            // className="group flex flex-col items-center space-y-1 text-gray-500 transition-colors duration-200 hover:text-orange-500"
-            // className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-orange-400"
+            href={`mailto:${contactDetails.email}`}
             className="group flex flex-col items-center space-y-1 text-gray-400 transition-colors duration-200 hover:text-blue-400"
           >
             <Mail className="h-6 w-6 font-bold transition-transform duration-200 group-hover:scale-110" />

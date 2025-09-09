@@ -2,34 +2,19 @@ import type { ProjectItemProps } from "@/types";
 
 export const portfolioItems: ProjectItemProps[] = [
   {
-    title: "Logify",
+    title: "Quiklist",
     stack: ["TypeScript"],
-    techSkills: ["NPM Package", "Logging", "Debugging"],
-    link: "https://github.com/udbhavbalaji/logify",
+    techSkills: ["Command Line Interface (CLI)", "Terminal Application"],
+    link: "/quiklist",
     descriptions: [
-      "A utility package, written in TS, for advanced, formatted logging while debugging.",
-      "Allows function and method inspection for functions with advanced logging for better error identification in JS.",
-      "Has a built in Error Logger and Handler to handle errors in a type-safe manner.",
-      "Used supervised CI/CD to allow smoother publishing at time of releasing updates.",
+      "Simple terminal-based app that allows you to track progress.",
+      "Intuitive UI and commands for fast workflows.",
+      "Comes with a global quiklist, with more task-specific lists creatable locally.",
+      "Allows syncing between systems (via git) & collaborative projects,",
     ],
     resource: {
       title: "View on NPM",
-      link: "https://www.npmjs.com/package/@udawg00/logify",
-    },
-  },
-  {
-    title: "Track-Rev",
-    stack: ["TypeScript", "React"],
-    techSkills: ["Full Stack App", "Next.js", "Tailwind CSS"],
-    link: "https://github.com/udbhavbalaji/udbhav-balaji-dev",
-    descriptions: [
-      "Formula 1 web app that offers an immersive experience, allowing users to explore current and historical standings for drivers and constructors.",
-      "Access comprehensive season schedules for both the current year and previous years, keeping you up-to-date with all the racing action.",
-      "Stay tuned as the race details, race results, and dedicated pages for constructors and drivers are in development.",
-    ],
-    resource: {
-      title: "Visit Website",
-      link: "/track-rev",
+      link: "https://www.npmjs.com/package/quiklist",
     },
   },
   {
@@ -64,4 +49,44 @@ export const portfolioItems: ProjectItemProps[] = [
       "Explored music trends across three decades, uncovering patterns in hits from the 1990s, 2000s, and 2010s.",
     ],
   },
+  {
+    title: "Logify",
+    stack: ["TypeScript"],
+    techSkills: ["NPM Package", "Logging", "Debugging"],
+    link: "https://github.com/udbhavbalaji/logify",
+    descriptions: [
+      "A utility package, written in TS, for advanced, formatted logging while debugging.",
+      "Allows function and method inspection for functions with advanced logging for better error identification in JS.",
+      "Has a built in Error Logger and Handler to handle errors in a type-safe manner.",
+      "Used supervised CI/CD to allow smoother publishing at time of releasing updates.",
+    ],
+    resource: {
+      title: "View on NPM",
+      link: "https://www.npmjs.com/package/@udawg00/logify",
+    },
+  },
+  {
+    title: "Track-Rev",
+    stack: ["TypeScript", "React"],
+    techSkills: ["Full Stack App", "Next.js", "Tailwind CSS"],
+    link: "https://github.com/udbhavbalaji/udbhav-balaji-dev",
+    descriptions: [
+      "Formula 1 web app that offers an immersive experience, allowing users to explore current and historical standings for drivers and constructors.",
+      "Access comprehensive season schedules for both the current year and previous years, keeping you up-to-date with all the racing action.",
+      "Stay tuned as the race details, race results, and dedicated pages for constructors and drivers are in development.",
+    ],
+    resource: {
+      title: "Visit Website",
+      link: "/track-rev",
+    },
+  },
 ];
+
+export const contactDetails = {
+  github: "https://github.com/udbhavbalaji",
+  linkedin: "https://linkedin.com/in/udbhav-balaji",
+  email: "udbhavbalaji@gmail.com",
+  // discord: "",
+  // facebook: "",
+  // instagram: "",
+};
