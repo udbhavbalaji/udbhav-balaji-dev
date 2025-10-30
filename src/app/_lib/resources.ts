@@ -2,6 +2,37 @@ import type { ProjectItemProps } from "@/types";
 
 export const portfolioItems: ProjectItemProps[] = [
   {
+    title: "Catchresult",
+    stack: ["TypeScript", "neverthrow", "bun"],
+    techSkills: ["Error-handling", "Library"],
+    link: "https://github.com/udbhavbalaji/catchresult",
+    descriptions: [
+      "Built a fluent, type-safe error handling library for cleaner exception management in TypeScript.",
+      "Supported flexible error matching by class, message, object shape, or predicate.",
+      "Enabled context-aware error handling and debugging via .addContext().",
+      "Unified sync and async workflows with getSafeFn / getSafeFnAsync and integrated neverthrow Result types.",
+    ],
+    resource: {
+      title: "View on NPM",
+      link: "https://www.npmjs.com/package/catchresult",
+    },
+  },
+  {
+    title: "CV Stack",
+    stack: ["TypeScript", "Python", "neverthrow", "bun", "drizzle", "SQLite"],
+    techSkills: ["Error-handling", "Library", "AI-powered"],
+    link: "https://github.com/udbhavbalaji/cvstack",
+    descriptions: [
+      "Built a cross-language CLI tool using Bun and Python to automate job tracking and analysis.",
+      "Integrated a Playwright-based scraper to extract structured job data directly from LinkedIn URLs.",
+      "Leveraged the OpenRouter API for AI-driven job description analysis, identifying key skills and requirements.",
+    ],
+    resource: {
+      title: "View on NPM",
+      link: "https://www.npmjs.com/package/cvstack",
+    },
+  },
+  {
     title: "Quiklist",
     stack: ["TypeScript"],
     techSkills: ["Command Line Interface (CLI)", "Terminal Application"],

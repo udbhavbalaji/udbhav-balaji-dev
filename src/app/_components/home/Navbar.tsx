@@ -29,7 +29,7 @@ function Navbar(props: UpdatedNavbarProps) {
             <Link
               href={props.title.href}
               className={`font-${props.styling.title.font ?? "inherit"} text-2xl font-bold transition-colors duration-200 text-${props.styling.title.text} hover:text-${props.styling.title.hover}`}
-            // className={`text-2xl font-bold text-spotifyGreen`}
+              // className={`text-2xl font-bold text-spotifyGreen`}
             >
               {props.title.label}
               {/*props.title.label*/}
@@ -42,7 +42,7 @@ function Navbar(props: UpdatedNavbarProps) {
                   key={item.label}
                   href={item.href}
                   className={`font-${props.styling.item.font ?? "inherit"} mt-2 transition-colors duration-200 text-${props.styling.item.text} hover:text-${props.styling.item.hover}`}
-                // className="mt-2 text-white transition-colors duration-200 hover:text-stone-100"
+                  // className="mt-2 text-white transition-colors duration-200 hover:text-stone-100"
                 >
                   {item.label}
                 </Link>
@@ -109,8 +109,9 @@ function Navbar(props: UpdatedNavbarProps) {
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed inset-0 z-50 transition-opacity duration-300 md:hidden ${isSidebarOpen ? "opacity-100" : "pointer-events-none opacity-0"
-          }`}
+        className={`fixed inset-0 z-50 transition-opacity duration-300 md:hidden ${
+          isSidebarOpen ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
       >
         {/* Overlay */}
         <div
@@ -120,8 +121,9 @@ function Navbar(props: UpdatedNavbarProps) {
 
         {/* Sidebar */}
         <div
-          className={`fixed right-0 top-0 h-full w-64 transform bg-inherit transition-transform duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "translate-x-full"
-            }`}
+          className={`fixed right-0 top-0 h-full w-64 transform bg-inherit transition-transform duration-300 ease-in-out ${
+            isSidebarOpen ? "translate-x-0" : "translate-x-full"
+          }`}
         >
           {/* Close Button */}
           <button
