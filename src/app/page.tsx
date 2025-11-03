@@ -11,7 +11,7 @@ const navItems: NavbarItem[] = [
   },
   {
     label: "Resume",
-    href: "assets/documents/Udbhav Balaji Resume SD.pdf",
+    href: "assets/documents/udbhav_resume.pdf",
     download: true,
     downloadName: "Udbhav_Balaji_Resume.pdf",
   },
